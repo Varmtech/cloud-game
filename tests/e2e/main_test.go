@@ -19,7 +19,7 @@ package e2e
 // 	"github.com/pion/webrtc/v2"
 // )
 //
-// var host = "http://localhost:8000"
+// var host = "http://localhost:3000"
 //
 // // Test is in cmd, so gamePath is in parent path
 // var testGamePath = "../games"

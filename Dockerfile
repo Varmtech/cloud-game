@@ -58,4 +58,4 @@ COPY scripts/version.sh version.sh
 RUN bash ./version.sh ./web/index.html ${VERSION} && \
     rm -rf version.sh
 
-EXPOSE 8000 9000
+EXPOSE 3000 9000
