@@ -90,7 +90,7 @@ Because the coordinator and workers need to run simultaneously. Workers connect 
 
 * Need to run coordinator and worker separately in two session
 * `go run cmd/coordinator/main.go` - spawn coordinator
-* `go run cmd/worker/main.go --coordinatorhost localhost:3000` - spawn workers connecting to coordinator
+* `go run cmd/worker/main.go --coordinatorhost localhost:8000` - spawn workers connecting to coordinator
 
 __Additionally, you may install and configure an `X Server` display in order to be able to run OpenGL cores.__
 __See the `docker-compose.yml` file for Xvfb example config.__
@@ -99,7 +99,7 @@ __See the `docker-compose.yml` file for Xvfb example config.__
 
 Use makefile script: `make dev.run-docker` or Docker Compose directly: `docker-compose up --build`
 (`CLOUD_GAME_GAMES_PATH` is env variable for games on your host). It will spawn a docker environment and you can access
-the service on `localhost:3000`.
+the service on `localhost:8000`.
 
 ## Configuration
 
