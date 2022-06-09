@@ -72,6 +72,9 @@ func (u *Upgrader) Upgrade(w http.ResponseWriter, r *http.Request, responseHeade
 	if u.Origin != "" {
 		w.Header().Set("Access-Control-Allow-Origin", u.Origin)
 	}
+	u.Upgrader.CheckOrigin = func(r *http.Request) bool {
+		return true
+	}
 	return u.Upgrader.Upgrade(w, r, responseHeader)
 }
 
