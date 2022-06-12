@@ -1,3 +1,9 @@
+@font-face {
+    font-family: "Overpass";
+    src: local("Overpass"),
+    url("../fonts/Overpass/Overpass-VariableFont_wght.ttf");
+}
+
 html {
     /* force full size for Firefox */
     width: 100%;

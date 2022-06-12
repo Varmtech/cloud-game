@@ -85,6 +85,7 @@ export const MENU_RELEASED = 'menuReleased';
 
 export const KEY_PRESSED = 'keyPressed';
 export const KEY_RELEASED = 'keyReleased';
+export const ON_CLICK = 'onClick';
 export const KEY_STATE_UPDATED = 'keyStateUpdated';
 export const KEYBOARD_TOGGLE_FILTER_MODE = 'keyboardToggleFilterMode';
 export const KEYBOARD_KEY_PRESSED = 'keyboardKeyPressed';

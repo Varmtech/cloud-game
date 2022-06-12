@@ -24,7 +24,7 @@ import {
     KEY_RELEASED,
     KEY_STATE_UPDATED,
     LATENCY_CHECK_REQUESTED,
-    MENU_HANDLER_ATTACHED,
+    MENU_HANDLER_ATTACHED, ON_CLICK,
     RECORDING_STATUS_CHANGED,
     RECORDING_TOGGLED,
     SETTINGS_CHANGED,
@@ -230,6 +230,11 @@ import {stats} from "./stats/stats";
         state.keyPress(data.key);
     };
 
+    // pre-state key press handler
+    const onClick = (index) => {
+        state.click(index);
+    };
+
     // pre-state key release handler
     const onKeyRelease = data => {
         const button = keyButtons[data.key];
@@ -356,6 +361,9 @@ import {stats} from "./stats/stats";
                             break;
                     }
                 },
+                click: (index) => {
+                    gameList.pickGame(index);
+                },
                 keyRelease: (key) => {
                     switch (key) {
                         case KEY.UP:
@@ -478,7 +486,6 @@ import {stats} from "./stats/stats";
     });
 
     event.sub(MEDIA_STREAM_INITIALIZED, (data) => {
-        console.log('data ... ', data)
         workerManager.whoami(data.xid);
         rtcp.start(data.stunturn);
         gameList.set(data.games);
@@ -502,6 +509,7 @@ import {stats} from "./stats/stats";
     });
     event.sub(KEY_PRESSED, onKeyPress);
     event.sub(KEY_RELEASED, onKeyRelease);
+    event.sub(ON_CLICK, onClick);
     event.sub(KEY_STATE_UPDATED, data => rtcp.input(data));
     event.sub(SETTINGS_CHANGED, () => message.show('Settings have been updated'));
     event.sub(SETTINGS_CLOSED, () => {

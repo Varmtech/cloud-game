@@ -15,7 +15,7 @@ import {
     KEY_PRESSED,
     KEY_RELEASED,
     MENU_HANDLER_ATTACHED, MENU_PRESSED,
-    MENU_RELEASED
+    MENU_RELEASED, ON_CLICK
 } from "../event/event";
 import {log} from "../log";
 import {env} from "../env";
@@ -241,6 +241,13 @@ export const touch = (() => {
         menuTouchDrag = null;
     }
 
+    function handleClickGame(evt) {
+        if (!evt.target.classList.contains('game_image')) return;
+
+        // current item?
+        event.pub(ON_CLICK, evt.target.getAttribute("data-index"));
+    }
+
     // Common events
     function handleWindowMove(event) {
         event.preventDefault();
@@ -268,6 +275,7 @@ export const touch = (() => {
     function handleWindowUp(ev) {
         handleVpadJoystickUp(ev);
         handleMenuUp(ev);
+        handleClickGame(ev);
         buttons.forEach((btn) => {
             btn.dispatchEvent(new Event('touchend'));
         });

@@ -5,6 +5,8 @@
 import {MENU_PRESSED, MENU_RELEASED} from "./event/event";
 import {event} from "./event/event";
 import {log} from "./log";
+import store from "../store";
+import {setActiveGameIndexAC, setGamesAC} from "../store/games/actions";
 
 export const gameList = (() => {
     // state
@@ -20,13 +22,12 @@ export const gameList = (() => {
     let menuTop = MENU_TOP_POSITION;
 
     const setGames = (gameList) => {
-        console.log('set games ... gameList --- ', gameList)
         games = gameList.sort((a, b) => a > b ? 1 : -1);
     };
 
     const render = () => {
         log.debug('[games] load game menu');
-
+        store.dispatch(setGamesAC(games))
         listBox.innerHTML = games
             .map(game => `<div class="menu-item unselectable"><div><span>${game}</span></div></div>`)
             .join('');
@@ -59,6 +60,7 @@ export const gameList = (() => {
         }
         document.querySelectorAll(`.menu-item span`)[idx].classList.add('pick');
 
+        store.dispatch(setActiveGameIndexAC(idx))
         gameIndex = idx;
     };
 
