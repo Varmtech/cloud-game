@@ -357,7 +357,9 @@ import {stats} from "./stats/stats";
                     switch (key) {
                         case KEY.UP:
                         case KEY.DOWN:
-                            gameList.startGamePickerTimer(key === KEY.UP);
+                        case KEY.LEFT:
+                        case KEY.RIGHT:
+                            gameList.startGamePickerTimer(key === KEY.UP || key === KEY.LEFT);
                             break;
                     }
                 },
@@ -368,6 +370,8 @@ import {stats} from "./stats/stats";
                     switch (key) {
                         case KEY.UP:
                         case KEY.DOWN:
+                        case KEY.LEFT:
+                        case KEY.RIGHT:
                             gameList.stopGamePickerTimer();
                             break;
                         case KEY.JOIN:

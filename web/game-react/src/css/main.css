@@ -11,9 +11,9 @@ html {
 }
 
 body {
-    background-image: url('../img/background.jpg');
     background-repeat: repeat;
 
+    background-color: #013094;
     align-items: center;
     display: flex;
     justify-content: center;

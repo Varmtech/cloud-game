@@ -125,8 +125,11 @@ const GamesOldContainer = styled.div`
 `
 const GamesNewContainer = styled.div`
   height: 100vh;
-  width: 50vw;
+  width: 540px;
   background-color: #013094;
+  @media (max-width: 570px) {
+    width: 100%;
+  }
 `
 const PageWrapper = styled.div`
   margin: auto;
