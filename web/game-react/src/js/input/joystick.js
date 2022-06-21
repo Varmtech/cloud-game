@@ -101,6 +101,7 @@ export const joystick = (() => {
 
                 if (joystickState[btnIdx] !== isPressed) {
                     joystickState[btnIdx] = isPressed;
+                    console.log('joystick button is pressed,  btnIdx-- ',btnIdx , 'button type --- ', joystickMap[btnIdx])
                     event.pub(isPressed === true ? KEY_PRESSED : KEY_RELEASED, {key: joystickMap[btnIdx]});
                 }
             });

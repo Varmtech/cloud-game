@@ -367,11 +367,13 @@ import {stats} from "./stats/stats";
                     gameList.pickGame(index);
                 },
                 keyRelease: (key) => {
+                    console.log('pressed ----', key)
                     switch (key) {
                         case KEY.UP:
                         case KEY.DOWN:
                         case KEY.LEFT:
                         case KEY.RIGHT:
+                            console.log('... handle arrows ... ')
                             gameList.stopGamePickerTimer();
                             break;
                         case KEY.JOIN:
@@ -381,6 +383,7 @@ import {stats} from "./stats/stats";
                         case KEY.Y:
                         case KEY.START:
                         case KEY.SELECT:
+                            console.log('... should start game ...')
                             startGame();
                             break;
                         case KEY.QUIT:
