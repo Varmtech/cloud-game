@@ -41,7 +41,7 @@ export const socket = (() => {
         let objParams = {room_id: roomId, zone: zone};
         if (wid) objParams.wid = wid;
         const params = new URLSearchParams(objParams).toString()
-        const address = `${window.location.protocol !== 'https:' ? 'ws' : 'wss'}://localhost:8000/ws?${params}`;
+        const address = `${window.location.protocol !== 'https:' ? 'ws://localhost:8000/'${params} : 'wss'}:${window.location.host}/ws?${params}`;
         console.info(`[ws] connecting to ${address}`);
         conn = new WebSocket(address);
 
