@@ -1,17 +1,18 @@
 import React from "react";
 import styled from 'styled-components'
-import {ReactComponent as Logo} from '../img/logo.svg';
-import {ReactComponent as ArrowLeft} from '../img/arrow-left.svg';
+import {ReactComponent as Logo} from '../../img/icons/logo.svg';
 
 
-export function Header() {
+export function Header({leftIcon, rightIcon}) {
     return (
         <HeaderContainer>
             <HeaderLeftSide>
-                <ArrowWrapper className='btn' value="quit"><ArrowLeft/></ArrowWrapper>
+                {leftIcon}
             </HeaderLeftSide>
             <Logo/>
-            <HeaderRightSide/>
+            <HeaderRightSide>
+                {rightIcon}
+            </HeaderRightSide>
         </HeaderContainer>
     )
 }
@@ -29,10 +30,4 @@ const HeaderLeftSide = styled.div`
 
 const HeaderRightSide = styled.div`
   width: 30px;
-  `
-const ArrowWrapper = styled.div`
-  width: 30px;
-  padding-top: 0;
-  position: static;
-  cursor: pointer;
   `

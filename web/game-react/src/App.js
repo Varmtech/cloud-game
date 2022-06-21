@@ -1,14 +1,23 @@
 import './App.css';
-import {Arrows} from "./components/arrows";
+import {Arrows} from "./components/OldView/arrows";
 import {Screen} from "./components/screen";
-import {GuideText} from "./components/guideText";
-import {PlayersSlider} from "./components/playersSlider";
-import {HolderButtons} from "./components/holderButtons";
+import {GuideText} from "./components/OldView/guideText";
+import {PlayersSlider} from "./components/OldView/playersSlider";
+import {HolderButtons} from "./components/OldView/holderButtons";
 import useScript from "./hooks/useScript";
-import {GameList} from "./components/gameList";
+import {GameList} from "./components/Game/gameList";
 import styled from "styled-components";
-import {Header} from "./components/header";
+import {Header} from "./components/Common/header";
 import React from "react";
+import {WelcomePage} from "./components/SignIn/welcomePage";
+import {colors} from "./Helpers/UI/constants";
+import {ConfirmAccount} from "./components/SignIn/confirmAccount";
+import {PrivacyPolicy} from "./components/SignIn/privacyPolicy";
+import {ReactComponent as ArrowLeft} from "./img/icons/arrow-left.svg";
+import {CreateGameSession} from "./components/Game/createGameSession";
+import {GameSessionCreated} from "./components/Game/gameSessionCreated";
+import {PreviousGameSessions} from "./components/Game/previousGameSessions";
+import {Lobby} from "./components/Game/lobby";
 
 function App() {
     useScript('gui/gui.js');
@@ -40,7 +49,7 @@ function App() {
             <MainContainer>
                 <GamesNewContainer>
                     <PageWrapper>
-                        <Header/>
+                        {/*<Lobby/>*/}
                         <GameList/>
                     </PageWrapper>
                 </GamesNewContainer>
@@ -126,9 +135,9 @@ const GamesOldContainer = styled.div`
 const GamesNewContainer = styled.div`
   height: 100vh;
   width: 540px;
-  background-color: #013094;
+  background-color: ${colors.blue};
   @media (max-width: 570px) {
-    width: 100%;
+    width: 100vw;
   }
 `
 const PageWrapper = styled.div`

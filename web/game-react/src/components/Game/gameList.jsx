@@ -1,13 +1,15 @@
 import React, {useState} from "react";
 import styled from 'styled-components'
 import {useDispatch, useSelector} from "react-redux";
-import {activeGameIndexSelector, gameListSelector} from "../store/games/selectors";
-import {ReactComponent as CheckIcon} from '../img/check-square.svg';
-import MarioImage from "../img/games/mario.png";
-import SampleDemobyFlorianImage from "../img/games/sample-demo-florian.png";
-import SushiTheCat from "../img/games/sushiCat.png";
-import Anguna from "../img/games/anguna.png";
-import {setActiveGameIndexAC} from "../store/games/actions";
+import {activeGameIndexSelector, gameListSelector} from "../../store/games/selectors";
+import {ReactComponent as CheckIcon} from '../../img/icons/check-square.svg';
+import MarioImage from "../../img/games/mario.png";
+import SampleDemobyFlorianImage from "../../img/games/sample-demo-florian.png";
+import SushiTheCat from "../../img/games/sushiCat.png";
+import Anguna from "../../img/games/anguna.png";
+import {setActiveGameIndexAC} from "../../store/games/actions";
+import {Header} from "../Common/header";
+import {ReactComponent as ArrowLeft} from "../../img/icons/arrow-left.svg";
 
 
 export function GameList() {
@@ -32,24 +34,34 @@ export function GameList() {
         console.log('continue to start game ------- ', gameImages[selectedGameIndex])
     }
     return (
-        <GamesContainer>
-            <GamesList>
-                {gamesList.map((game, index) =>
-                    <GameItem key={game} onClick={() => handleSetSelectedGameIndex(index)} gameIsSelected={selectedGameIndex}
-                              isSelected={selectedGameIndex === index}>
-                        <GameItemImg data-index={index} src={setGameImageUrl(index)} alt={game} className='game_image'/>
-                    </GameItem>)}
-            </GamesList>
+       <>
+           <Header leftIcon={<ArrowWrapper className='btn' value="quit"><ArrowLeft/></ArrowWrapper>}/>
+           <GamesContainer>
+               <GamesList>
+                   {gamesList.map((game, index) =>
+                       <GameItem key={game} onClick={() => handleSetSelectedGameIndex(index)} gameIsSelected={selectedGameIndex}
+                                 isSelected={selectedGameIndex === index}>
+                           <GameItemImg data-index={index} src={setGameImageUrl(index)} alt={game} className='game_image'/>
+                       </GameItem>)}
+               </GamesList>
 
-            <VideoWrapper>
-                <GameVideo id="stream" className="game-screen" hidden muted playsInline preload="none"/>
-            </VideoWrapper>
-            <GameStartButtonWrapper>
-                <GameContinueButton onClick={handleContinue} className='btn' value="start"> <CheckIcon/> <span>Continue</span> </GameContinueButton>
-            </GameStartButtonWrapper>
-        </GamesContainer>
+               <VideoWrapper>
+                   <GameVideo id="stream" className="game-screen" hidden muted playsInline preload="none"/>
+               </VideoWrapper>
+               <GameStartButtonWrapper>
+                   <GameContinueButton onClick={handleContinue} className='btn' value="start"> <CheckIcon/> <span>Continue</span> </GameContinueButton>
+               </GameStartButtonWrapper>
+           </GamesContainer>
+       </>
     )
 }
+
+const ArrowWrapper = styled.div`
+  width: 30px;
+  padding-top: 0;
+  position: static;
+  cursor: pointer;
+  `
 
 const GamesContainer = styled.div`
   position: relative;

@@ -56,22 +56,24 @@ export const stream = (() => {
 
         screen.onerror = (e) => {
             // video playback failed - show a message saying why
-            switch (e.target.error.code) {
-                case e.target.error.MEDIA_ERR_ABORTED:
-                    log.error('You aborted the video playback.');
-                    break;
-                case e.target.error.MEDIA_ERR_NETWORK:
-                    log.error('A network error caused the video download to fail part-way.');
-                    break;
-                case e.target.error.MEDIA_ERR_DECODE:
-                    log.error('The video playback was aborted due to a corruption problem or because the video used features your browser did not support.');
-                    break;
-                case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-                    log.error('The video could not be loaded, either because the server or network failed or because the format is not supported.');
-                    break;
-                default:
-                    log.error('An unknown video error occurred.');
-                    break;
+            if(e.target.error) {
+                switch (e.target.error.code) {
+                    case e.target.error.MEDIA_ERR_ABORTED:
+                        log.error('You aborted the video playback.');
+                        break;
+                    case e.target.error.MEDIA_ERR_NETWORK:
+                        log.error('A network error caused the video download to fail part-way.');
+                        break;
+                    case e.target.error.MEDIA_ERR_DECODE:
+                        log.error('The video playback was aborted due to a corruption problem or because the video used features your browser did not support.');
+                        break;
+                    case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+                        log.error('The video could not be loaded, either because the server or network failed or because the format is not supported.');
+                        break;
+                    default:
+                        log.error('An unknown video error occurred.');
+                        break;
+                }
             }
         };
 
