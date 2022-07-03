@@ -7,7 +7,7 @@ import {ReactComponent as AttachGameIcon} from "../../img/icons/attachGame.svg";
 import {ReactComponent as AttachIcon} from "../../img/icons/folder-plus.svg";
 import {ReactComponent as PlusIcon} from "../../img/icons/plus.svg";
 import {ProfileBadge} from "../Profile/profileBadge";
-import {ArrowWrapper, PageHeader} from "../../Helpers/UI";
+import {ArrowWrapper, SectionHeader} from "../../Helpers/UI";
 import {colors} from "../../Helpers/UI/constants";
 import {CustomButton} from "../Common/CustomButton";
 
@@ -19,7 +19,7 @@ export function CreateGameSession() {
             <Header leftIcon={<ArrowWrapper><ShoppingBagIcon/></ArrowWrapper>}
                     rightIcon={<ArrowWrapper><SettingsIcon/></ArrowWrapper>}/>
             <ProfileBadge/>
-            <PageHeader>Create game session</PageHeader>
+            <SectionHeader>Create game session</SectionHeader>
             <AttachGameContainer>
                 <AttachGameBoard>
                     <AttachGameIcon/>

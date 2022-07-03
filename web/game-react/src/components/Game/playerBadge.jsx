@@ -17,15 +17,14 @@ const PlayerContainer = styled.div`
   align-items: center;
   background: rgba(255, 255, 255, 0.2);
   min-width: ${props => props.size ? `${props.size}px` : '60px'};
-  max-width: ${props => props.size ? `${props.size}px` : '60px'};;
-  height: ${props => props.size ? `${props.size}px` : '60px'};;
+  max-width: ${props => props.size ? `${props.size}px` : '60px'};
+  height: ${props => props.size ? `${props.size}px` : '60px'};
   border-radius: 38%;
 
   @media (max-width: 355px) {
     min-width: ${props => props.size ? props.smSize ? `${props.smSize}px` : `${props.size - 8}px` : '52px'};;
     max-width: ${props => props.size ? props.smSize ? `${props.smSize}px` : `${props.size - 8}px` : '52px'};;
     height: ${props => props.size ? props.smSize ? `${props.smSize}px` : `${props.size - 8}px` : '52px'};;
-    border-radius: 20px;
   }
 `
 

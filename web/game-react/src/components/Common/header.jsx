@@ -1,15 +1,16 @@
 import React from "react";
 import styled from 'styled-components'
 import {ReactComponent as Logo} from '../../img/icons/logo.svg';
+import {ReactComponent as ColoredLogo} from '../../img/icons/logo-colored.svg';
 
 
-export function Header({leftIcon, rightIcon}) {
+export function Header({leftIcon, rightIcon, coloredLogo, marginBottom}) {
     return (
-        <HeaderContainer>
+        <HeaderContainer marginBottom={marginBottom}>
             <HeaderLeftSide>
                 {leftIcon}
             </HeaderLeftSide>
-            <Logo/>
+            {coloredLogo ? <ColoredLogo/> : <Logo/>}
             <HeaderRightSide>
                 {rightIcon}
             </HeaderRightSide>
@@ -21,7 +22,7 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 32px;
+  margin-bottom: ${props => props.marginBottom ? props.marginBottom : '32px'};
 `
 
 const HeaderLeftSide = styled.div`

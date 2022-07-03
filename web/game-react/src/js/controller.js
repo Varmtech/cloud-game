@@ -50,6 +50,8 @@ import {utils} from "./utils";
 import {settings} from "./settings/settings";
 import {opts} from "./settings/opts";
 import {stats} from "./stats/stats";
+import store from "../store";
+import {setActiveGameIndexAC, setGameIsStarted} from "../store/games/actions";
 
 (() => {
     console.log('controller')
@@ -381,6 +383,7 @@ import {stats} from "./stats/stats";
                         case KEY.Y:
                         case KEY.START:
                         case KEY.SELECT:
+                            store.dispatch(setGameIsStarted(true))
                             startGame();
                             break;
                         case KEY.QUIT:

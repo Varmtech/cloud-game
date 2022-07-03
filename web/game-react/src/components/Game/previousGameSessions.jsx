@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {Header} from "../Common/header";
 import {ReactComponent as BackIcon} from "../../img/icons/arrow-left.svg";
 import {ProfileBadge} from "../Profile/profileBadge";
-import {ArrowWrapper, ButtonWrapper, PageHeader} from "../../Helpers/UI";
+import {ArrowWrapper, ButtonWrapper, SectionHeader} from "../../Helpers/UI";
 import {colors} from "../../Helpers/UI/constants";
 import MarioImageSrc from "../../img/games/mario.png";
 import SushiCatImageSrc from "../../img/games/sushiCat.png";
@@ -21,7 +21,7 @@ export function PreviousGameSessions() {
         <PageContainer>
             <Header leftIcon={<ArrowWrapper><BackIcon/></ArrowWrapper>}/>
 
-            <PageHeader>Previous game sessions</PageHeader>
+            <SectionHeader>Previous game sessions</SectionHeader>
             <GameSessionsContainer>
                 <GameSessionItem>
                     <GameImageCont>

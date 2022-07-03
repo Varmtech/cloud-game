@@ -2,23 +2,24 @@ import React from "react";
 import styled from 'styled-components'
 import {Header} from "../Common/header";
 import {ReactComponent as SettingsIcon} from "../../img/icons/settings.svg";
-import {ReactComponent as LogOutIcon} from "../../img/icons/log-out.svg";
+import {ReactComponent as LogOutIcon} from "../../img/icons/log-out-red.svg";
 import {ReactComponent as PlayIcon} from "../../img/icons/play.svg";
 import GameImageSrc from "../../img/games/mario.png";
 import AvatarUrl from "../../img/avatar-man2.png";
-import {ArrowWrapper, ButtonWrapper, PageHeader} from "../../Helpers/UI";
+import {ArrowWrapper, ButtonWrapper, SectionHeader} from "../../Helpers/UI";
 import {colors} from "../../Helpers/UI/constants";
 import {CustomButton} from "../Common/CustomButton";
 import {PlayerBadge} from "./playerBadge";
+import {PageWrapper} from "../Common/PageWrapper";
 
 export function GameSessionCreated() {
 
     return (
-        <>
+        <PageWrapper>
             <Header leftIcon={<ArrowWrapper><LogOutIcon/></ArrowWrapper>}
                     rightIcon={<ArrowWrapper><SettingsIcon/></ArrowWrapper>}/>
             <GameSessionContainer>
-                <PageHeader>Game session created</PageHeader>
+                <SectionHeader>Game session created</SectionHeader>
                 <AttachedGameCont>
                     <AttachedGameImg src={GameImageSrc}/>
                 </AttachedGameCont>
@@ -35,7 +36,7 @@ export function GameSessionCreated() {
                     <CustomButton buttonText='I’m ready' icon={<PlayIcon/>}/>
                 </ButtonWrapper>
             </GameSessionContainer>
-        </>
+        </PageWrapper>
     )
 }
 

@@ -11,7 +11,7 @@ import Player1Srs from "../../img/avatar-w.png";
 import Player2Srs from "../../img/avatar-m3.png";
 import Player3Srs from "../../img/avatar-man2.png";
 import {ProfileBadge} from "../Profile/profileBadge";
-import {ArrowWrapper, PageHeader} from "../../Helpers/UI";
+import {ArrowWrapper, SectionHeader} from "../../Helpers/UI";
 import {colors} from "../../Helpers/UI/constants";
 import {CustomButton} from "../Common/CustomButton";
 import {AttachGameBoard, AttachGameContainer, PlusGameIcon} from "./createGameSession";
@@ -26,7 +26,7 @@ export function Lobby() {
                     rightIcon={<ArrowWrapper><SettingsIcon/></ArrowWrapper>}/>
             <ProfileBadge/>
             <PrevGameSessions>
-                <PageHeader>Start game session</PageHeader>
+                <SectionHeader>Start game session</SectionHeader>
                 <GameSessionsCont>
                     <GameSessionItem>
                         <GameImageWrapper>
@@ -81,7 +81,7 @@ export function Lobby() {
                 </GameSessionsCont>
             </PrevGameSessions>
 
-            <PageHeader>Create new game session</PageHeader>
+            <SectionHeader>Create new game session</SectionHeader>
             <AttachNewGame>
                 <AttachNewGameBoard>
                     <AttachGameIcon/>

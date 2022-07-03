@@ -13,7 +13,7 @@ html {
 body {
     background-repeat: repeat;
 
-    background-color: #013094;
+    /*background-color: #013094;*/
     align-items: center;
     display: flex;
     justify-content: center;

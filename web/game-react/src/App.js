@@ -18,6 +18,11 @@ import {CreateGameSession} from "./components/Game/createGameSession";
 import {GameSessionCreated} from "./components/Game/gameSessionCreated";
 import {PreviousGameSessions} from "./components/Game/previousGameSessions";
 import {Lobby} from "./components/Game/lobby";
+import {ChooseAvatarAndNickname} from "./components/Profile/chooseAvatarAndNickname";
+import {useSelector} from "react-redux";
+import {activeGameIndexSelector, gameIsStarted} from "./store/games/selectors";
+import {Stream} from "./components/Stream/stream";
+import {GameStream} from "./components/Stream/gameStream";
 
 function App() {
     useScript('gui/gui.js');
@@ -44,87 +49,86 @@ function App() {
     useScript('input/touch.js');
     useScript('input/joystick.js');
     useScript('init.js');
+
+    const gameStarted = useSelector(gameIsStarted);
+    console.log('gameStarted ,,,, ', gameStarted)
     return (
         <div className="App">
-            <MainContainer>
-                <GamesNewContainer>
-                    <PageWrapper>
-                        {/*<Lobby/>*/}
-                        <GameList/>
-                    </PageWrapper>
-                </GamesNewContainer>
-                <GamesOldContainer>
-                    <div id="gamebody">
-                        <Arrows/>
+            <GameStream/>
+            {/*{gameStarted ? <Stream/>: <GameList/>}*/}
+            {/*<GameList/>*/}
 
-                        <Screen/>
+            <GamesOldContainer>
+                <div id="gamebody">
+                    <Arrows/>
 
-                        <div id="servers"/>
+                    <Screen/>
 
-                        <GuideText/>
+                    <div id="servers"/>
 
-                        <div id="btn-load" className="btn big unselectable" value="load"/>
-                        <div id="btn-save" className="btn big unselectable" value="save"/>
-                        <div id="btn-join" className="btn big unselectable" value="join"/>
+                    <GuideText/>
 
-                        <PlayersSlider/>
+                    <div id="btn-load" className="btn big unselectable" value="load"/>
+                    <div id="btn-save" className="btn big unselectable" value="save"/>
+                    <div id="btn-join" className="btn big unselectable" value="join"/>
 
-                        <div id="btn-quit" className="btn big unselectable" value="quit"/>
-                        <div id="btn-select" className="btn big unselectable" value="select"/>
-                        <div id="btn-start" className="btn big unselectable" value="start"/>
+                    <PlayersSlider/>
 
-                        <HolderButtons/>
+                    <div id="btn-quit" className="btn big unselectable" value="quit"/>
+                    <div id="btn-select" className="btn big unselectable" value="select"/>
+                    <div id="btn-start" className="btn big unselectable" value="start"/>
 
-                        <div id="btn-settings" className="btn unselectable" value="settings"/>
+                    <HolderButtons/>
 
-                        TODO: remove
-                        <input id="room-txt" type="text" placeholder="room id..." className=" unselectable" disabled/>
+                    <div id="btn-settings" className="btn unselectable" value="settings"/>
 
-                        <label className="dpad-toggle-label" title="D-pad toggle">
-                            <input type="checkbox" id="dpad-toggle" checked/>
-                            <span className="dpad-toggle-slider"/>
-                        </label>
+                    TODO: remove
+                    <input id="room-txt" type="text" placeholder="room id..." className=" unselectable" disabled/>
 
-                        <div id="noti-box" className="unselectable">Oh my god</div>
+                    <label className="dpad-toggle-label" title="D-pad toggle">
+                        <input type="checkbox" id="dpad-toggle" checked/>
+                        <span className="dpad-toggle-slider"/>
+                    </label>
 
-                        <div id="help-overlay" className="hidden">
-                            <div id="help-overlay-background"/>
-                            <div id="help-overlay-detail"/>
-                        </div>
-                        <div id="btn-help" className="btn unselectable" value="help"/>
+                    <div id="noti-box" className="unselectable">Oh my god</div>
+
+                    <div id="help-overlay" className="hidden">
+                        <div id="help-overlay-background"/>
+                        <div id="help-overlay-detail"/>
                     </div>
+                    <div id="btn-help" className="btn unselectable" value="help"/>
+                </div>
 
-                    <div id="app-settings" className="modal-window">
+                <div id="app-settings" className="modal-window">
+                    <div>
+                        <div className="settings__controls">
+                            <span title="Save" id="settings__controls__save" className="semi-button">↑</span>
+                            <span title="Load" id="settings__controls__load" className="semi-button">↓</span>
+                            <span title="Reset" id="settings__controls__reset" className="semi-button">⟲</span>
+                            <span title="Close" id="settings__controls__close" className="semi-button">X</span>
+                        </div>
+                        <h1>Options</h1>
+                        <div id="settings-data"/>
                         <div>
-                            <div className="settings__controls">
-                                <span title="Save" id="settings__controls__save" className="semi-button">↑</span>
-                                <span title="Load" id="settings__controls__load" className="semi-button">↓</span>
-                                <span title="Reset" id="settings__controls__reset" className="semi-button">⟲</span>
-                                <span title="Close" id="settings__controls__close" className="semi-button">X</span>
-                            </div>
-                            <h1>Options</h1>
-                            <div id="settings-data"/>
-                            <div>
-                                * -- applied after application restart
-                            </div>
+                            * -- applied after application restart
                         </div>
                     </div>
+                </div>
 
-                    <div className="source">
-                        <span id="v">69ff8ae</span>
-                        <a rel="noopener noreferrer" target="_blank" href="https://github.com/giongto35/cloud-game">
-                            Source code on GitHub
-                        </a>
-                    </div>
+                <div className="source">
+                    <span id="v">69ff8ae</span>
+                    <a rel="noopener noreferrer" target="_blank" href="https://github.com/giongto35/cloud-game">
+                        Source code on GitHub
+                    </a>
+                </div>
 
-                </GamesOldContainer>
-            </MainContainer>
+            </GamesOldContainer>
         </div>
     );
 }
 
 const MainContainer = styled.div`
-    display: flex;
+  display: flex;
 `
 const GamesOldContainer = styled.div`
   display: none;
@@ -135,7 +139,6 @@ const GamesOldContainer = styled.div`
 const GamesNewContainer = styled.div`
   height: 100vh;
   width: 540px;
-  background-color: ${colors.blue};
   @media (max-width: 570px) {
     width: 100vw;
   }

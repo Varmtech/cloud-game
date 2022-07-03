@@ -13,7 +13,11 @@ import {opts} from "../settings/opts";
 import {settings} from "../settings/settings";
 
 export const stream = (() => {
-        const screen = document.getElementById('stream');
+        let screen = document.getElementById('stream');
+
+        const setScreen = (elemRef) => {
+            screen = elemRef
+        };
 
         let options = {
                 volume: 0.5,
@@ -151,7 +155,8 @@ export const stream = (() => {
             play: stream,
             toggle,
             useCustomScreen,
-            init
+            init,
+            setScreen
         }
     }
 )(env, gui, log, opts, settings);

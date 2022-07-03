@@ -1,8 +1,9 @@
-import {SET_ACTIVE_GAME_INDEX, SET_GAME_LIST} from './actions';
+import {GAME_IS_STARTED, SET_ACTIVE_GAME_INDEX, SET_GAME_LIST} from './actions';
 
 const initialState = {
     gameList: [],
-    activeGameIndex: 0
+    activeGameIndex: 0,
+    gameIsStarted: false
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -14,6 +15,10 @@ export default (state = initialState, { type, payload }) => {
         }
         case SET_ACTIVE_GAME_INDEX: {
             newState.activeGameIndex = payload.gameIndex;
+            return newState;
+        }
+        case GAME_IS_STARTED: {
+            newState.gameIsStarted = payload.gameStarted;
             return newState;
         }
         default:

@@ -10,6 +10,9 @@ import Anguna from "../../img/games/anguna.png";
 import {setActiveGameIndexAC} from "../../store/games/actions";
 import {Header} from "../Common/header";
 import {ReactComponent as ArrowLeft} from "../../img/icons/arrow-left.svg";
+import {PageContainer} from "../../Helpers/UI";
+import {PageWrapper} from "../Common/PageWrapper";
+import {colors} from "../../Helpers/UI/constants";
 
 
 export function GameList() {
@@ -34,7 +37,7 @@ export function GameList() {
         console.log('continue to start game ------- ', gameImages[selectedGameIndex])
     }
     return (
-       <>
+       <PageWrapper backgroundColor={colors.blue}>
            <Header leftIcon={<ArrowWrapper className='btn' value="quit"><ArrowLeft/></ArrowWrapper>}/>
            <GamesContainer>
                <GamesList>
@@ -52,7 +55,7 @@ export function GameList() {
                    <GameContinueButton onClick={handleContinue} className='btn' value="start"> <CheckIcon/> <span>Continue</span> </GameContinueButton>
                </GameStartButtonWrapper>
            </GamesContainer>
-       </>
+       </PageWrapper>
     )
 }
 

@@ -32,3 +32,18 @@
     transform: rotate(360deg);
   }
 }
+
+.avatar_slider .swiper-slide {
+  display: flex;
+  justify-content: center;
+}
+.avatar_slider.swiper-backface-hidden .swiper-slide {
+  transform: translateZ(0) scale(0.85) translateY(3px);
+  opacity: 0.5;
+  transition: all 0.2s;
+}
+
+.avatar_slider .swiper-slide-active {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
