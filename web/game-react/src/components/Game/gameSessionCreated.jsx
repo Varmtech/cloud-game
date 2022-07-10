@@ -33,7 +33,7 @@ export function GameSessionCreated() {
                     <PlayersJoinNotification>Waiting for players to join</PlayersJoinNotification>
                 </PlayersWrapper>
                 <ButtonWrapper>
-                    <CustomButton buttonText='I’m ready' icon={<PlayIcon/>}/>
+                    <CustomButton fullWidth buttonText='I’m ready' icon={<PlayIcon/>}/>
                 </ButtonWrapper>
             </GameSessionContainer>
         </PageWrapper>

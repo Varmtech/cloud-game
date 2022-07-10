@@ -1,4 +1,5 @@
 import './App.css';
+import {BrowserRouter, Route, Switch, Redirect, useLocation, useHistory, Routes} from 'react-router-dom';
 import {Arrows} from "./components/OldView/arrows";
 import {Screen} from "./components/screen";
 import {GuideText} from "./components/OldView/guideText";
@@ -22,111 +23,30 @@ import {ChooseAvatarAndNickname} from "./components/Profile/chooseAvatarAndNickn
 import {useSelector} from "react-redux";
 import {activeGameIndexSelector, gameIsStarted} from "./store/games/selectors";
 import {Stream} from "./components/Stream/stream";
-import {GameStream} from "./components/Stream/gameStream";
+import {AddPlayerToGame} from "./components/Stream/addPlayerToGame";
+import {DndProvider, DragPreviewImage} from "react-dnd";
+import {DragPlayers} from "./components/Stream/dragPlayers";
+import {HTML5Backend} from "react-dnd-html5-backend";
+import Example from "./components/Stream/example";
 
 function App() {
-    useScript('gui/gui.js');
-    useScript('utils.js');
-    useScript('gui/message.js');
-    useScript('log.js');
-    useScript('event/event.js');
-    useScript('network/socket.js');
-    useScript('input/keys.js');
-    useScript('settings/opts.js');
-    useScript('settings/settings.js');
-    useScript('env.js');
-    useScript('input/input.js');
-    useScript('gameList.js');
-    useScript('stream/stream.js');
-    useScript('room.js');
-    useScript('network/ajax.js');
-    useScript('network/rtcp.js');
-    useScript('workerManager.js');
-    useScript('recording.js');
-    useScript('stats/stats.js');
-    useScript('controller.js');
-    useScript('input/keyboard.js');
-    useScript('input/touch.js');
-    useScript('input/joystick.js');
-    useScript('init.js');
+
 
     const gameStarted = useSelector(gameIsStarted);
-    console.log('gameStarted ,,,, ', gameStarted)
+
     return (
-        <div className="App">
-            <GameStream/>
-            {/*{gameStarted ? <Stream/>: <GameList/>}*/}
-            {/*<GameList/>*/}
-
-            <GamesOldContainer>
-                <div id="gamebody">
-                    <Arrows/>
-
-                    <Screen/>
-
-                    <div id="servers"/>
-
-                    <GuideText/>
-
-                    <div id="btn-load" className="btn big unselectable" value="load"/>
-                    <div id="btn-save" className="btn big unselectable" value="save"/>
-                    <div id="btn-join" className="btn big unselectable" value="join"/>
-
-                    <PlayersSlider/>
-
-                    <div id="btn-quit" className="btn big unselectable" value="quit"/>
-                    <div id="btn-select" className="btn big unselectable" value="select"/>
-                    <div id="btn-start" className="btn big unselectable" value="start"/>
-
-                    <HolderButtons/>
-
-                    <div id="btn-settings" className="btn unselectable" value="settings"/>
-
-                    TODO: remove
-                    <input id="room-txt" type="text" placeholder="room id..." className=" unselectable" disabled/>
-
-                    <label className="dpad-toggle-label" title="D-pad toggle">
-                        <input type="checkbox" id="dpad-toggle" checked/>
-                        <span className="dpad-toggle-slider"/>
-                    </label>
-
-                    <div id="noti-box" className="unselectable">Oh my god</div>
-
-                    <div id="help-overlay" className="hidden">
-                        <div id="help-overlay-background"/>
-                        <div id="help-overlay-detail"/>
-                    </div>
-                    <div id="btn-help" className="btn unselectable" value="help"/>
-                </div>
-
-                <div id="app-settings" className="modal-window">
-                    <div>
-                        <div className="settings__controls">
-                            <span title="Save" id="settings__controls__save" className="semi-button">↑</span>
-                            <span title="Load" id="settings__controls__load" className="semi-button">↓</span>
-                            <span title="Reset" id="settings__controls__reset" className="semi-button">⟲</span>
-                            <span title="Close" id="settings__controls__close" className="semi-button">X</span>
-                        </div>
-                        <h1>Options</h1>
-                        <div id="settings-data"/>
-                        <div>
-                            * -- applied after application restart
-                        </div>
-                    </div>
-                </div>
-
-                <div className="source">
-                    <span id="v">69ff8ae</span>
-                    <a rel="noopener noreferrer" target="_blank" href="https://github.com/giongto35/cloud-game">
-                        Source code on GitHub
-                    </a>
-                </div>
-
-            </GamesOldContainer>
-        </div>
-    );
+        <BrowserRouter>
+            <Routes>
+                {/*<Route path="/" element={<Layout />}>*/}
+                <Route index element={<GameList/>}/>
+                <Route path="addPlayers" element={<AddPlayerToGame/>}/>
+                <Route path="createGameSession" element={<CreateGameSession/>}/>
+                {/*<Route path="*" element={<NoPage />} />*/}
+                {/*</Route>*/}
+            </Routes>
+        </BrowserRouter>
+    )
 }
-
 const MainContainer = styled.div`
   display: flex;
 `

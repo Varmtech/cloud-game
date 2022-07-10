@@ -17,7 +17,7 @@ export function WelcomePage() {
                 <SignInText>Please sign in to continue</SignInText>
             </PageContainer>
             <BottomButton>
-                <CustomButton buttonText="Signin with Google" icon={<GoogleIcon/>} handleFunction={handleSingIn} />
+                <CustomButton fullWidth buttonText="Signin with Google" icon={<GoogleIcon/>} handleFunction={handleSingIn} />
             </BottomButton>
         </>
     )

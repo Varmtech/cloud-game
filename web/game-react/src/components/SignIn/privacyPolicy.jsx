@@ -42,7 +42,7 @@ export function PrivacyPolicy() {
                 </ConfirmText>
             </PageContainer>
             <BottomButton>
-                <CustomButton buttonText="Confirm" handleFunction={handleConfirm}/>
+                <CustomButton fullWidth buttonText="Confirm" handleFunction={handleConfirm}/>
             </BottomButton>
         </>
     )

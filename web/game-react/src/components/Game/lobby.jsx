@@ -87,7 +87,7 @@ export function Lobby() {
                     <AttachGameIcon/>
                     <PlusGameIcon/>
                 </AttachNewGameBoard>
-                <CustomButton buttonText='Attach game' icon={<AttachIcon/>}/>
+                <CustomButton fullWidth buttonText='Attach game' icon={<AttachIcon/>}/>
             </AttachNewGame>
         </>
     )

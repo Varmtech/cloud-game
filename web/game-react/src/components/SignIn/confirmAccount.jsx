@@ -26,8 +26,8 @@ export function ConfirmAccount() {
                 </ConfirmText>
             </PageContainer>
             <BottomButton>
-                <CustomButton buttonText="Signin with Google" icon={<GoogleIcon/>} handleFunction={handleConfirm}/>
-                <CustomButton buttonText="Change Account" handleFunction={handleConfirm} transparent/>
+                <CustomButton fullWidth buttonText="Signin with Google" icon={<GoogleIcon/>} handleFunction={handleConfirm}/>
+                <CustomButton fullWidth buttonText="Change Account" handleFunction={handleConfirm} transparent/>
             </BottomButton>
         </>
     )

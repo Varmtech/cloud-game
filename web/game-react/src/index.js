@@ -9,6 +9,9 @@ import './css/ui.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from "./store";
+import {DndProvider} from "react-dnd";
+import {HTML5Backend} from "react-dnd-html5-backend";
+import Example from "./components/Stream/example";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -71,7 +71,7 @@ export function PreviousGameSessions() {
             </GameSessionsContainer>
 
             <ButtonWrapper>
-                <CustomButton buttonText='Restart session' icon={<PlayCircleIcon/>} />
+                <CustomButton fullWidth buttonText='Restart session' icon={<PlayCircleIcon/>} />
             </ButtonWrapper>
         </PageContainer>
     )

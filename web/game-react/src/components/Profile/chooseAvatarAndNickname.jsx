@@ -75,7 +75,7 @@ export function ChooseAvatarAndNickname() {
 
 
             <ButtonWrapper>
-                <CustomButton buttonText='I’m Ready' icon={<PlayCircleIcon/>} />
+                <CustomButton fullWidth buttonText='I’m Ready' icon={<PlayCircleIcon/>} />
             </ButtonWrapper>
         </AvatarPageContainer>
     )
