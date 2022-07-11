@@ -12,7 +12,6 @@ import {colors} from "../../Helpers/UI/constants";
 import {CustomButton} from "../Common/CustomButton";
 import {PageWrapper} from "../Common/PageWrapper";
 
-
 export function CreateGameSession() {
     const [shareLink, setShareLink] = useState('http://rate.am/')
     const [shareErrorMessage, setShareErrorMessage] = useState('')

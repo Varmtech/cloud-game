@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import styled from 'styled-components'
 import {useDispatch, useSelector} from "react-redux";
-import {activeGameIndexSelector, gameListSelector} from "../../store/games/selectors";
+import {activeGameIndexSelector, gameIsStarted, gameListSelector} from "../../store/games/selectors";
 import {ReactComponent as CheckIcon} from '../../img/icons/check-square.svg';
 import MarioImage from "../../img/games/mario.png";
 import SampleDemobyFlorianImage from "../../img/games/sample-demo-florian.png";
@@ -50,6 +50,7 @@ export function GameList() {
     const dispatch = useDispatch();
     const gamesList = useSelector(gameListSelector) || [];
     const selectedGameIndex = useSelector(activeGameIndexSelector);
+    const gameStarted = useSelector(gameIsStarted);
 
     const gameImages = {
         0: SampleDemobyFlorianImage,
