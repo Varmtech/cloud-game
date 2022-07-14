@@ -13,20 +13,20 @@ import {CustomButton} from "../Common/CustomButton";
 import {PageWrapper} from "../Common/PageWrapper";
 
 export function CreateGameSession() {
-    const [shareLink, setShareLink] = useState('http://rate.am/')
+    const [shareLink, setShareLink] = useState("https://1up.games")
     const [shareErrorMessage, setShareErrorMessage] = useState('')
 
     const handleInviteFriend = () => {
-        if(navigator.share) {
-            navigator.share(shareLink)
-                .then(data => {
-                    console.log('success on share... ', data)
+
+       if(navigator.share) {
+            navigator.share({ title: "Example Page", url: shareLink })
+                .then(() => {
+                    console.log(' .. shared successfully .. ', )
                 })
                 .catch(error => {
                     console.log('error on share .. ', error)
                 })
         } else {
-            // fallback code
             console.log("Web share is currently not supported on this browser. Please provide a callback");
             setShareErrorMessage("Your system doesn't support sharing")
         }
