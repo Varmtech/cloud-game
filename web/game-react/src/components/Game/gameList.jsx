@@ -1,7 +1,13 @@
 import React, {useState} from "react";
 import styled from 'styled-components'
 import {useDispatch, useSelector} from "react-redux";
-import {activeGameIndexSelector, gameIsStarted, gameListSelector} from "../../store/games/selectors";
+import {
+    activeGameIndexSelector,
+    gameIsStarted,
+    gameListSelector, logsJoySelector,
+    logsOsSelector,
+    logsSelector
+} from "../../store/games/selectors";
 import {ReactComponent as CheckIcon} from '../../img/icons/check-square.svg';
 import MarioImage from "../../img/games/mario.png";
 import SampleDemobyFlorianImage from "../../img/games/sample-demo-florian.png";
@@ -49,9 +55,13 @@ export function GameList() {
 
     const dispatch = useDispatch();
     const gamesList = useSelector(gameListSelector) || [];
+    const logs = useSelector(logsSelector) || [];
+    const osLog = useSelector(logsOsSelector) || '';
+    const joyLogs = useSelector(logsJoySelector) || [];
     const selectedGameIndex = useSelector(activeGameIndexSelector);
     const gameStarted = useSelector(gameIsStarted);
-
+    console.log('osLog .. .', osLog)
+    console.log('logs .. .', logs)
     const gameImages = {
         0: SampleDemobyFlorianImage,
         1: MarioImage,
@@ -71,6 +81,15 @@ export function GameList() {
     return (
        <PageWrapper backgroundColor={colors.blue}>
            <Header leftIcon={<ArrowWrapper className='btn' value="quit"><ArrowLeft/></ArrowWrapper>}/>
+           {logs.length ? <LogContainer>
+               Keys press log
+               {logs.map(log => <div>{log.key}</div>)}
+           </LogContainer>: ''}
+           {joyLogs.length ?  <LogJoyContainer>
+               {osLog}
+               Joystick logs
+               {joyLogs.map(log => <div>{log.key}</div>)}
+           </LogJoyContainer> : ''}
            <GamesContainer>
                <GamesList>
                    {gamesList.map((game, index) =>
@@ -156,6 +175,31 @@ export function GameList() {
        </PageWrapper>
     )
 }
+
+const LogContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  max-height: 300px;
+  width: 120px;
+  overflow-y: auto;
+  z-index: 999;
+  color: #fff;
+  background-color: rgba(0,0,0,0.4);
+`
+
+
+const LogJoyContainer = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  max-height: 300px;
+  width: 120px;
+  overflow-y: auto;
+  z-index: 999;
+  color: #fff;
+  background-color: rgba(0,0,0,0.4);
+`
 
 const GamesOldContainer = styled.div`
   display: none;

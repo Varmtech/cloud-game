@@ -28,6 +28,8 @@ import {
 } from "../event/event";
 import {env} from "../env";
 import {log} from "../log";
+import store from "../../store";
+import {setJoystickLogAC, setLogAC, setOsLogAC} from "../../store/games/actions";
 
 export const joystick = (() => {
     const deadZone = 0.1;
@@ -101,6 +103,7 @@ export const joystick = (() => {
 
                 if (joystickState[btnIdx] !== isPressed) {
                     joystickState[btnIdx] = isPressed;
+                    store.dispatch(setJoystickLogAC(btnIdx))
                     event.pub(isPressed === true ? KEY_PRESSED : KEY_RELEASED, {key: joystickMap[btnIdx]});
                 }
             });
@@ -120,6 +123,7 @@ export const joystick = (() => {
         let browser = env.getBrowser();
 
         if (os === 'android') {
+            store.dispatch(setOsLogAC('android'))
             // default of android is KeyMap1
             joystickMap = {
                 2: KEY.A,
@@ -136,6 +140,7 @@ export const joystick = (() => {
                 15: KEY.RIGHT
             };
         } else {
+            store.dispatch(setOsLogAC('default'))
             // default of other OS is KeyMap2
             joystickMap = {
                 0: KEY.A,
@@ -154,6 +159,7 @@ export const joystick = (() => {
         }
 
         if (os === 'android' && (browser === 'firefox' || browser === 'uc')) { //KeyMap2
+            store.dispatch(setOsLogAC('android - browser = firefox || uc'))
             joystickMap = {
                 0: KEY.A,
                 1: KEY.B,
@@ -171,6 +177,7 @@ export const joystick = (() => {
         }
 
         if (os === 'win' && browser === 'firefox') { //KeyMap3
+            store.dispatch(setOsLogAC('win - browser = firefox '))
             joystickMap = {
                 1: KEY.A,
                 2: KEY.B,
@@ -184,6 +191,7 @@ export const joystick = (() => {
         }
 
         if (os === 'mac' && browser === 'safari') { //KeyMap4
+            store.dispatch(setOsLogAC('mac - browser = safari '))
             joystickMap = {
                 1: KEY.A,
                 2: KEY.B,
@@ -201,6 +209,7 @@ export const joystick = (() => {
         }
 
         if (os === 'mac' && browser === 'firefox') { //KeyMap5
+            store.dispatch(setOsLogAC('mac - browser = firefox '))
             joystickMap = {
                 1: KEY.A,
                 2: KEY.B,
@@ -219,7 +228,9 @@ export const joystick = (() => {
 
         // https://bugs.chromium.org/p/chromium/issues/detail?id=1076272
         if (gamepad.id.includes('PLAYSTATION(R)3')) {
+            store.dispatch(setOsLogAC('PLAYSTATION(R)3 '))
             if (browser === 'chrome') {
+                store.dispatch(setOsLogAC('chrome  - PLAYSTATION(R)3 '))
                 joystickMap = {
                     1: KEY.A,
                     0: KEY.B,
@@ -233,6 +244,7 @@ export const joystick = (() => {
                     11: KEY.R3,
                 };
             } else {
+                store.dispatch(setOsLogAC('else  - PLAYSTATION(R)3 '))
                 joystickMap = {
                     13: KEY.A,
                     14: KEY.B,

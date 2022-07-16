@@ -51,7 +51,7 @@ import {settings} from "./settings/settings";
 import {opts} from "./settings/opts";
 import {stats} from "./stats/stats";
 import store from "../store";
-import {setActiveGameIndexAC, setGameIsStarted} from "../store/games/actions";
+import {setActiveGameIndexAC, setGameIsStarted, setLogAC} from "../store/games/actions";
 
 (() => {
     console.log('controller')
@@ -218,6 +218,7 @@ import {setActiveGameIndexAC, setGameIsStarted} from "../store/games/actions";
     // pre-state key press handler
     const onKeyPress = (data) => {
         console.log('key Press ... ', data)
+        store.dispatch(setLogAC(data))
         const button = keyButtons[data.key];
 
         if (_dpadArrowKeys.includes(data.key)) {
