@@ -217,6 +217,7 @@ import {setActiveGameIndexAC, setGameIsStarted} from "../store/games/actions";
 
     // pre-state key press handler
     const onKeyPress = (data) => {
+        console.log('key Press ... ', data)
         const button = keyButtons[data.key];
 
         if (_dpadArrowKeys.includes(data.key)) {
@@ -239,6 +240,7 @@ import {setActiveGameIndexAC, setGameIsStarted} from "../store/games/actions";
 
     // pre-state key release handler
     const onKeyRelease = data => {
+        console.log('key Release ... ', data)
         const button = keyButtons[data.key];
 
         if (_dpadArrowKeys.includes(data.key)) {
