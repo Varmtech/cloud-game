@@ -193,18 +193,18 @@ export const joystick = (() => {
         if (os === 'mac' && browser === 'safari') { //KeyMap4
             store.dispatch(setOsLogAC('mac - browser = safari '))
             joystickMap = {
-                1: KEY.A,
-                2: KEY.B,
-                0: KEY.START,
+                0: KEY.A,
+                1: KEY.B,
+                2: KEY.START,
                 3: KEY.SELECT,
                 8: KEY.LOAD,
                 9: KEY.SAVE,
                 6: KEY.HELP,
                 7: KEY.QUIT,
-                14: KEY.UP,
-                15: KEY.DOWN,
-                16: KEY.LEFT,
-                17: KEY.RIGHT
+                12: KEY.UP,
+                13: KEY.DOWN,
+                14: KEY.LEFT,
+                15: KEY.RIGHT
             };
         }
 

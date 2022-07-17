@@ -88,7 +88,7 @@ export function GameList() {
            {joyLogs.length ?  <LogJoyContainer>
                {osLog}
                Joystick logs
-               {joyLogs.map(log => <div>{log.key}</div>)}
+               {joyLogs.map(log => <div>{log}</div>)}
            </LogJoyContainer> : ''}
            <GamesContainer>
                <GamesList>
