@@ -186,6 +186,9 @@ const LogContainer = styled.div`
   z-index: 999;
   color: #fff;
   background-color: rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 `
 
 
@@ -199,6 +202,9 @@ const LogJoyContainer = styled.div`
   z-index: 999;
   color: #fff;
   background-color: rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 `
 
 const GamesOldContainer = styled.div`
