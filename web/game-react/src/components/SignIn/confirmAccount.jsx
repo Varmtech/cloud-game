@@ -4,13 +4,14 @@ import LogoImage from '../../img/icons/logo.svg';
 import {CustomButton} from "../Common/CustomButton";
 import {ReactComponent as GoogleIcon} from '../../img/icons/google.svg';
 import {colors} from "../../Helpers/UI/constants";
+import {PageWrapper} from "../Common/PageWrapper";
 
 export function ConfirmAccount() {
     const handleConfirm = () => {
         console.log('... confirm account .... ')
     }
     return (
-        <>
+        <PageWrapper backgroundColor={colors.blue} >
             <PageContainer>
                 <Logo src={LogoImage}/>
                 <ConfirmHeader>Confirm your Google account</ConfirmHeader>
@@ -29,7 +30,7 @@ export function ConfirmAccount() {
                 <CustomButton fullWidth buttonText="Signin with Google" icon={<GoogleIcon/>} handleFunction={handleConfirm}/>
                 <CustomButton fullWidth buttonText="Change Account" handleFunction={handleConfirm} transparent/>
             </BottomButton>
-        </>
+        </PageWrapper>
     )
 }
 

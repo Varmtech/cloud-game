@@ -4,6 +4,7 @@ import {GameList} from "./components/Game/gameList";
 import React from "react";
 import {CreateGameSession} from "./components/Game/createGameSession";
 import {AddPlayerToGame} from "./components/Stream/addPlayerToGame";
+import {WelcomePage} from "./components/SignIn/welcomePage";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
                 <Route index element={<GameList/>}/>
                 <Route path="addPlayers" element={<AddPlayerToGame/>}/>
                 <Route path="createGameSession" element={<CreateGameSession/>}/>
+                <Route path="login" element={<WelcomePage/>}/>
                 {/*<Route path="*" element={<NoPage />} />*/}
             </Routes>
         </BrowserRouter>
