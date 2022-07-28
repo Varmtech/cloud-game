@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, getAuth, signInWithPopup, setPersistence, browserLocalPersistence } from 'firebase/auth';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBvjCo2ds3JZTjeXDAomydM8WflVU5vlEk",
@@ -19,4 +19,15 @@ export const auth = getAuth();
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: 'select_account' });
 
-export const signInWithGoogle = () => signInWithPopup(auth, provider);
+
+// export const signInWithGoogle = () => signInWithPopup(auth, provider);
+export const signInWithGoogle = () => setPersistence(auth, browserLocalPersistence)
+    .then(() => {
+        return signInWithPopup(auth, provider);
+    })
+    .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log('error in login code - ', errorCode , ' _ message - ', errorMessage)
+    });
