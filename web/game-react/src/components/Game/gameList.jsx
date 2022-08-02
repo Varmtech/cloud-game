@@ -347,7 +347,7 @@ const GameVideo = styled.video`
 
 const StreamContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   width: 100%;
 `
