@@ -25,6 +25,12 @@ import {Screen} from "../screen";
 import {GuideText} from "../OldView/guideText";
 import {PlayersSlider} from "../OldView/playersSlider";
 import {HolderButtons} from "../OldView/holderButtons";
+import {PlayerBadge} from "./playerBadge";
+import marioImage from "../../img/games/mario.png";
+import avatarUrl1 from "../../img/avatar-man.png";
+import avatarUrl2 from "../../img/avatar-m3.png";
+import avatarUrl3 from "../../img/avatar-man2.png";
+import avatarUrl4 from "../../img/avatar-w.png";
 
 
 export function GameList() {
@@ -60,8 +66,16 @@ export function GameList() {
     const joyLogs = useSelector(logsJoySelector) || [];
     const selectedGameIndex = useSelector(activeGameIndexSelector);
     const gameStarted = useSelector(gameIsStarted);
+
+    const [gamersList, setGamersList] = useState([{id: 'gamer1', name: 'MyUser', host: true, avatarUrl: avatarUrl1},
+        {id: 'gamer2', name: 'User2', host: false, avatarUrl: avatarUrl2},
+        {id: 'gamer3', name: 'User3', host: false, avatarUrl: avatarUrl3},
+        {id: 'gamer4', name: 'User4', host: false, avatarUrl: avatarUrl4},
+    ])
+
     console.log('osLog .. .', osLog)
     console.log('logs .. .', logs)
+    console.log('gameStarted .. .', gameStarted)
     const gameImages = {
         0: SampleDemobyFlorianImage,
         1: MarioImage,
@@ -99,8 +113,32 @@ export function GameList() {
                        </GameItem>)}
                </GamesList>
 
-               <VideoWrapper>
-                   <GameVideo id="stream" className="game-screen" hidden muted playsInline preload="none"/>
+               <VideoWrapper id='stream_container' className='hide'>
+                   <StreamContainer>
+                       <PlayersSection>
+                           <GamerItem>
+                               <PlayerBadge player={{avatar: gamersList[0] && gamersList[0].avatarUrl}} size={80}/>
+                               <PlayerName>{gamersList[0] && gamersList[0].name === 'MyUser' ? 'You' : gamersList[0] && gamersList[0].name} ({gamersList[0] && gamersList[0].host ? 'Host' : ''})</PlayerName>
+                           </GamerItem>
+                           <PlayersSeparator/>
+                           <GamerItem>
+                               <PlayerBadge player={{avatar: gamersList[1] && gamersList[0].avatarUrl}} size={80}/>
+                               <PlayerName>{gamersList[1] && gamersList[1].name}</PlayerName>
+                           </GamerItem>
+                       </PlayersSection>
+                       <GameVideo id="stream" className="game-screen" hidden muted playsInline preload="none"/>
+                       <PlayersSection leftSide={true}>
+                           <GamerItem>
+                               <PlayerBadge player={{avatar: gamersList[2] && gamersList[2].avatarUrl}} size={80}/>
+                               <PlayerName>{gamersList[2] && gamersList[2].name}</PlayerName>
+                           </GamerItem>
+                           <PlayersSeparator/>
+                           <GamerItem>
+                               <PlayerBadge player={{avatar: gamersList[3] && gamersList[3].avatarUrl}} size={80}/>
+                               <PlayerName>{gamersList[3] && gamersList[3].name}</PlayerName>
+                           </GamerItem>
+                       </PlayersSection>
+                   </StreamContainer>
                </VideoWrapper>
                <GameStartButtonWrapper>
                    <GameContinueButton onClick={handleContinue} className='btn' value="start"> <CheckIcon/> <span>Continue</span> </GameContinueButton>
@@ -276,10 +314,72 @@ const GameContinueButton = styled.button`
   }
 `
 const VideoWrapper = styled.div`
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: ${colors.blue};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  z-index: 999999999;
+  
+  &.hide {
+    display: none;
+  }
 `
 
 const GameVideo = styled.video`
-  height: calc(100% - 52px);
+  position: static;
+  //width: calc(100vw - 188px);
+  //height: calc((100vw - 188px) * 3 / 4);
+  //max-height: 100vh;
+  max-height: 100vh;
+  max-width: calc(100vw - 200px);
+  @media (min-width: 500px) {
+    width: 350px;
+  }
   z-index: 9;
   top: 0;
+`
+
+
+const StreamContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`
+
+const GamerItem = styled.div`
+`
+
+const PlayerName = styled.h4`
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 140%;
+  text-align: center;
+  color: ${colors.white};
+  margin: 6px 0 0;
+`
+
+
+const PlayersSection = styled.div`
+  ${props => props.leftSide ? 'padding-left: 14px;' : 'padding-right: 14px;'}
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  & ${GamerItem} {
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+`
+
+const PlayersSeparator = styled.div`
+  border-bottom: 1px solid ${colors.beige};
 `

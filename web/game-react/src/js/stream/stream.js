@@ -14,6 +14,7 @@ import {settings} from "../settings/settings";
 
 export const stream = (() => {
         let screen = document.getElementById('stream');
+        const streamContainer = document.getElementById('stream_container');
 
         const setScreen = (elemRef) => {
             screen = elemRef
@@ -26,7 +27,8 @@ export const stream = (() => {
                 mirrorUpdateRate: 1 / 60,
             },
             state = {
-                screen: screen,
+                screen,
+                streamContainer,
                 timerId: null,
             };
 
@@ -46,6 +48,7 @@ export const stream = (() => {
 
         const toggle = (show) => {
             state.screen.toggleAttribute('hidden', !show)
+            state.streamContainer.classList.toggle('hide', !show)
         }
 
         const toggleFullscreen = () => {
