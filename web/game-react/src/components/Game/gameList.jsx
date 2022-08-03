@@ -62,9 +62,8 @@ export function GameList() {
     const osLog = useSelector(logsOsSelector) || '';
     const joyLogs = useSelector(logsJoySelector) || [];
     const selectedGameIndex = useSelector(activeGameIndexSelector);
-    const screen = window.screen;
-
-    const [isLandscapeMode, setIsLandscapeMode] = useState(screen.height < screen.width);
+    const screen = window;
+    const [isLandscapeMode, setIsLandscapeMode] = useState(screen.innerHeight < screen.innerWidth);
 
     const [gamersList, setGamersList] = useState([{id: 'gamer1', name: 'MyUser', host: true, avatarUrl: avatarUrl1},
         {id: 'gamer2', name: 'User2', host: false, avatarUrl: avatarUrl2},
@@ -89,13 +88,13 @@ export function GameList() {
         console.log('continue to start game ------- ', gameImages[selectedGameIndex])
     }
 
-    const handleDetectScreen = (e) => {
-        setIsLandscapeMode(screen.height < screen.width)
+    const handleDetectScreen = () => {
+        setIsLandscapeMode(screen.innerHeight < screen.innerWidth)
     };
     useEffect(() => {
-        window.addEventListener("orientationchange", handleDetectScreen);
+        window.addEventListener("resize", handleDetectScreen);
         return () => {
-            window.removeEventListener('orientationchange')
+            window.removeEventListener('resize')
         }
     }, [])
     return (
@@ -119,7 +118,7 @@ export function GameList() {
                        </GameItem>)}
                </GamesList>
 
-               <VideoWrapper id='stream_container' className='hide'>
+               <VideoWrapper id='stream_container'>
                    <StreamContainer>
                        <PlayersSection>
                            <GamerItem>
@@ -320,19 +319,19 @@ const GameContinueButton = styled.button`
   }
 `
 const VideoWrapper = styled.div`
+  display: none;
   position: fixed;
   left: 0;
   top: 0;
   background-color: ${colors.charcoal};
-  display: flex;
   flex-direction: column;
   justify-content: center;
   width: 100%;
   height: 100%;
   z-index: 999999999;
   
-  &.hide {
-    display: none;
+  &.show {
+    display: flex;
   }
 `
 

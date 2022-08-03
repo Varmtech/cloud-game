@@ -48,7 +48,7 @@ export const stream = (() => {
 
         const toggle = (show) => {
             state.screen.toggleAttribute('hidden', !show)
-            state.streamContainer.classList.toggle('hide', !show)
+            state.streamContainer.classList.toggle('show', show)
         }
 
         const toggleFullscreen = () => {
