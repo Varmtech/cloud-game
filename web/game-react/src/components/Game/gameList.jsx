@@ -68,7 +68,7 @@ export function GameList() {
     const gameStarted = useSelector(gameIsStarted);
 
 
-    const [isLandscapeMode, setIsLandscapeMode] = useState();
+    const [isLandscapeMode, setIsLandscapeMode] = useState(!!window.screen.orientation.angle);
 
     const [gamersList, setGamersList] = useState([{id: 'gamer1', name: 'MyUser', host: true, avatarUrl: avatarUrl1},
         {id: 'gamer2', name: 'User2', host: false, avatarUrl: avatarUrl2},
