@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import {useDispatch, useSelector} from "react-redux";
 import {
     activeGameIndexSelector,
-    gameIsStarted,
     gameListSelector, logsJoySelector,
     logsOsSelector,
     logsSelector
@@ -16,7 +15,6 @@ import Anguna from "../../img/games/anguna.png";
 import {setActiveGameIndexAC} from "../../store/games/actions";
 import {Header} from "../Common/header";
 import {ReactComponent as ArrowLeft} from "../../img/icons/arrow-left.svg";
-import {PageContainer} from "../../Helpers/UI";
 import {PageWrapper} from "../Common/PageWrapper";
 import {colors} from "../../Helpers/UI/constants";
 import useScript from "../../hooks/useScript";
@@ -26,7 +24,6 @@ import {GuideText} from "../OldView/guideText";
 import {PlayersSlider} from "../OldView/playersSlider";
 import {HolderButtons} from "../OldView/holderButtons";
 import {PlayerBadge} from "./playerBadge";
-import marioImage from "../../img/games/mario.png";
 import avatarUrl1 from "../../img/avatar-man.png";
 import avatarUrl2 from "../../img/avatar-m3.png";
 import avatarUrl3 from "../../img/avatar-man2.png";
@@ -65,10 +62,9 @@ export function GameList() {
     const osLog = useSelector(logsOsSelector) || '';
     const joyLogs = useSelector(logsJoySelector) || [];
     const selectedGameIndex = useSelector(activeGameIndexSelector);
-    const gameStarted = useSelector(gameIsStarted);
+    const screen = window.screen;
 
-
-    const [isLandscapeMode, setIsLandscapeMode] = useState(!!window.screen.orientation.angle);
+    const [isLandscapeMode, setIsLandscapeMode] = useState(!!(screen.orientation || screen.mozOrientation || screen.msOrientation));
 
     const [gamersList, setGamersList] = useState([{id: 'gamer1', name: 'MyUser', host: true, avatarUrl: avatarUrl1},
         {id: 'gamer2', name: 'User2', host: false, avatarUrl: avatarUrl2},
@@ -94,7 +90,7 @@ export function GameList() {
     }
 
     const handleDetectScreen = () => {
-        setIsLandscapeMode(!!window.screen.orientation.angle)
+        setIsLandscapeMode(!!(screen.orientation || screen.mozOrientation || screen.msOrientation))
     };
     useEffect(() => {
         window.addEventListener("resize", handleDetectScreen)
@@ -137,7 +133,6 @@ export function GameList() {
                                <PlayerName>{gamersList[1] && gamersList[1].name}</PlayerName>
                            </GamerItem>
                        </PlayersSection>
-                       {console.log('iisLandscapeMode - - ; ... // -- ', isLandscapeMode)}
                        <GameVideo isLandscapeMode={isLandscapeMode} id="stream" className="game-screen" hidden muted playsInline preload="none"/>
                        <PlayersSection leftSide={true}>
                            <GamerItem>
