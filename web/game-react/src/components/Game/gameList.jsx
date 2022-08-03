@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from 'styled-components'
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -67,15 +67,15 @@ export function GameList() {
     const selectedGameIndex = useSelector(activeGameIndexSelector);
     const gameStarted = useSelector(gameIsStarted);
 
+
+    const [isLandscapeMode, setIsLandscapeMode] = useState();
+
     const [gamersList, setGamersList] = useState([{id: 'gamer1', name: 'MyUser', host: true, avatarUrl: avatarUrl1},
         {id: 'gamer2', name: 'User2', host: false, avatarUrl: avatarUrl2},
         {id: 'gamer3', name: 'User3', host: false, avatarUrl: avatarUrl3},
         {id: 'gamer4', name: 'User4', host: false, avatarUrl: avatarUrl4},
     ])
 
-    console.log('osLog .. .', osLog)
-    console.log('logs .. .', logs)
-    console.log('gameStarted .. .', gameStarted)
     const gameImages = {
         0: SampleDemobyFlorianImage,
         1: MarioImage,
@@ -92,6 +92,17 @@ export function GameList() {
     const handleContinue = () => {
         console.log('continue to start game ------- ', gameImages[selectedGameIndex])
     }
+
+    const handleDetectScreen = () => {
+        setIsLandscapeMode(!!window.screen.orientation.angle)
+    };
+    useEffect(() => {
+        window.addEventListener("resize", handleDetectScreen)
+
+        return () => {
+            window.removeEventListener('resize')
+        }
+    }, [])
     return (
        <PageWrapper backgroundColor={colors.blue}>
            <Header leftIcon={<ArrowWrapper className='btn' value="quit"><ArrowLeft/></ArrowWrapper>}/>
@@ -126,7 +137,8 @@ export function GameList() {
                                <PlayerName>{gamersList[1] && gamersList[1].name}</PlayerName>
                            </GamerItem>
                        </PlayersSection>
-                       <GameVideo id="stream" className="game-screen" hidden muted playsInline preload="none"/>
+                       {console.log('iisLandscapeMode - - ; ... // -- ', isLandscapeMode)}
+                       <GameVideo isLandscapeMode={isLandscapeMode} id="stream" className="game-screen" hidden muted playsInline preload="none"/>
                        <PlayersSection leftSide={true}>
                            <GamerItem>
                                <PlayerBadge player={{avatar: gamersList[2] && gamersList[2].avatarUrl}} size={80}/>
@@ -317,7 +329,7 @@ const VideoWrapper = styled.div`
   position: fixed;
   left: 0;
   top: 0;
-  background-color: ${colors.blue};
+  background-color: ${colors.charcoal};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -337,8 +349,9 @@ const GameVideo = styled.video`
   //max-height: 100vh;
   max-height: 100vh;
   max-width: calc(100vw - 200px);
+  height: ${props => props.isLandscapeMode ? '100vh' : '260px'};
   @media (min-width: 500px) {
-    width: 350px;
+    //width: 350px;
   }
   z-index: 9;
   top: 0;
