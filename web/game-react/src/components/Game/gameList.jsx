@@ -64,7 +64,7 @@ export function GameList() {
     const selectedGameIndex = useSelector(activeGameIndexSelector);
     const screen = window.screen;
 
-    const [isLandscapeMode, setIsLandscapeMode] = useState(!!(screen.orientation || screen.mozOrientation || screen.msOrientation));
+    const [isLandscapeMode, setIsLandscapeMode] = useState(screen.height < screen.width);
 
     const [gamersList, setGamersList] = useState([{id: 'gamer1', name: 'MyUser', host: true, avatarUrl: avatarUrl1},
         {id: 'gamer2', name: 'User2', host: false, avatarUrl: avatarUrl2},
@@ -78,7 +78,7 @@ export function GameList() {
         2: SushiTheCat,
         3: Anguna
     }
-
+    console.log('isLandscapeMode .... ', isLandscapeMode)
     const setGameImageUrl = (gameIndex) => gameImages[gameIndex]
 
     const handleSetSelectedGameIndex = (gameIndex) => {
@@ -89,14 +89,13 @@ export function GameList() {
         console.log('continue to start game ------- ', gameImages[selectedGameIndex])
     }
 
-    const handleDetectScreen = () => {
-        setIsLandscapeMode(!!(screen.orientation || screen.mozOrientation || screen.msOrientation))
+    const handleDetectScreen = (e) => {
+        setIsLandscapeMode(screen.height < screen.width)
     };
     useEffect(() => {
-        window.addEventListener("resize", handleDetectScreen)
-
+        window.addEventListener("orientationchange", handleDetectScreen);
         return () => {
-            window.removeEventListener('resize')
+            window.removeEventListener('orientationchange')
         }
     }, [])
     return (
