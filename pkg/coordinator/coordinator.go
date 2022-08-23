@@ -3,6 +3,9 @@ package coordinator
 import (
 	"errors"
 	"fmt"
+	"github.com/giongto35/cloud-game/v3/pkg/api/service/usersvc"
+	"github.com/giongto35/cloud-game/v3/pkg/api/userhandler"
+	"gorm.io/gorm"
 	"html/template"
 	"net/http"
 	"strings"
@@ -22,14 +25,18 @@ type Coordinator struct {
 	}
 }
 
-func New(conf config.CoordinatorConfig, log *logger.Logger) (*Coordinator, error) {
+func New(conf config.CoordinatorConfig, log *logger.Logger, db *gorm.DB) (*Coordinator, error) {
 	coordinator := &Coordinator{}
 	lib := games.NewLib(conf.Coordinator.Library, conf.Emulator, log)
 	lib.Scan()
 	coordinator.hub = NewHub(conf, lib, log)
+	usrSvc := usersvc.New(db)
+	usrHandler := userhandler.New(usrSvc)
 	h, err := NewHTTPServer(conf, log, func(mux *httpx.Mux) *httpx.Mux {
 		mux.HandleFunc("/ws", coordinator.hub.handleUserConnection())
 		mux.HandleFunc("/wso", coordinator.hub.handleWorkerConnection())
+		mux.HandleFunc("/api/users", usrHandler.Request)
+		mux.HandleFunc("/api/users/games", usrHandler.GameRequest)
 		return mux
 	})
 	if err != nil {

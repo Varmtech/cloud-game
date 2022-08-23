@@ -8,6 +8,10 @@ GO_TAGS=static
 
 .PHONY: clean test
 
+.PHONY: start-postgres
+start-postgres:
+	docker compose up -d postgres
+
 fmt:
 	@goimports -w cmd pkg tests
 	@gofmt -s -w cmd pkg tests

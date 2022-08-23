@@ -30,5 +30,19 @@ services:
       - x11:/tmp/.X11-unix
     command: [ ":99", "-screen", "0", "320x240x16" ]
 
+  postgres:
+    image: postgres:16.1-alpine
+    environment:
+      POSTGRES_DB: yester
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD", "psql", "-U", "postgres", "-l" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
 volumes:
   x11:
