@@ -3,6 +3,10 @@ package main
 import (
 	"context"
 	goflag "flag"
+	"fmt"
+	"github.com/giongto35/cloud-game/v2/pkg/api/service/usersvc"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 	"math/rand"
 	"time"
 
@@ -28,9 +32,27 @@ func main() {
 	logging.Init()
 	defer logging.Flush()
 
+	dsn := fmt.Sprintf(
+		"user=%s password=%s host=%s port=%d dbname=%s",
+		"postgres",
+		"mongooseimpw",
+		"192.168.178.62",
+		5432,
+		"1up",
+	)
+
+	db, err := gorm.Open(postgres.Open(dsn))
+
+	if err != nil {
+		glog.Errorf("Failed to open db connection, %v", err)
+		return
+	}
+
+	db.AutoMigrate(&usersvc.User{}, &usersvc.Game{})
+
 	glog.Infof("[coordinator] version: %v", Version)
 	glog.V(4).Infof("Coordinator configs %v", conf)
-	c := coordinator.New(conf)
+	c := coordinator.New(conf, db)
 	c.Start()
 
 	ctx, cancelCtx := context.WithCancel(context.Background())

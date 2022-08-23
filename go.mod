@@ -3,6 +3,7 @@ module github.com/giongto35/cloud-game/v2
 go 1.13
 
 require (
+	firebase.google.com/go/v4 v4.8.0
 	github.com/cavaliercoder/grab v1.0.1-0.20201108051000-98a5bfe305ec
 	github.com/faiface/mainthread v0.0.0-20171120011319-8b78f0a41ae3
 	github.com/fsnotify/fsnotify v1.5.1
@@ -10,10 +11,10 @@ require (
 	github.com/gofrs/flock v0.8.1
 	github.com/gofrs/uuid v4.2.0+incompatible
 	github.com/golang/glog v1.0.0
-	github.com/google/go-cmp v0.5.6 // indirect
 	github.com/gorilla/websocket v1.5.0
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1
+	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/kkyr/fig v0.3.0
 	github.com/mitchellh/mapstructure v1.4.3 // indirect
 	github.com/pelletier/go-toml v1.9.4 // indirect
@@ -26,9 +27,12 @@ require (
 	github.com/rs/xid v1.4.0
 	github.com/spf13/pflag v1.0.5
 	github.com/veandco/go-sdl2 v0.4.20
-	golang.org/x/crypto v0.0.0-20220408190544-5352b0902921
+	golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d
 	golang.org/x/image v0.0.0-20220321031419-a8550c1d254a
 	golang.org/x/net v0.0.0-20220407224826-aac1ed45d8e3 // indirect
 	golang.org/x/sys v0.0.0-20220408201424-a24fb2fb8a0f // indirect
+	google.golang.org/api v0.73.0
 	google.golang.org/protobuf v1.28.0 // indirect
+	gorm.io/driver/postgres v1.3.8
+	gorm.io/gorm v1.23.8
 )
