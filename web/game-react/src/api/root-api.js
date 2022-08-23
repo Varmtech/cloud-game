@@ -12,7 +12,7 @@ rootApi.interceptors.request.use(request => {
     // Add access token in header
     if (request.url === '/users') {
         const modifiedRequest = { ...request };
-        modifiedRequest.headers['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
+        modifiedRequest.headers['Authorization'] = `Bearer ${localStorage.getItem('idToken')}`;
         return modifiedRequest;
     }
     return request;

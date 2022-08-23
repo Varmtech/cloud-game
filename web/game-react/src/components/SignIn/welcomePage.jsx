@@ -16,7 +16,7 @@ export function WelcomePage() {
     const handleSingIn = () => {
         auth.onAuthStateChanged(function(user) {
             if (user) {
-                console.log('user is logged in. .. ', user)
+                console.log('User is logged in')
                 dispatch(authUserAC(user))
                 // User is signed in
                 // Show them the authenticated content...
@@ -26,19 +26,13 @@ export function WelcomePage() {
                 // Let's sign them in
                 signInWithGoogle()
                     .then((result) => {
-                        console.log('result .. ', result)
+                        console.log('Successfully signed in with Google')
 
-                        // This gives you a Google Access Token. You can use it to access the Google API.
-                        const credential = GoogleAuthProvider.credentialFromResult(result);
-                        localStorage.setItem('access_token', credential.accessToken)
-
-                        console.log('credential .. ', credential)
+                        auth.currentUser.getIdToken(false).then(token => {
+                            localStorage.setItem('idToken', token)
+                        })
 
                         dispatch(authUserAC(result.user))
-                        /*       const token = credential.accessToken;
-                           // The signed-in user info.
-                           const user = result.user;
-                           // ...*/
                     }).catch((error) => {
                     console.log('error .. ', error)
                     /*    // Handle Errors here.
@@ -62,7 +56,7 @@ export function WelcomePage() {
                 <SignInText>Please sign in to continue</SignInText>
             </PageContainer>
             <BottomButton>
-                <CustomButton fullWidth buttonText="Signin with Google" icon={<GoogleIcon/>} handleFunction={handleSingIn} />
+                <CustomButton fullWidth buttonText="Sign in with Google" icon={<GoogleIcon/>} handleFunction={handleSingIn} />
             </BottomButton>
         </PageWrapper>
     )
