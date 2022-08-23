@@ -19,14 +19,15 @@ function* authUser() {
         // Let's sign them in
         signInWithGoogle()
             .then((result) => {
-
-              const userData = {
-                displayName: result.user.displayName,
-                email: result.user.email,
-                avatarUrl: result.user.photoURL,
+              if (result) {
+                const userData = {
+                  display_name: result.user.displayName,
+                  email: result.user.email,
+                  profile_url: result.user.photoURL,
+                }
+                store.dispatch(saveUserAC(userData))
+                store.dispatch(authUserSuccessAC({displayName: userData.display_name, email: userData.email, avatarUrl: userData.profile_url}))
               }
-              store.dispatch(saveUserAC(userData))
-              store.dispatch(authUserSuccessAC(userData))
             }).catch((error) => {
             console.log('error .. ', error)
             /*    // Handle Errors here.
@@ -48,7 +49,6 @@ function* authUser() {
 function* authUserSuccess(action) {
   try {
     const { payload } = action;
-
     yield call(rootApi.post, '/users', { ...payload.userData });
   } catch (e) {
     console.log('ERROR in login - ', e.message);
