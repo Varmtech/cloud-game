@@ -24,6 +24,7 @@ func (h *UserHandler) Request(w http.ResponseWriter, r *http.Request) {
 	case http.MethodOptions:
 		cors(w)
 	case http.MethodPost:
+		cors(w)
 		h.create(w, r)
 	}
 
@@ -34,6 +35,7 @@ func (h *UserHandler) GameRequest(w http.ResponseWriter, r *http.Request) {
 	case http.MethodOptions:
 		cors(w)
 	case http.MethodGet:
+		cors(w)
 		h.listGames(w, r)
 	}
 
