@@ -27,7 +27,6 @@ export default function InviteFriends() {
         {id: '2', name: 'Sushi The Cat', host: false, image: SushiTheCat},
         {id: '3', name: 'Anguna', host: false, image: Anguna},
     ])
-    console.log('/selectedGameIndex .. . . ', selectedGameIndex)
     const handleInviteFriend = () => {
         if(navigator.share) {
             navigator.share({ title: "Example Page", url: shareLink })

@@ -12,8 +12,8 @@ export default function ProfileBadge() {
 
     return (
         <BadgeContainer>
-            <UserAvatar src={userData.avatarUrl || UserAvatarSrc} />
-            <UserInfo>{userData.displayName}</UserInfo>
+            <UserAvatar src={userData ? userData.avatarUrl || UserAvatarSrc : ''} />
+            <UserInfo>{userData ? userData.displayName : ''}</UserInfo>
             <NotificationIconWrapper>
                 <NotificationIcon />
             </NotificationIconWrapper>
