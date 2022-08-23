@@ -1,16 +1,55 @@
-import { put, call, takeLatest } from 'redux-saga/effects';
-import { AUTH_USER } from "./actions";
+import { call, takeLatest } from 'redux-saga/effects';
+import {AUTH_USER, authUserSuccessAC, SAVE_USER, saveUserAC} from "./actions";
 import { rootApi } from "../../api";
+import {auth, signInWithGoogle} from "../../service/firebase";
+import store from "../index";
 
-function* getMembers(action) {
+function* authUser() {
+  try {
+    auth.onAuthStateChanged(function (user) {
+      if (user) {
+        const userData = {
+          displayName: user.displayName,
+          email: user.email,
+          avatarUrl: user.photoURL,
+        }
+        store.dispatch(authUserSuccessAC(userData))
+      } else {
+        // No user is signed in
+        // Let's sign them in
+        signInWithGoogle()
+            .then((result) => {
+
+              const userData = {
+                displayName: result.user.displayName,
+                email: result.user.email,
+                avatarUrl: result.user.photoURL,
+              }
+              store.dispatch(saveUserAC(userData))
+              store.dispatch(authUserSuccessAC(userData))
+            }).catch((error) => {
+            console.log('error .. ', error)
+            /*    // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.customData.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                // ...*/
+        });
+      }
+    });
+  } catch (e) {
+    console.log('ERROR in login - ', e.message);
+  }
+}
+
+function* authUserSuccess(action) {
   try {
     const { payload } = action;
-    const userAuthData = {
-      displayName: payload.userData.displayName,
-      email: payload.userData.email,
-      photoUrl: payload.userData.photoURL,
-    }
-    yield call(rootApi.post, '/users', { ...userAuthData });
+
+    yield call(rootApi.post, '/users', { ...payload.userData });
   } catch (e) {
     console.log('ERROR in login - ', e.message);
   }
@@ -18,5 +57,6 @@ function* getMembers(action) {
 
 
 export default function* MembersSaga() {
-  yield takeLatest(AUTH_USER, getMembers);
+  yield takeLatest(AUTH_USER, authUser);
+  yield takeLatest(SAVE_USER, authUserSuccess);
 }

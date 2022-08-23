@@ -1,40 +1,71 @@
 import React, {useEffect} from "react";
-import {useDispatch} from "react-redux";
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {useDispatch, useSelector} from "react-redux";
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import GameList from "./components/pages/Games";
 import CreateGameSession from "./components/pages/Games/createGameSession";
-import AddPlayerToGame from "./components/pages/addPlayersToGame";
 import WelcomePage from "./components/pages/SignIn/welcomePage";
 import Settings from "./components/pages/Profile/settings";
 import NotFound from "./components/notFound";
 import EditUserInfo from "./components/pages/Profile/settings/editUserInfo";
 import './App.css';
-import {authUserSuccessAC} from "./store/auth/actions";
 import InviteFriends from "./components/pages/Games/inviteFriends";
 import GameStream from "./components/pages/Games/stream";
+import {userDataSelector} from "./store/auth/selectors";
+import {authUserAC} from "./store/auth/actions";
 
 function App() {
     const dispatch = useDispatch();
+    const userData = useSelector(userDataSelector);
 
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('auth_user_data'))
-        if (user) {
-            dispatch(authUserSuccessAC(user))
-        }
+        dispatch(authUserAC())
     }, [])
-
     return (
         <BrowserRouter>
             <Routes>
-                {/*<Route path="/" element={<Layout />}>*/}
                 <Route index element={<WelcomePage/>}/>
-                <Route path="addPlayers" element={<AddPlayerToGame/>}/>
-                <Route path="createGameSession" element={<CreateGameSession/>}/>
-                <Route path="inviteFriends" element={<InviteFriends/>}/>
-                <Route path="playGame" element={<GameStream/>}/>
-                <Route path="gameList" element={<GameList/>}/>
-                <Route path="settings" element={<Settings/>}/>
-                <Route path="settings/editUserInfo" element={<EditUserInfo/>}/>
+                <Route exact path="createGameSession"
+                       element={
+                           userData ?
+                               <CreateGameSession/> :
+                               <Navigate to='/'/>
+                       }
+                />
+                <Route exact path="inviteFriends"
+                       element={
+                           userData ?
+                               <InviteFriends/> :
+                               <Navigate to='/'/>
+                       }
+                />
+                <Route exact path="playGame"
+                       element={
+                           userData ?
+                               <GameStream/> :
+                               <Navigate to='/'/>
+                       }
+                />
+                <Route exact path="gameList"
+                       element={
+                           userData ?
+                               <GameList/> :
+                               <Navigate to='/'/>
+                       }
+                />
+                <Route exact path="settings"
+                       element={
+                           userData ?
+                               <Settings/> :
+                               <Navigate to='/'/>
+                       }
+                />
+                <Route exact path="settings/editUserInfo"
+                       element={
+                           userData ?
+                               <EditUserInfo/> :
+                               <Navigate to='/'/>
+                       }
+                />
                 <Route path="*" element={<NotFound/>} />
             </Routes>
         </BrowserRouter>

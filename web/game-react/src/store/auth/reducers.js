@@ -1,7 +1,7 @@
 import {AUTH_USER_SUCCESS} from "./actions";
 
 const initialState = {
-    userData: {},
+    userData: null,
 };
 
 export default (state = initialState, { type, payload }) => {

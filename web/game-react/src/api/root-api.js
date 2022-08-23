@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {auth} from "../service/firebase";
 
 
 const rootApi = axios.create({
@@ -7,15 +8,12 @@ const rootApi = axios.create({
     headers: {}
 });
 
-rootApi.interceptors.request.use(request => {
+rootApi.interceptors.request.use(async (request) => {
+    const token = await auth.currentUser.getIdToken(false)
+    const modifiedRequest = { ...request };
+    modifiedRequest.headers['Authorization'] = `Bearer ${token}`;
+    return modifiedRequest;
 
-    // Add access token in header
-    if (request.url === '/users') {
-        const modifiedRequest = { ...request };
-        modifiedRequest.headers['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
-        return modifiedRequest;
-    }
-    return request;
 }, error => Promise.reject(error));
 
 export default rootApi;
