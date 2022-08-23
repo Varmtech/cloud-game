@@ -1,8 +1,7 @@
-import { AUTH_USER_SUCCESS } from "./actions";
+import {AUTH_USER_SUCCESS} from "./actions";
 
 const initialState = {
     userData: {},
-
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -12,6 +11,7 @@ export default (state = initialState, { type, payload }) => {
             newState.userData = payload.userData;
             return newState;
         }
+
         default:
             return state;
     }

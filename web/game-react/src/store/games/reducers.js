@@ -1,27 +1,26 @@
-import {GAME_IS_STARTED, SET_ACTIVE_GAME_INDEX, SET_GAME_LIST, SET_JOYSTICK_LOG, SET_LOG, SET_OS_LOG} from './actions';
+import {
+    SET_ACTIVE_GAME_INDEX,
+    SET_GAME_IS_READY_TO_PLAY,
+    SET_JOYSTICK_LOG,
+    SET_LOG,
+    SET_OS_LOG,
+} from './actions';
 
 const initialState = {
     gameList: [],
-    activeGameIndex: 0,
+    activeGameIndex: 1,
     gameIsStarted: false,
     logs: [],
     joyLogs: [],
-    osLogs: ''
+    osLogs: '',
+    gameIsReadyToPlay: false
 };
 
 export default (state = initialState, { type, payload }) => {
     let newState = { ...state };
     switch (type) {
-        case SET_GAME_LIST: {
-            newState.gameList = payload.gameList;
-            return newState;
-        }
         case SET_ACTIVE_GAME_INDEX: {
             newState.activeGameIndex = payload.gameIndex;
-            return newState;
-        }
-        case GAME_IS_STARTED: {
-            newState.gameIsStarted = payload.gameStarted;
             return newState;
         }
         case SET_LOG: {
@@ -34,6 +33,10 @@ export default (state = initialState, { type, payload }) => {
         }
         case SET_JOYSTICK_LOG: {
             newState.joyLogs = [...newState.joyLogs, payload.log];
+            return newState;
+        }
+        case SET_GAME_IS_READY_TO_PLAY: {
+            newState.gameIsReadyToPlay = payload.state;
             return newState;
         }
         default:

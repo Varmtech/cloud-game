@@ -66,6 +66,8 @@ export const GAME_LOADED = 'gameLoaded';
 // used to transfer the index value between touch and controller
 export const GAME_PLAYER_IDX_CHANGE = 'gamePlayerIndexChange';
 export const GAME_PLAYER_IDX = 'gamePlayerIndex';
+export const PLAY_GAME = 'PLAY_GAME';
+export const QUIT_GAME = 'QUIT_GAME';
 
 export const CONNECTION_READY = 'connectionReady';
 export const CONNECTION_CLOSED = 'connectionClosed';

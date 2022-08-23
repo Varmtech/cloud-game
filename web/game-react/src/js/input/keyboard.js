@@ -64,34 +64,6 @@ export const keyboard = (() => {
     let dpadMode = true;
     let dpadState = {[KEY.LEFT]: false, [KEY.RIGHT]: false, [KEY.UP]: false, [KEY.DOWN]: false};
 
-    function onDpadToggle(checked) {
-        if (dpadMode === checked) {
-            return //error?
-        }
-        if (dpadMode) {
-            dpadMode = false;
-            // reset dpad keys pressed before moving to analog stick mode
-            for (const key in dpadState) {
-                if (dpadState[key] === true) {
-                    dpadState[key] = false;
-                    event.pub(KEY_RELEASED, {key: key});
-                }
-            }
-        } else {
-            dpadMode = true;
-            let value;
-            // reset analog stick axes before moving to dpad mode
-            value = (dpadState[KEY.RIGHT] === true ? 1 : 0) - (dpadState[KEY.LEFT] === true ? 1 : 0)
-            if (value !== 0) {
-                event.pub(AXIS_CHANGED, {id: 0, value: 0});
-            }
-            value = (dpadState[KEY.DOWN] === true ? 1 : 0) - (dpadState[KEY.UP] === true ? 1 : 0)
-            if (value !== 0) {
-                event.pub(AXIS_CHANGED, {id: 1, value: 0});
-            }
-            dpadState = {[KEY.LEFT]: false, [KEY.RIGHT]: false, [KEY.UP]: false, [KEY.DOWN]: false};
-        }
-    }
 
     const onKey = (code, callback, state) => {
         if (code in keyMap) {
@@ -115,8 +87,6 @@ export const keyboard = (() => {
             }
         }
     };
-
-    event.sub(DPAD_TOGGLE, (data) => onDpadToggle(data.checked));
 
     return {
         init: () => {

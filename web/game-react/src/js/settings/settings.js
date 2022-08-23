@@ -52,13 +52,6 @@ export const settings = (() => {
 
     const exportFileName = `cloud-game.settings.v${revision}.txt`;
 
-    // ui references
-    const ui = document.getElementById('app-settings'),
-        closeEl = document.getElementById('settings__controls__close'),
-        loadEl = document.getElementById('settings__controls__load'),
-        saveEl = document.getElementById('settings__controls__save'),
-        resetEl = document.getElementById('settings__controls__reset');
-
    /* this._renderrer = this._renderrer || {
         render: () => {
         }
@@ -152,7 +145,7 @@ export const settings = (() => {
             log.error(`Your import file is broken!`);
         }
 
-        _render();
+        // _render();
     }
 
     const _export = () => {
@@ -259,13 +252,7 @@ export const settings = (() => {
         provider.remove(key, subKey);
     }
 
-    const _render = () => settings._renderrer.render()
-
-    /**
-     * Settings modal window toggle handler.
-     * @returns {boolean} True in case if it's opened.
-     */
-    const toggle = () => ui.classList.toggle('modal-visible') && !_render();
+    // const _render = () => settings._renderrer.render()
 
     function _getType(value) {
         if (value === undefined) return option.undefined
@@ -310,22 +297,7 @@ export const settings = (() => {
         }
     }
 
-    event.sub(SETTINGS_CHANGED, _render);
-
-    // internal init section
-    closeEl.addEventListener('click', () => {
-        event.pub(SETTINGS_CLOSED);
-        // to make sure it's disabled, but it's a tad verbose
-        event.pub(KEYBOARD_TOGGLE_FILTER_MODE, {mode: true});
-    });
-    saveEl.addEventListener('click', () => _export());
-    loadEl.addEventListener('click', () => _fileReader.read(onFileLoad));
-    resetEl.addEventListener('click', () => {
-        if (window.confirm("Are you sure want to reset your settings?")) {
-            _reset();
-            event.pub(SETTINGS_CHANGED);
-        }
-    });
+    // event.sub(SETTINGS_CHANGED, _render);
 
     return {
         init,
@@ -336,14 +308,11 @@ export const settings = (() => {
         remove,
         import: _import,
         export: _export,
-        ui: {
-            toggle,
-        }
     }
 })()
 
 // hardcoded ui stuff
-settings._renderrer = function () {
+/*settings._renderrer = function () {
     // options to ignore (i.e. ignored = {'_version': 1})
     const ignored = {};
 
@@ -352,7 +321,7 @@ settings._renderrer = function () {
 
     // a fast way to clear data holder.
     const clearData = () => {
-        while (data.firstChild) data.removeChild(data.firstChild)
+        // while (data.firstChild) data.removeChild(data.firstChild)
     };
 
     const _option = (holderEl) => {
@@ -424,13 +393,13 @@ settings._renderrer = function () {
         return wrapperEl;
     }
 
-    /**
+    /!**
      * Handles a normal option change.
      *
      * @param key The name (id) of an option.
      * @param newValue A new value to set.
      * @param oldValue An old value to use somehow if needed.
-     */
+     *!/
     const onChange = (key, newValue, oldValue) => settings.set(key, newValue);
 
     const onKeyBindingChange = (key, oldValue) => {
@@ -479,4 +448,4 @@ settings._renderrer = function () {
     return {
         render,
     }
-}()
+}()*/

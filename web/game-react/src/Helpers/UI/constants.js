@@ -7,6 +7,7 @@ export const colors = {
     yellow: '#FDAC00',
     orange: '#FC8831',
     gray: '#8E8E93',
+    gray2: '#373737',
     grayLight: '#C7C7CC',
     cream: '#F3EBDD',
     beige: '#E5D8BF',

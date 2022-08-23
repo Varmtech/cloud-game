@@ -2,11 +2,11 @@
  * Game list module.
  * @version 1
  */
-import {MENU_PRESSED, MENU_RELEASED} from "./event/event";
+import {MENU_PRESSED, MENU_RELEASED, PLAY_GAME} from "./event/event";
 import {event} from "./event/event";
 import {log} from "./log";
 import store from "../store";
-import {setActiveGameIndexAC, setGamesAC} from "../store/games/actions";
+import {setGameIsReadyToPlayAC} from "../store/games/actions";
 
 export const gameList = (() => {
     // state
@@ -25,22 +25,14 @@ export const gameList = (() => {
         games = gameList.sort((a, b) => a > b ? 1 : -1);
     };
 
-    const render = () => {
-        log.debug('[games] load game menu');
-        store.dispatch(setGamesAC(games))
-        listBox.innerHTML = games
-            .map(game => `<div class="menu-item unselectable"><div><span>${game}</span></div></div>`)
-            .join('');
-    };
-
     const show = () => {
-        render();
-        menuItemChoice.style.display = "block";
         pickGame();
     };
 
     const pickGame = (index) => {
-        let idx = undefined !== index ? index : gameIndex;
+        const { GameReducer: { activeGameIndex } } = store.getState();
+
+        let idx = undefined !== activeGameIndex ? activeGameIndex : gameIndex;
 
         // check boundaries
         // cycle
@@ -48,20 +40,20 @@ export const gameList = (() => {
         if (idx >= games.length) idx = 0;
 
         // transition menu box
-        listBox.style['transition'] = 'top 0.2s';
+        // listBox.style['transition'] = 'top 0.2s';
 
         menuTop = MENU_TOP_POSITION - idx * 36;
-        listBox.style['top'] = `${menuTop}px`;
+        // listBox.style['top'] = `${menuTop}px`;
 
         // overflow marquee
-        let pick = document.querySelectorAll('.menu-item .pick')[0];
+       /* let pick = document.querySelectorAll('.menu-item .pick')[0];
         if (pick) {
             pick.classList.remove('pick');
-        }
-        document.querySelectorAll(`.menu-item span`)[idx].classList.add('pick');
-
-        store.dispatch(setActiveGameIndexAC(idx))
+        }*/
+        // document.querySelectorAll(`.menu-item span`)[idx].classList.add('pick');
+        store.dispatch(setGameIsReadyToPlayAC(true))
         gameIndex = idx;
+        event.pub(PLAY_GAME);
     };
 
     const startGamePickerTimer = (upDirection) => {

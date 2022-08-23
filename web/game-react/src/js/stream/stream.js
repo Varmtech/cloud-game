@@ -11,6 +11,7 @@ import {SETTINGS_CHANGED} from "../event/event";
 import {gui} from "../gui/gui";
 import {opts} from "../settings/opts";
 import {settings} from "../settings/settings";
+import {rtcp} from "../network/rtcp";
 
 export const stream = (() => {
         let screen = document.getElementById('stream');
@@ -133,7 +134,9 @@ export const stream = (() => {
                 clearInterval(state.timerId);
                 let mirror = state.screen;
                 state.screen = screen;
-                toggle(true);
+                if(rtcp.getConnection()) {
+                    toggle(true);
+                }
                 if (mirror !== screen) {
                     mirror.parentNode.removeChild(mirror);
                 }

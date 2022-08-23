@@ -436,7 +436,6 @@ export const stats = (() => {
         webRTCStats_,
         webRTCFrameStats
     );
-    modules(m => statsOverlayEl.append(m.get()), false);
 
     event.sub(STATS_TOGGLE, onToggle);
     event.sub(HELP_OVERLAY_TOGGLED, onHelpOverlayToggle)

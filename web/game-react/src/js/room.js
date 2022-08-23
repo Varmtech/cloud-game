@@ -40,11 +40,11 @@ export const room = (() => {
         getId: () => id,
         setId: (id_) => {
             id = id_;
-            roomLabel.value = id;
+            // roomLabel.value = id;
         },
         reset: () => {
             id = '';
-            roomLabel.value = id;
+            // roomLabel.value = id;
         },
         save: (roomIndex) => {
             localStorage.setItem('roomID', roomIndex);

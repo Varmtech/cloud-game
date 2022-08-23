@@ -18,7 +18,7 @@ export const env = (() => {
         // save page rotation
         isLayoutSwitched = isPortrait();
 
-        rescaleGameBoy(targetWidth, targetHeight);
+      /*  rescaleGameBoy(targetWidth, targetHeight);
 
         sourceLink.style['bottom'] = isLayoutSwitched ? 0 : '';
         if (isLayoutSwitched) {
@@ -29,7 +29,7 @@ export const env = (() => {
             sourceLink.style['right'] = 5;
         }
         sourceLink.style['transform'] = isLayoutSwitched ? 'rotate(-90deg)' : '';
-        sourceLink.style['transform-origin'] = isLayoutSwitched ? 'left top' : '';
+        sourceLink.style['transform-origin'] = isLayoutSwitched ? 'left top' : '';*/
     };
 
     const rescaleGameBoy = (targetWidth, targetHeight) => {

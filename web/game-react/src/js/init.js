@@ -6,7 +6,6 @@ import {socket} from "./network/socket";
 import {keyboard} from "./input/keyboard";
 import {opts} from "./settings/opts";
 import {joystick} from "./input/joystick";
-import {touch} from "./input/touch";
 
 settings.init();
 
@@ -26,7 +25,6 @@ settings.init();
 
 keyboard.init();
 joystick.init();
-touch.init();
 stream.init();
 
 const [roomId, zone] = room.loadMaybe();

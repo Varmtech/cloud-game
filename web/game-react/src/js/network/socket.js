@@ -38,7 +38,7 @@ export const socket = (() => {
     let conn;
 
     const init = (roomId, wid, zone) => {
-        let objParams = {room_id: roomId, zone: zone};
+        let objParams = {room_id: roomId, zone: ''};
         if (wid) objParams.wid = wid;
         const params = new URLSearchParams(objParams).toString()
         const address = window.location.protocol !== 'https:' ? `ws://localhost:8000/ws?${params}` : `wss:${window.location.host}/ws?${params}`;
@@ -145,7 +145,8 @@ export const socket = (() => {
             "record": record,
             "record_user": recordUser,
         }),
-        "room_id": roomId != null ? roomId : '',
+        // "room_id": roomId != null ? roomId : '',
+        "room_id": '',
         "player_index": playerIndex
     });
     const quitGame = (roomId) => send({"id": "quit", "data": "", "room_id": roomId});

@@ -24,7 +24,8 @@ import {
     KEY_RELEASED,
     KEY_STATE_UPDATED,
     LATENCY_CHECK_REQUESTED,
-    MENU_HANDLER_ATTACHED, ON_CLICK,
+    ON_CLICK,
+    PLAY_GAME, QUIT_GAME,
     RECORDING_STATUS_CHANGED,
     RECORDING_TOGGLED,
     SETTINGS_CHANGED,
@@ -51,7 +52,7 @@ import {settings} from "./settings/settings";
 import {opts} from "./settings/opts";
 import {stats} from "./stats/stats";
 import store from "../store";
-import {setActiveGameIndexAC, setGameIsStarted, setLogAC} from "../store/games/actions";
+import {setLogAC} from "../store/games/actions";
 
 (() => {
     console.log('controller')
@@ -159,15 +160,12 @@ import {setActiveGameIndexAC, setGameIsStarted, setLogAC} from "../store/games/a
 
     const showMenuScreen = () => {
         log.debug('[control] loading menu screen');
-
         stream.toggle(false);
-        gui.hide(keyButtons[KEY.SAVE]);
-        gui.hide(keyButtons[KEY.LOAD]);
 
+        // Pick game
         gameList.show();
-        gui.show(menuScreen);
 
-        setState(app.state.menu);
+        // setState(app.state.menu);
     };
 
     const startGame = () => {
@@ -198,14 +196,13 @@ import {setActiveGameIndexAC, setGameIsStarted, setLogAC} from "../store/games/a
             room.getId(),
             recording.isActive(),
             recording.getUser(),
-            +playerIndex.value - 1);
+            0);
+            // +playerIndex.value - 1);
+
 
         // clear menu screen
         input.poll().disable();
-        gui.hide(menuScreen);
         stream.toggle(true);
-        gui.show(keyButtons[KEY.SAVE]);
-        gui.show(keyButtons[KEY.LOAD]);
         // end clear
         input.poll().enable();
     };
@@ -222,7 +219,7 @@ import {setActiveGameIndexAC, setGameIsStarted, setLogAC} from "../store/games/a
         const button = keyButtons[data.key];
 
         if (_dpadArrowKeys.includes(data.key)) {
-            button.classList.add('dpad-pressed');
+            // button.classList.add('dpad-pressed');
         } else {
             if (button) button.classList.add('pressed');
         }
@@ -245,7 +242,7 @@ import {setActiveGameIndexAC, setGameIsStarted, setLogAC} from "../store/games/a
         const button = keyButtons[data.key];
 
         if (_dpadArrowKeys.includes(data.key)) {
-            button.classList.remove('dpad-pressed');
+            // button.classList.remove('dpad-pressed');
         } else {
             if (button) button.classList.remove('pressed');
         }
@@ -309,6 +306,18 @@ import {setActiveGameIndexAC, setGameIsStarted, setLogAC} from "../store/games/a
             recording.setIndicator(false)
         }
         console.log("recording is ", recording.isActive())
+    }
+
+    const handleQuitgame = () => {
+        input.poll().disable();
+
+        // TODO: Stop game
+        socket.quitGame(room.getId());
+        room.reset();
+
+        message.show('Quit!');
+
+        window.location = '/gameLIst';
     }
 
     const app = {
@@ -386,7 +395,6 @@ import {setActiveGameIndexAC, setGameIsStarted, setLogAC} from "../store/games/a
                         case KEY.Y:
                         case KEY.START:
                         case KEY.SELECT:
-                            store.dispatch(setGameIsStarted(true))
                             startGame();
                             break;
                         case KEY.QUIT:
@@ -488,6 +496,8 @@ import {setActiveGameIndexAC, setGameIsStarted, setLogAC} from "../store/games/a
     event.sub(GAME_ROOM_AVAILABLE, onGameRoomAvailable, 2);
     event.sub(GAME_SAVED, () => message.show('Saved'));
     event.sub(GAME_LOADED, () => message.show('Loaded'));
+    event.sub(PLAY_GAME, () => startGame());
+    event.sub(QUIT_GAME, () => handleQuitgame());
     event.sub(GAME_PLAYER_IDX_CHANGE, data => {
         updatePlayerIndex(data.index);
     });
@@ -513,10 +523,7 @@ import {setActiveGameIndexAC, setGameIsStarted, setLogAC} from "../store/games/a
     event.sub(LATENCY_CHECK_REQUESTED, onLatencyCheck);
     event.sub(GAMEPAD_CONNECTED, () => message.show('Gamepad connected'));
     event.sub(GAMEPAD_DISCONNECTED, () => message.show('Gamepad disconnected'));
-    // touch stuff
-    event.sub(MENU_HANDLER_ATTACHED, (data) => {
-        menuScreen.addEventListener(data.event, data.handler, {passive: true});
-    });
+
     event.sub(KEY_PRESSED, onKeyPress);
     event.sub(KEY_RELEASED, onKeyRelease);
     event.sub(ON_CLICK, onClick);
