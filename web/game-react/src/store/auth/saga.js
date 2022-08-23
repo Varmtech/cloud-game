@@ -56,7 +56,7 @@ function* authUserSuccess(action) {
 }
 
 
-export default function* MembersSaga() {
+export default function* AuthSaga() {
   yield takeLatest(AUTH_USER, authUser);
   yield takeLatest(SAVE_USER, authUserSuccess);
 }

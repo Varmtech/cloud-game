@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import styled from 'styled-components'
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -12,7 +12,7 @@ import MarioImage from "../../../img/games/mario.png";
 import SampleDemobyFlorianImage from "../../../img/games/sample-demo-florian.png";
 import SushiTheCat from "../../../img/games/sushiCat.png";
 import Anguna from "../../../img/games/anguna.png";
-import {setActiveGameIndexAC} from "../../../store/games/actions";
+import {getGamesAC, setActiveGameIndexAC} from "../../../store/games/actions";
 import Header from "../../header";
 import {ReactComponent as ArrowLeft} from "../../../img/icons/arrow-left.svg";
 import {PageWrapper} from "../../common/PageWrapper";
@@ -39,6 +39,10 @@ export default function GameList() {
     const handleContinue = () => {
         navigate('/inviteFriends')
     }
+
+    useEffect(() => {
+        dispatch(getGamesAC())
+    }, []);
 
     return (
        <PageWrapper backgroundColor={colors.blue}>
@@ -118,16 +122,26 @@ const GamesContainer = styled.div`
 
 const GamesList = styled.div`
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+  margin-right: -7px;
+  margin-left: -7px;
 `
 const GameItem = styled.div`
-  width: 100%;
+  width: calc(33% - 12px);
   margin: 7px;
   border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
-  opacity: 0.5
-  ${(props) => props.isSelected && `opacity: 1`}
+  opacity: 0.5;
+  ${(props) => props.isSelected && `opacity: 1`};
+
+  @media (max-width: 600px) {
+    width: calc(33% - 13px);
+  }
+  @media (max-width: 300px) {
+    width: calc(33% - 14px);
+  }
+  
 `
 const GameItemImg = styled.img`
   width: 100%;
