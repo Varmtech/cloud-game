@@ -31,7 +31,7 @@ export default function WelcomePage() {
             }, 500)
         }
     }, [userData])
-    
+
     return (
         <PageWrapper backgroundColor={colors.blue} >
             { loading && <LoadingContainer> <span/> </LoadingContainer>}
@@ -52,7 +52,7 @@ const PageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 163px);
+  min-height: calc(100vh - 163px);
 `
 
 const BottomButton = styled.div`

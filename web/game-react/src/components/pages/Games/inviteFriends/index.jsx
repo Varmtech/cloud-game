@@ -71,15 +71,24 @@ const GameSessionContainer = styled.div`
   background-color: ${colors.darkBlue};
   padding: 30px 16px 24px;
   margin-top: 16px;
-  height: calc(100vh - 192px);
+  min-height: calc(100vh - 222px);
   overflow-y: auto;
+  
+  @media (max-width: 900px) {
+    padding: 20px 16px;
+    margin-top: 12px;
+  }
 `
 
 const AttachedGameCont = styled.div`
   width: 200px;
   height: 200px;
-  margin-bottom: 34px;
-  margin-top: 64px;
+  margin-bottom: 28px;
+  margin-top: 44px;
+  @media (max-width: 900px) {
+    margin-bottom: 12px;
+    margin-top: 20px;
+  }
 `
 
 const GameName = styled.h3`

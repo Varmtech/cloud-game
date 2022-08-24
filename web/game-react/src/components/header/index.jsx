@@ -23,6 +23,10 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: ${props => props.marginBottom ? props.marginBottom : '32px'};
+
+  @media (max-width: 900px) {
+    margin-bottom: 20px;
+  }
 `
 
 const HeaderLeftSide = styled.div`
