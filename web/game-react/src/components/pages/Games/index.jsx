@@ -113,7 +113,6 @@ const GamesContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 82px);
-  overflow-y: auto;
 `
 
 const GamesList = styled.div`
