@@ -51,7 +51,6 @@ export const gameList = (() => {
             pick.classList.remove('pick');
         }*/
         // document.querySelectorAll(`.menu-item span`)[idx].classList.add('pick');
-        store.dispatch(setGameIsReadyToPlayAC(true))
 
         event.pub(PLAY_GAME);
     };

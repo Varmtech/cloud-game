@@ -12,6 +12,8 @@ import {gui} from "../gui/gui";
 import {opts} from "../settings/opts";
 import {settings} from "../settings/settings";
 import {rtcp} from "../network/rtcp";
+import store from "../../store";
+import {setGameIsReadyToPlayAC} from "../../store/games/actions";
 
 export const stream = (() => {
         let screen = document.getElementById('stream');
@@ -97,6 +99,8 @@ export const stream = (() => {
         }, false);
         screen.addEventListener('canplay', () => {
             screen.poster = '';
+            console.log('set game is ready to play ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, ')
+            store.dispatch(setGameIsReadyToPlayAC(true))
             useCustomScreen(options.mirrorMode === 'mirror');
         }, false);
 
