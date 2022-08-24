@@ -214,7 +214,6 @@ import {setLogAC} from "../store/games/actions";
 
     // pre-state key press handler
     const onKeyPress = (data) => {
-        console.log('key Press ... ', data)
         store.dispatch(setLogAC(data))
         const button = keyButtons[data.key];
 
@@ -238,7 +237,6 @@ import {setLogAC} from "../store/games/actions";
 
     // pre-state key release handler
     const onKeyRelease = data => {
-        console.log('key Release ... ', data)
         const button = keyButtons[data.key];
 
         if (_dpadArrowKeys.includes(data.key)) {
@@ -346,27 +344,6 @@ import {setLogAC} from "../store/games/actions";
 
             menu: {
                 name: 'menu',
-                axisChanged: (id, value) => {
-                    if (id === 1) { // Left Stick, Y Axis
-                        let dir = DIR.IDLE;
-                        if (value < -0.5) dir = DIR.UP;
-                        if (value > 0.5) dir = DIR.DOWN;
-                        if (dir !== prevDir) {
-                            prevDir = dir;
-                            switch (dir) {
-                                case DIR.IDLE:
-                                    gameList.stopGamePickerTimer();
-                                    break;
-                                case DIR.UP:
-                                    gameList.startGamePickerTimer(true);
-                                    break;
-                                case DIR.DOWN:
-                                    gameList.startGamePickerTimer(false);
-                                    break;
-                            }
-                        }
-                    }
-                },
                 keyPress: (key) => {
                     switch (key) {
                         case KEY.UP:

@@ -1,39 +1,31 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import styled from 'styled-components'
 import {useDispatch, useSelector} from "react-redux";
 import {
-    activeGameIndexSelector,
-    logsJoySelector,
-    logsOsSelector,
-    logsSelector
+    activeGameSelector,
+    gameListSelector, gameLoadingSelector,
+    // logsJoySelector,
+    // logsOsSelector,
+    // logsSelector
 } from "../../../store/games/selectors";
 import {ReactComponent as CheckIcon} from '../../../img/icons/check-square.svg';
-import MarioImage from "../../../img/games/mario.png";
-import SampleDemobyFlorianImage from "../../../img/games/sample-demo-florian.png";
-import SushiTheCat from "../../../img/games/sushiCat.png";
-import Anguna from "../../../img/games/anguna.png";
-import {getGamesAC, setActiveGameIndexAC} from "../../../store/games/actions";
+import {getGamesAC, setActiveGameAC} from "../../../store/games/actions";
 import Header from "../../header";
 import {ReactComponent as ArrowLeft} from "../../../img/icons/arrow-left.svg";
 import {PageWrapper} from "../../common/PageWrapper";
 import {colors} from "../../../Helpers/UI/constants";
 import {useNavigate} from "react-router-dom";
+import {LoadingContainer} from "../../../Helpers/UI";
 
 export default function GameList() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const logs = useSelector(logsSelector) || [];
-    const osLog = useSelector(logsOsSelector) || '';
-    const joyLogs = useSelector(logsJoySelector) || [];
-    const selectedGameIndex = useSelector(activeGameIndexSelector);
-    const [gamesList, setGamesList] = useState([{id: '0', name: 'Sample Demo by Florian (PD)', host: true, image: SampleDemobyFlorianImage},
-        {id: '1', name: 'Super Mario Bros', host: false, image: MarioImage},
-        {id: '2', name: 'Sushi The Cat', host: false, image: SushiTheCat},
-        {id: '3', name: 'Anguna', host: false, image: Anguna},
-    ])
+    const gameList = useSelector(gameListSelector) || [];
+    const selectedGame = useSelector(activeGameSelector);
+    const gamesLoading = useSelector(gameLoadingSelector);
 
-    const handleSetSelectedGameIndex = (gameIndex) => {
-        dispatch(setActiveGameIndexAC(gameIndex))
+    const handleSetSelectedGameIndex = (game) => {
+        dispatch(setActiveGameAC(game))
     }
 
     const handleContinue = () => {
@@ -47,7 +39,7 @@ export default function GameList() {
     return (
        <PageWrapper backgroundColor={colors.blue}>
            <Header leftIcon={<ArrowWrapper onClick={() => {navigate('/createGameSession')}}><ArrowLeft/></ArrowWrapper>}/>
-           {logs.length ? <LogContainer>
+          {/* {logs.length ? <LogContainer>
                Keys press log
                {logs.map(log => <div>{log.key}</div>)}
            </LogContainer>: ''}
@@ -55,15 +47,18 @@ export default function GameList() {
                {osLog}
                Joystick logs
                {joyLogs.map(log => <div>{log}</div>)}
-           </LogJoyContainer> : ''}
+           </LogJoyContainer> : ''}*/}
            <GamesContainer>
-               <GamesList>
-                   {gamesList.map((game, index) =>
-                       <GameItem key={game.id} onClick={() => handleSetSelectedGameIndex(index)} gameIsSelected={selectedGameIndex}
-                                 isSelected={selectedGameIndex === index}>
-                           <GameItemImg data-index={index} src={game.image} alt={game.name}/>
-                       </GameItem>)}
-               </GamesList>
+               {gamesLoading
+                   ? <LoadingContainer> <span/> </LoadingContainer>
+                   :  <GamesList>
+                       {gameList.map((game, index) =>
+                           <GameItem key={game.name} onClick={() => handleSetSelectedGameIndex(game)}
+                                     isSelected={selectedGame.name === game.name}>
+                               <GameItemImg data-index={index} src={game.wallpaper} alt={game.name}/>
+                           </GameItem>)}
+                   </GamesList>
+               }
                <GameStartButtonWrapper>
                    <GameContinueButton onClick={handleContinue} > <CheckIcon/> <span>Continue</span> </GameContinueButton>
                </GameStartButtonWrapper>
@@ -126,26 +121,18 @@ const GamesList = styled.div`
   margin-right: -7px;
   margin-left: -7px;
 `
-const GameItem = styled.div`
-  width: calc(33% - 12px);
-  margin: 7px;
-  border-radius: 10px;
-  overflow: hidden;
+const GameItem = styled.div`    
+  width: 33.33%;
+  padding: 7px;
+  box-sizing: border-box;
   cursor: pointer;
   opacity: 0.5;
   ${(props) => props.isSelected && `opacity: 1`};
-
-  @media (max-width: 600px) {
-    width: calc(33% - 13px);
-  }
-  @media (max-width: 300px) {
-    width: calc(33% - 14px);
-  }
-  
 `
 const GameItemImg = styled.img`
   width: 100%;
   height: 100%;
+  border-radius: 10px;
   object-fit: cover;
 `
 const GameStartButtonWrapper = styled.div`

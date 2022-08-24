@@ -9,24 +9,16 @@ import {colors} from "../../../../Helpers/UI/constants";
 import {CustomButton} from "../../../common/CustomButton";
 import {PageWrapper} from "../../../common/PageWrapper";
 import {useSelector} from "react-redux";
-import {activeGameIndexSelector} from "../../../../store/games/selectors";
+import {activeGameSelector, gameListSelector} from "../../../../store/games/selectors";
 import {useNavigate} from "react-router-dom";
 import {ErrorMessage} from "../createGameSession";
-import SampleDemobyFlorianImage from "../../../../img/games/sample-demo-florian.png";
-import MarioImage from "../../../../img/games/mario.png";
-import SushiTheCat from "../../../../img/games/sushiCat.png";
-import Anguna from "../../../../img/games/anguna.png";
 
 export default function InviteFriends() {
     const navigate = useNavigate();
-    const selectedGameIndex = useSelector(activeGameIndexSelector);
+    const selectedGame = useSelector(activeGameSelector);
     const [shareErrorMessage, setShareErrorMessage] = useState('')
     const [shareLink, setShareLink] = useState("https://1up.games")
-    const [gamesList, setGamesList] = useState([{id: '0', name: 'Sample Demo by Florian (PD)', host: true, image: SampleDemobyFlorianImage},
-        {id: '1', name: 'Super Mario Bros', host: false, image: MarioImage},
-        {id: '2', name: 'Sushi The Cat', host: false, image: SushiTheCat},
-        {id: '3', name: 'Anguna', host: false, image: Anguna},
-    ])
+
     const handleInviteFriend = () => {
         if(navigator.share) {
             navigator.share({ title: "Example Page", url: shareLink })
@@ -56,9 +48,9 @@ export default function InviteFriends() {
             <GameSessionContainer>
                 <SectionHeader>Game session created</SectionHeader>
                 <AttachedGameCont>
-                    <AttachedGameImg src={gamesList[selectedGameIndex].image}/>
+                    <AttachedGameImg src={selectedGame.wallpaper}/>
                 </AttachedGameCont>
-                <GameName>{gamesList[selectedGameIndex].name}</GameName>
+                <GameName>{selectedGame.name}</GameName>
 
                 <ButtonWrapper >
 

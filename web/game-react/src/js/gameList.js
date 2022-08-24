@@ -11,7 +11,8 @@ import {setGameIsReadyToPlayAC} from "../store/games/actions";
 export const gameList = (() => {
     // state
     let games = [];
-    let gameIndex = 1;
+    // let gameIndex = 1;
+    let selectedGame = null;
     let gamePickTimer = null;
 
     // UI
@@ -22,7 +23,7 @@ export const gameList = (() => {
     let menuTop = MENU_TOP_POSITION;
 
     const setGames = (gameList) => {
-        games = gameList.sort((a, b) => a > b ? 1 : -1);
+        games = gameList;
     };
 
     const show = () => {
@@ -30,19 +31,18 @@ export const gameList = (() => {
     };
 
     const pickGame = (index) => {
-        const { GameReducer: { activeGameIndex } } = store.getState();
-
-        let idx = undefined !== activeGameIndex ? activeGameIndex : gameIndex;
+        const { GameReducer: { activeGame } } = store.getState();
+        selectedGame = activeGame || games[0];
 
         // check boundaries
         // cycle
-        if (idx < 0) idx = games.length - 1;
-        if (idx >= games.length) idx = 0;
+        /*if (idx < 0) idx = games.length - 1;
+        if (idx >= games.length) idx = 0;*/
 
         // transition menu box
         // listBox.style['transition'] = 'top 0.2s';
 
-        menuTop = MENU_TOP_POSITION - idx * 36;
+        // menuTop = MENU_TOP_POSITION - idx * 36;
         // listBox.style['top'] = `${menuTop}px`;
 
         // overflow marquee
@@ -52,11 +52,11 @@ export const gameList = (() => {
         }*/
         // document.querySelectorAll(`.menu-item span`)[idx].classList.add('pick');
         store.dispatch(setGameIsReadyToPlayAC(true))
-        gameIndex = idx;
+
         event.pub(PLAY_GAME);
     };
 
-    const startGamePickerTimer = (upDirection) => {
+  /*  const startGamePickerTimer = (upDirection) => {
         if (gamePickTimer !== null) return;
         const shift = upDirection ? -1 : 1;
         pickGame(gameIndex + shift);
@@ -66,13 +66,13 @@ export const gameList = (() => {
         gamePickTimer = setInterval(() => {
             pickGame(gameIndex + shift);
         }, 200);
-    };
+    };*/
 
-    const stopGamePickerTimer = () => {
+   /* const stopGamePickerTimer = () => {
         if (gamePickTimer === null) return;
         clearInterval(gamePickTimer);
         gamePickTimer = null;
-    };
+    };*/
 
     const onMenuPressed = (newPosition) => {
         listBox.style['transition'] = '';
@@ -89,11 +89,11 @@ export const gameList = (() => {
     event.sub(MENU_RELEASED, onMenuReleased);
 
     return {
-        startGamePickerTimer: startGamePickerTimer,
-        stopGamePickerTimer: stopGamePickerTimer,
+        // startGamePickerTimer: startGamePickerTimer,
+        // stopGamePickerTimer: stopGamePickerTimer,
         pickGame: pickGame,
         show: show,
         set: setGames,
-        getCurrentGame: () => games[gameIndex]
+        getCurrentGame: () => selectedGame.name
     }
 })(document, event, log);

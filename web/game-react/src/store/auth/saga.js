@@ -13,6 +13,7 @@ function* authUser() {
           email: user.email,
           avatarUrl: user.photoURL,
         }
+        localStorage.setItem('user', JSON.stringify(userData))
         store.dispatch(authUserSuccessAC(userData))
       } else {
         // No user is signed in
@@ -25,6 +26,7 @@ function* authUser() {
                   email: result.user.email,
                   profile_url: result.user.photoURL,
                 }
+                localStorage.setItem('user', JSON.stringify(userData))
                 store.dispatch(saveUserAC(userData))
                 store.dispatch(authUserSuccessAC({displayName: userData.display_name, email: userData.email, avatarUrl: userData.profile_url}))
               }

@@ -1,12 +1,11 @@
-import { call, takeLatest } from 'redux-saga/effects';
-import { GET_GAMES } from "./actions";
+import { call, takeLatest, put } from 'redux-saga/effects';
+import {GET_GAMES, setGamesAC} from "./actions";
 import { rootApi } from "../../api";
 
 function* getGames() {
   try {
-    console.log('handle to get games . ')
-    const response = yield call(rootApi.get, '/users/games');
-    console.log('response  ==== = ==== ', response)
+    const { data } = yield call(rootApi.get, '/users/games');
+    yield put(setGamesAC(data))
   } catch (e) {
     console.log('ERROR in login - ', e.message);
   }

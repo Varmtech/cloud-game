@@ -1,5 +1,6 @@
 export const GET_GAMES = 'GET_GAMES';
-export const SET_ACTIVE_GAME_INDEX = 'SET_ACTIVE_GAME_INDEX';
+export const SET_GAMES = 'SET_GAMES';
+export const SET_ACTIVE_GAME = 'SET_ACTIVE_GAME';
 export const SET_OS_LOG = 'SET_OS_LOG';
 export const SET_JOYSTICK_LOG = 'SET_JOYSTICK_LOG';
 export const SET_LOG = 'SET_LOG';
@@ -11,10 +12,17 @@ export function getGamesAC() {
     };
 }
 
-export function setActiveGameIndexAC(gameIndex) {
+export function setGamesAC(gameList) {
     return {
-        type: SET_ACTIVE_GAME_INDEX,
-        payload: { gameIndex },
+        type: SET_GAMES,
+        payload: { gameList }
+    };
+}
+
+export function setActiveGameAC(game) {
+    return {
+        type: SET_ACTIVE_GAME,
+        payload: { game },
     };
 }
 

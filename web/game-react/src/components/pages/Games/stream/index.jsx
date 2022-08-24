@@ -38,7 +38,6 @@ export default function GameStream() {
     useEffect(() => {
         return () => {
             dispatch(setGameIsReadyToPlayAC(false))
-
             event.pub(QUIT_GAME);
         }
     }, [])

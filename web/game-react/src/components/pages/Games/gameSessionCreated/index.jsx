@@ -11,17 +11,17 @@ import {colors} from "../../../../Helpers/UI/constants";
 import PlayerBadge from "../playerBadge";
 import {PageWrapper} from "../../../common/PageWrapper";
 import {useSelector} from "react-redux";
-import {activeGameIndexSelector} from "../../../../store/games/selectors";
 import {GameContinueButton} from "../index";
 import {ReactComponent as CheckIcon} from "../../../../img/icons/check-square.svg";
+import {activeGameSelector} from "../../../../store/games/selectors";
 
 export default function GameSessionCreated() {
     const navigate = useNavigate();
 
-    const selectedGameIndex = useSelector(activeGameIndexSelector);
+    const selectedGame = useSelector(activeGameSelector);
 
     useEffect(() => {
-        if(!selectedGameIndex) {
+        if(!selectedGame) {
             navigate('/');
         }
     }, [])
