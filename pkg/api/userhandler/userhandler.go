@@ -9,6 +9,8 @@ import (
 	"google.golang.org/api/option"
 	"net/http"
 	"strings"
+
+	"github.com/golang/glog"
 )
 
 type UserHandler struct {
@@ -23,6 +25,7 @@ func (h *UserHandler) Request(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodOptions:
 		cors(w)
+		w.WriteHeader(http.StatusNoContent)
 	case http.MethodPost:
 		cors(w)
 		h.create(w, r)
@@ -34,7 +37,9 @@ func (h *UserHandler) GameRequest(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodOptions:
 		cors(w)
+		w.WriteHeader(http.StatusNoContent)
 	case http.MethodGet:
+	    glog.Infof("[Get game list] version:")
 		cors(w)
 		h.listGames(w, r)
 	}
@@ -61,7 +66,7 @@ func (h *UserHandler) Delete(w http.ResponseWriter, r *http.Request) {
 }
 
 func checkToken(token string) (*string, error) {
-	opt := option.WithCredentialsFile("/Users/aramm/Documents/Projects/1UP/upgames-19cbf-firebase-adminsdk-q10xz-e057e4543a.json")
+	opt := option.WithCredentialsFile("/Users/armenmkrtchyan/Documents/1upsDocs/upgames-19cbf-firebase-adminsdk-q10xz-e057e4543a.json")
 	ctx := context.Background()
 	app, err := firebase.NewApp(ctx, nil, opt)
 	if err != nil {
@@ -117,6 +122,7 @@ func (h *UserHandler) listGames(w http.ResponseWriter, r *http.Request) {
 	}
 
 	games, err := h.userService.ListGames()
+
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -131,8 +137,11 @@ func (h *UserHandler) listGames(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+
+
 	json, _ := json.Marshal(gamesDto)
 	w.Header().Set("Content-Type", "application/json")
+	glog.Infof("[Get game list] games json: %s", json)
 	w.Write(json)
 }
 
@@ -140,5 +149,4 @@ func cors(w http.ResponseWriter) {
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "*")
-	w.WriteHeader(http.StatusNoContent)
 }
