@@ -112,7 +112,7 @@ const GamesContainer = styled.div`
   margin: -7px;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 154px);
+  min-height: calc(100vh - 82px);
 `
 
 const GamesList = styled.div`
@@ -120,6 +120,7 @@ const GamesList = styled.div`
   flex-wrap: wrap;
   margin-right: -7px;
   margin-left: -7px;
+  margin-bottom: 14px;
 `
 const GameItem = styled.div`    
   width: 33.33%;
@@ -137,7 +138,7 @@ const GameItemImg = styled.img`
 `
 const GameStartButtonWrapper = styled.div`
   margin-top: auto;
-  margin-bottom: 54px;
+  margin-bottom: 12px;
 `
 export const GameContinueButton = styled.button`
   display: flex;

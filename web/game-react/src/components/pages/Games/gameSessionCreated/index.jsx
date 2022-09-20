@@ -66,8 +66,8 @@ const GameSessionContainer = styled.div`
 const AttachedGameCont = styled.div`
   width: 200px;
   height: 200px;
-  margin-bottom: 34px;
-  margin-top: 64px;
+  margin-bottom: 28px;
+  margin-top: 44px;
 `
 
 const GameName = styled.h3`

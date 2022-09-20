@@ -15,6 +15,10 @@ export const PageContainer = styled.div`
   padding: 46px 16px;
   //height: calc(100% - 92px);
   //background-color: ${props => props.backgroundColor ? props.backgroundColor : colors.blue};
+  
+  @media (max-width: 900px) {
+    padding: 14px 16px;
+  }
 `
 
 export const SectionHeader = styled.h2`
