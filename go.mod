@@ -26,7 +26,7 @@ require (
 	github.com/prometheus/common v0.33.0 // indirect
 	github.com/rs/xid v1.4.0
 	github.com/spf13/pflag v1.0.5
-	github.com/veandco/go-sdl2 v0.4.20
+	github.com/veandco/go-sdl2 v0.4.25
 	golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d
 	golang.org/x/image v0.0.0-20220321031419-a8550c1d254a
 	golang.org/x/net v0.0.0-20220407224826-aac1ed45d8e3 // indirect
