@@ -241,6 +241,9 @@ emulator:
             # in order to support up to 5-player games
             # see: https://nintendo.fandom.com/wiki/Super_Multitap
             1: 257
+        sg:
+          lib: genesis_plus_gx_libretro
+          roms: [ "mdx", "gen", "bin", "iso", "md", "smd", "cue", "iso", "sms", "gg", "sg", "68k", "chd" ]
         n64:
           lib: mupen64plus_next_libretro
           roms: [ "n64", "v64", "z64" ]
