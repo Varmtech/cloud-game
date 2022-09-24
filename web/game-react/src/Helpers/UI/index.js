@@ -9,11 +9,15 @@ export const ArrowWrapper = styled.div`
 `
 
 export const PageContainer = styled.div`
+  width: 100vw;
   max-width: 570px;
-  min-height: calc(100vh - 92px);
-  margin: auto;
+  //min-height: calc(100vh - 92px);
   padding: 46px 16px;
   //height: calc(100% - 92px);
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  justify-content: ${props => props.alignVertCenter && 'center'};
   //background-color: ${props => props.backgroundColor ? props.backgroundColor : colors.blue};
   
   @media (max-width: 900px) {

@@ -71,7 +71,7 @@ const GameSessionContainer = styled.div`
   background-color: ${colors.darkBlue};
   padding: 30px 16px 24px;
   margin-top: 16px;
-  min-height: calc(100vh - 222px);
+  height: 100%;
   overflow-y: auto;
   
   @media (max-width: 900px) {

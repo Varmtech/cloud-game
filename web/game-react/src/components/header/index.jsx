@@ -1,6 +1,6 @@
 import React from "react";
 import styled from 'styled-components'
-import {ReactComponent as Logo} from '../../img/icons/logo.svg';
+import {ReactComponent as Logo} from '../../img/icons/primaryLogo.svg';
 import {ReactComponent as ColoredLogo} from '../../img/icons/logo-colored.svg';
 
 
@@ -24,6 +24,9 @@ const HeaderContainer = styled.div`
   align-items: center;
   margin-bottom: ${props => props.marginBottom ? props.marginBottom : '32px'};
 
+  & > svg {
+    height: 70px;
+  }
   @media (max-width: 900px) {
     margin-bottom: 20px;
   }

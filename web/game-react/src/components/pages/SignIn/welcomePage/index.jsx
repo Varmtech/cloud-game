@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import LogoImage from '../../../../img/logo.png';
 import {CustomButton} from "../../../common/CustomButton";
 import {ReactComponent as GoogleIcon} from '../../../../img/icons/google.svg';
+import {ReactComponent as Logo} from '../../../../img/icons/primaryLogo.svg';
 import {colors} from "../../../../Helpers/UI/constants";
 import {PageWrapper} from "../../../common/PageWrapper";
 import {auth, signInWithGoogle} from "../../../../service/firebase";
@@ -19,6 +20,9 @@ export default function WelcomePage() {
     const navigate = useNavigate();
     const userData = useSelector(userDataSelector);
     const [loading, setLoading] = useState(false);
+    const [guestMode, setGuestMode] = useState(false);
+    const elHeight = window.innerHeight
+    const usersWhitelist = ['scottygammon@gmail.com', 'armmkrtchyan07@gmail.com', 'voipam@gmail.com']
     const handleSingIn = () => {
         dispatch(authUserAC());
     }
@@ -27,22 +31,32 @@ export default function WelcomePage() {
         if(userData) {
             setLoading(true)
             setTimeout(() => {
-                navigate("/createGameSession");
+                setLoading(false)
+                if (usersWhitelist.includes(userData.email)) {
+                    navigate("/createGameSession");
+                } else {
+                    setGuestMode(true)
+                }
             }, 500)
         }
     }, [userData])
 
     return (
-        <PageWrapper backgroundColor={colors.blue} >
+        <PageWrapper backgroundColor={colors.blue} minHeigth={elHeight} alignVertCenter>
             { loading && <LoadingContainer> <span/> </LoadingContainer>}
-            <PageContainer>
+            <PageContainer guestMode={guestMode}>
                 <Logo src={LogoImage}/>
                 <WelcomeText>Welcome</WelcomeText>
-                <SignInText>Please sign in to continue</SignInText>
+                <SignInText>{guestMode
+                    ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam arcu aliquet amet.'
+                    : 'Please sign in to continue'}
+                </SignInText>
             </PageContainer>
-            <BottomButton>
-                <CustomButton fullWidth buttonText="Signin with Google" icon={<GoogleIcon/>} handleFunction={handleSingIn} />
-            </BottomButton>
+            {!guestMode && (
+                <BottomButton>
+                    <CustomButton fullWidth buttonText="Signin with Google" icon={<GoogleIcon/>} handleFunction={handleSingIn} />
+                </BottomButton>
+            )}
         </PageWrapper>
     )
 }
@@ -52,18 +66,19 @@ const PageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 163px);
+  margin-bottom: 70px;
 `
 
 const BottomButton = styled.div`
-`
-
-const Logo = styled.img`
+  position: absolute;
+  bottom: 36px;
+  left: 16px;
+  width: calc(100% - 30px);
 `
 
 const WelcomeText = styled.h1`
   font-family: 'Overpass', sans-serif;
-  margin: 30px 0 10px;
+  margin: 66px 0 10px;
   color: ${colors.white};
   font-weight: 700;
   font-size: 36px;
@@ -75,6 +90,7 @@ const WelcomeText = styled.h1`
 const SignInText = styled.p`
   font-family: Roboto, sans-serif;
   color: ${colors.white};
+  max-width: 210px;
   font-size: 14px;
   line-height: 120%;
   margin: 0;

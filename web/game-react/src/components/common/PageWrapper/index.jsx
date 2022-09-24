@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import {colors} from "../../../Helpers/UI/constants";
 import {PageContainer} from "../../../Helpers/UI";
 
-export function PageWrapper({backgroundColor, children}) {
+export function PageWrapper({backgroundColor, children, alignVertCenter}) {
     return (
         <Wrapper backgroundColor={backgroundColor}>
-            <PageContainer>
+            <PageContainer alignVertCenter={alignVertCenter}>
                 {children}
             </PageContainer>
         </Wrapper>
@@ -14,7 +14,9 @@ export function PageWrapper({backgroundColor, children}) {
 }
 
 const Wrapper = styled.div`
+  display: flex;
   width: 100vw;
-  min-height: 100vh;
+  height: 100%;
+  //min-height: 100vh;
   background-color: ${props => props.backgroundColor ? props.backgroundColor : colors.blue};
 `

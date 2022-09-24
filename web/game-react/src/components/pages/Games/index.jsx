@@ -49,16 +49,16 @@ export default function GameList() {
                {joyLogs.map(log => <div>{log}</div>)}
            </LogJoyContainer> : ''}*/}
            <GamesContainer>
-               {gamesLoading
-                   ? <LoadingContainer> <span/> </LoadingContainer>
-                   :  <GamesList>
+               {/*{gamesLoading*/}
+               {/*    ? <LoadingContainer> <span/> </LoadingContainer>
+                   :  */} <GamesList>
                        {gameList.map((game, index) =>
                            <GameItem key={game.name} onClick={() => handleSetSelectedGameIndex(game)}
                                      isSelected={selectedGame.name === game.name}>
                                <GameItemImg data-index={index} src={game.wallpaper} alt={game.name}/>
                            </GameItem>)}
                    </GamesList>
-               }
+               {/*}*/}
                <GameStartButtonWrapper>
                    <GameContinueButton onClick={handleContinue} > <CheckIcon/> <span>Continue</span> </GameContinueButton>
                </GameStartButtonWrapper>
@@ -112,7 +112,7 @@ const GamesContainer = styled.div`
   margin: -7px;
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 82px);
+  height: 100%;
 `
 
 const GamesList = styled.div`

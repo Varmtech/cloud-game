@@ -66,6 +66,20 @@ function App() {
                                <Navigate to='/'/>
                        }
                 />
+                <Route exact path="settings"
+                       element={
+                           userData ?
+                               <Settings/> :
+                               <Navigate to='/'/>
+                       }
+                />
+                <Route exact path="settings/editUserInfo"
+                       element={
+                           userData ?
+                               <EditUserInfo/> :
+                               <Navigate to='/'/>
+                       }
+                />
                 <Route path="*" element={<NotFound/>} />
             </Routes>
         </BrowserRouter>
