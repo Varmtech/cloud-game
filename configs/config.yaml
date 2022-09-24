@@ -171,6 +171,9 @@ emulator:
           lib: snes9x_libretro
           roms: [ "smc", "sfc", "swc", "fig", "bs" ]
           hasMultitap: true
+        sg:
+          lib: genesis_plus_gx_libretro
+          roms: ["mdx", "gen", "bin", "iso", "md", "smd", "cue", "iso", "sms", "gg", "sg", "68k", "chd"]
         n64:
           lib: mupen64plus_next_libretro
           config: mupen64plus_next_libretro.cfg
