@@ -37,7 +37,7 @@ export const AttachGameContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${colors.darkBlue};
-  padding: 60px 16px 24px;
+  padding: 50px 16px 24px;
   margin-top: 16px;
   border-radius: 8px;
   flex-flow: column wrap;
@@ -52,7 +52,7 @@ export const AttachGameBoard = styled.div`
   height: 260px;
   border: 1px dashed ${colors.white};
   border-radius: 50%;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 `
 
 
