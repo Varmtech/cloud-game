@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import LogoImage from '../../../../img/logo.png';
 import {CustomButton} from "../../../common/CustomButton";
 import {ReactComponent as GoogleIcon} from '../../../../img/icons/google.svg';
-import {ReactComponent as Logo} from '../../../../img/icons/primaryLogo.svg';
+// import {ReactComponent as Logo} from '../../../../img/icons/primaryLogo.svg';
 import {colors} from "../../../../Helpers/UI/constants";
 import {PageWrapper} from "../../../common/PageWrapper";
 import {auth, signInWithGoogle} from "../../../../service/firebase";
@@ -75,6 +75,8 @@ const BottomButton = styled.div`
   left: 16px;
   width: calc(100% - 30px);
 `
+
+const Logo = styled.img``
 
 const WelcomeText = styled.h1`
   font-family: 'Overpass', sans-serif;

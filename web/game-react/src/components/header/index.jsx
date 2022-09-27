@@ -1,6 +1,6 @@
 import React from "react";
 import styled from 'styled-components'
-import {ReactComponent as Logo} from '../../img/icons/primaryLogo.svg';
+import {ReactComponent as Logo} from '../../img/icons/logo.svg';
 import {ReactComponent as ColoredLogo} from '../../img/icons/logo-colored.svg';
 
 

@@ -9,6 +9,7 @@ export const ArrowWrapper = styled.div`
 `
 
 export const PageContainer = styled.div`
+  position: relative;
   width: 100vw;
   max-width: 570px;
   //min-height: calc(100vh - 92px);
