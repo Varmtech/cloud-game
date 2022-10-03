@@ -35,7 +35,7 @@ export default function GameStream({userData, isGuest}) {
     const dispatch = useDispatch()
     const screen = window;
     const [isLandscapeMode, setIsLandscapeMode] = useState(screen.innerHeight < screen.innerWidth);
-    const [shareMode, setShareMode] = useState(true);
+    // const [shareMode, setShareMode] = useState(true);
     const [gamersList, setGamersList] = useState([{id: 'gamer1', name: 'User 1', host: true, avatarUrl: avatarUrl1},
         {id: 'gamer2', name: 'User2', host: false, avatarUrl: avatarUrl2},
         {id: 'gamer3', name: 'User3', host: false, avatarUrl: avatarUrl3},
@@ -106,13 +106,13 @@ export default function GameStream({userData, isGuest}) {
                             <PlayerName>{isGuest ? 'You' : gamersList[1] && gamersList[1].name}</PlayerName>
                         </GamerItem>
                     </PlayersSection>
-                    {shareMode && (
+                    {/*{shareMode && (
                         <ShareContainer>
                             <CustomButton buttonText='Invite friends' handleFunction={handleInviteFriend} transparent/>
                             <CustomButton buttonText='Play' handleFunction={() => setShareMode(false)}/>
                             <ErrorMessage>{shareErrorMessage}</ErrorMessage>
                         </ShareContainer>)
-                    }
+                    }*/}
                     <GameVideo isLandscapeMode={isLandscapeMode} id="stream" className="game-screen" hidden muted playsInline preload="none" />
                     <PlayersSection leftSide={true}>
                         <GamerItem>

@@ -12,6 +12,7 @@ import InviteFriends from "./components/pages/Games/inviteFriends";
 import GameStream from "./components/pages/Games/stream";
 import {guestUserDataSelector, userDataSelector} from "./store/auth/selectors";
 import ChooseAvatarAndNickname from "./components/pages/Profile/chooseAvatarAndNickname";
+import {authUserAC} from "./store/auth/actions";
 
 function App() {
     const dispatch = useDispatch();
