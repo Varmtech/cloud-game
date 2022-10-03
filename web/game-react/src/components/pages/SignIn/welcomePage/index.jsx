@@ -40,7 +40,8 @@ export default function WelcomePage({inviteUrl}) {
         'mr.marco.lobo@gmail.com',
         'aasf.pombeiro@gmail.com',
         'jaredjames.nelson@gmail.com',
-        'karunavannan@gmail.com'
+        'karunavannan@gmail.com',
+        'babajanyan.ju@gmail.com'
     ]
     const handleSingIn = () => {
         dispatch(authUserAC());
