@@ -1,18 +1,26 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from 'styled-components'
 import UserAvatarSrc from '../../../../img/avatar-man.png';
 import {ReactComponent as NotificationIcon} from '../../../../img/icons/notification.svg';
+import DefaultAvatar from '../../../../img/icons/defaulsAvatar.svg';
+
 import {colors} from "../../../../Helpers/UI/constants";
 import {useSelector} from "react-redux";
 import {userDataSelector} from "../../../../store/auth/selectors";
 
 export default function ProfileBadge() {
-
     const userData = useSelector(userDataSelector);
+    const [trueAvatar, setTrueAvatar] = useState(userData && userData.avatarUrl);
 
     return (
         <BadgeContainer>
-            <UserAvatar src={userData ? userData.avatarUrl || UserAvatarSrc : ''} />
+            <UserAvatar
+                src={trueAvatar ? userData.avatarUrl : DefaultAvatar}
+                onError={(e) => {
+                    e.target.onerror = null; // prevents looping
+                    setTrueAvatar(false);
+                }}
+            />
             <UserInfo>{userData ? userData.displayName : ''}</UserInfo>
             <NotificationIconWrapper>
                 <NotificationIcon />

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import GameList from "./components/pages/Games";
@@ -10,20 +10,25 @@ import EditUserInfo from "./components/pages/Profile/settings/editUserInfo";
 import './App.css';
 import InviteFriends from "./components/pages/Games/inviteFriends";
 import GameStream from "./components/pages/Games/stream";
-import {userDataSelector} from "./store/auth/selectors";
-import {authUserAC} from "./store/auth/actions";
+import {guestUserDataSelector, userDataSelector} from "./store/auth/selectors";
+import ChooseAvatarAndNickname from "./components/pages/Profile/chooseAvatarAndNickname";
 
 function App() {
     const dispatch = useDispatch();
     const userData = useSelector(userDataSelector);
+    const guestUserData = useSelector(guestUserDataSelector);
+    const [inviteUrl, setInviteURL] = useState('')
 
+    if (window.location.pathname === '/playGame' && window.location.search && !inviteUrl) {
+        setInviteURL(`${window.location.pathname}${window.location.search}`)
+    }
     useEffect(() => {
         dispatch(authUserAC())
     }, [])
     return (
         <BrowserRouter>
             <Routes>
-                <Route index element={<WelcomePage/>}/>
+                <Route index element={<WelcomePage inviteUrl={inviteUrl}/>}/>
                 <Route exact path="createGameSession"
                        element={
                            userData ?
@@ -40,8 +45,8 @@ function App() {
                 />
                 <Route exact path="playGame"
                        element={
-                           userData ?
-                               <GameStream/> :
+                           userData || guestUserData ?
+                               <GameStream userData={userData || guestUserData} isGuest={!!inviteUrl}/> :
                                <Navigate to='/'/>
                        }
                 />
@@ -77,6 +82,13 @@ function App() {
                        element={
                            userData ?
                                <EditUserInfo/> :
+                               <Navigate to='/'/>
+                       }
+                />
+                <Route exact path="settings/chooseAvatarAndNickname"
+                       element={
+                           inviteUrl ?
+                               <ChooseAvatarAndNickname inviteUrl={inviteUrl}/> :
                                <Navigate to='/'/>
                        }
                 />

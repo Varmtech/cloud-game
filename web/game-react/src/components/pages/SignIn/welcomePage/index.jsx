@@ -4,21 +4,22 @@ import styled from 'styled-components'
 import LogoImage from '../../../../img/logo.png';
 import {CustomButton} from "../../../common/CustomButton";
 import {ReactComponent as GoogleIcon} from '../../../../img/icons/google.svg';
-// import {ReactComponent as Logo} from '../../../../img/icons/primaryLogo.svg';
 import {colors} from "../../../../Helpers/UI/constants";
 import {PageWrapper} from "../../../common/PageWrapper";
-import {auth, signInWithGoogle} from "../../../../service/firebase";
-import {GoogleAuthProvider} from "firebase/auth";
-import {authUserAC, authUserSuccessAC} from "../../../../store/auth/actions";
+import {authUserAC} from "../../../../store/auth/actions";
 import { useNavigate } from "react-router-dom";
 import useDidUpdate from "../../../../hooks/useDidUpdate";
 import {LoadingContainer} from "../../../../Helpers/UI";
-import {userDataSelector} from "../../../../store/auth/selectors";
+import {authUserFailedSelector, userDataSelector} from "../../../../store/auth/selectors";
+import {setActiveGameAC} from "../../../../store/games/actions";
+import {activeGameSelector} from "../../../../store/games/selectors";
 
-export default function WelcomePage() {
+export default function WelcomePage({inviteUrl}) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const userData = useSelector(userDataSelector);
+    const userAuthFailed = useSelector(authUserFailedSelector);
+    const activeGameName = useSelector(activeGameSelector)
     const [loading, setLoading] = useState(false);
     const [guestMode, setGuestMode] = useState(false);
     const elHeight = window.innerHeight
@@ -33,7 +34,14 @@ export default function WelcomePage() {
             setTimeout(() => {
                 setLoading(false)
                 if (usersWhitelist.includes(userData.email)) {
-                    navigate("/createGameSession");
+                    if (inviteUrl) {
+                        const activeGame = decodeURIComponent(inviteUrl).split('___')[1]
+                        if(activeGame) {
+                            dispatch(setActiveGameAC({name: activeGame}))
+                        }
+                    } else {
+                        navigate("/createGameSession");
+                    }
                 } else {
                     setGuestMode(true)
                 }
@@ -41,6 +49,17 @@ export default function WelcomePage() {
         }
     }, [userData])
 
+    useEffect(() => {
+        if (userAuthFailed && inviteUrl) {
+            navigate("/settings/chooseAvatarAndNickname");
+        }
+    }, [userAuthFailed])
+
+    useEffect(() => {
+        if (activeGameName && inviteUrl) {
+            navigate(inviteUrl);
+        }
+    }, [activeGameName])
     return (
         <PageWrapper backgroundColor={colors.blue} minHeigth={elHeight} alignVertCenter>
             { loading && <LoadingContainer> <span/> </LoadingContainer>}

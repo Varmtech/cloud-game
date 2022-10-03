@@ -21,7 +21,7 @@ provider.setCustomParameters({ prompt: 'select_account' });
 
 
 // export const signInWithGoogle = () => signInWithPopup(auth, provider);
-export const signInWithGoogle = () => setPersistence(auth, browserLocalPersistence)
+export const signInWithGoogle = (errorCallback) => setPersistence(auth, browserLocalPersistence)
     .then(() => {
         return signInWithPopup(auth, provider);
     })
@@ -30,4 +30,6 @@ export const signInWithGoogle = () => setPersistence(auth, browserLocalPersisten
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log('error in login code - ', errorCode , ' _ message - ', errorMessage)
+        errorCallback(errorCode, errorMessage)
+        // return new Error(errorCode, errorMessage)
     });

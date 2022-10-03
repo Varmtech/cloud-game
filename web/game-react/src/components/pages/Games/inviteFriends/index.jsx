@@ -11,28 +11,10 @@ import {PageWrapper} from "../../../common/PageWrapper";
 import {useSelector} from "react-redux";
 import {activeGameSelector, gameListSelector} from "../../../../store/games/selectors";
 import {useNavigate} from "react-router-dom";
-import {ErrorMessage} from "../createGameSession";
 
 export default function InviteFriends() {
     const navigate = useNavigate();
     const selectedGame = useSelector(activeGameSelector);
-    const [shareErrorMessage, setShareErrorMessage] = useState('')
-    const [shareLink, setShareLink] = useState("https://1up.games")
-
-    const handleInviteFriend = () => {
-        if(navigator.share) {
-            navigator.share({ title: "Example Page", url: shareLink })
-                .then(() => {
-                    console.log(' .. shared successfully .. ', )
-                })
-                .catch(error => {
-                    console.log('error on share .. ', error)
-                })
-        } else {
-            console.log("Web share is currently not supported on this browser. Please provide a callback");
-            setShareErrorMessage("Your system doesn't support sharing")
-        }
-    }
     const onBackButtonEvent = (e) => {
         navigate('/gameList')
         window.onpopstate = () => {}
@@ -52,11 +34,9 @@ export default function InviteFriends() {
                 </AttachedGameCont>
                 <GameName>{selectedGame.name}</GameName>
 
-                <ButtonWrapper >
-
-                    <ErrorMessage>{shareErrorMessage}</ErrorMessage>
-                    <CustomButton fullWidth buttonText='Invite friends' handleFunction={handleInviteFriend} />
-                    <CustomButton handleFunction={() => navigate('/playGame')} fullWidth buttonText='I’m ready' icon={<PlayIcon/>} transparent/>
+                <ButtonWrapper>
+                    {/*<CustomButton fullWidth buttonText='Invite friends' handleFunction={handleInviteFriend} />*/}
+                    <CustomButton handleFunction={() => navigate('/playGame')} fullWidth buttonText='I’m ready' icon={<PlayIcon/>} />
                 </ButtonWrapper>
             </GameSessionContainer>
         </PageWrapper>

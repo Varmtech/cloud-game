@@ -126,15 +126,17 @@ export const joystick = (() => {
             store.dispatch(setOsLogAC('android'))
             // default of android is KeyMap1
             joystickMap = {
-                // 2: KEY.A,
-                2: KEY.START,
+                2: KEY.A,
+                // 2: KEY.START,
                 0: KEY.B,
                 // 3: KEY.START,
-                3: KEY.A,
+                3: KEY.X,
                 // 4: KEY.SELECT,
                 4: KEY.Y,
-                10: KEY.LOAD,
-                11: KEY.SAVE,
+                10: KEY.SELECT,
+                // 10: KEY.LOAD,
+                11: KEY.START,
+                // 11: KEY.SAVE,
                 // 8: KEY.HELP,
                 // 9: KEY.QUIT,
                 12: KEY.UP,
@@ -146,15 +148,15 @@ export const joystick = (() => {
             store.dispatch(setOsLogAC('default'))
             // default of other OS is KeyMap2
             joystickMap = {
-                // 0: KEY.A,
-                0: KEY.START,
+                0: KEY.A,
                 1: KEY.B,
-                // 2: KEY.START,
-                2: KEY.A,
+                2: KEY.X,
                 // 3: KEY.SELECT,
                 3: KEY.Y,
-                8: KEY.LOAD,
-                9: KEY.SAVE,
+                8: KEY.SELECT,
+                // 8: KEY.LOAD,
+                9: KEY.START,
+                // 9: KEY.SAVE,
                 // 6: KEY.HELP,
                 // 7: KEY.QUIT,
                 12: KEY.UP,
@@ -167,15 +169,16 @@ export const joystick = (() => {
         if (os === 'android' && (browser === 'firefox' || browser === 'uc')) { //KeyMap2
             store.dispatch(setOsLogAC('android - browser = firefox || uc'))
             joystickMap = {
-                0: KEY.START,
-                // 0: KEY.A,
+                0: KEY.A,
                 1: KEY.B,
-                2: KEY.A,
+                2: KEY.X,
                 // 2: KEY.START,
                 // 3: KEY.SELECT,
                 3: KEY.Y,
-                8: KEY.LOAD,
-                9: KEY.SAVE,
+                8: KEY.SELECT,
+                // 8: KEY.LOAD,
+                9: KEY.START,
+                // 9: KEY.SAVE,
                 // 6: KEY.HELP,
                 // 7: KEY.QUIT,
                 12: KEY.UP,
@@ -188,15 +191,17 @@ export const joystick = (() => {
         if (os === 'win' && browser === 'firefox') { //KeyMap3
             store.dispatch(setOsLogAC('win - browser = firefox '))
             joystickMap = {
-                1: KEY.START,
-                // 1: KEY.A,
-                2: KEY.B,
+                // 1: KEY.START,
+                1: KEY.B,
+                2: KEY.X,
                 0: KEY.A,
                 // 0: KEY.START,
                 // 3: KEY.SELECT,
                 3: KEY.Y,
-                8: KEY.LOAD,
-                9: KEY.SAVE,
+                8: KEY.SELECT,
+                // 8: KEY.LOAD,
+                9: KEY.START,
+                // 9: KEY.SAVE,
                 // 6: KEY.HELP,
                 // 7: KEY.QUIT
             };
@@ -205,15 +210,15 @@ export const joystick = (() => {
         if (os === 'mac' && browser === 'safari') { //KeyMap4
             store.dispatch(setOsLogAC('mac - browser = safari '))
             joystickMap = {
-                0: KEY.START,
+                0: KEY.A,
                 // 0: KEY.A,
                 1: KEY.B,
-                2: KEY.A,
+                2: KEY.X,
                 // 2: KEY.START,
                 // 3: KEY.SELECT,
                 3: KEY.Y,
-                8: KEY.LOAD,
-                9: KEY.SAVE,
+                8: KEY.SELECT,
+                9: KEY.START,
                 // 6: KEY.HELP,
                 // 7: KEY.QUIT,
                 12: KEY.UP,

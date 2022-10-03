@@ -59,9 +59,3 @@ export const AttachGameBoard = styled.div`
 export const PlusGameIcon = styled(PlusIcon)`
   position: absolute;
 `
-
-export const ErrorMessage = styled.p`
-  color: #fff;
-  font-size: 12px;
-  margin: 22px 0 -10px;
-`

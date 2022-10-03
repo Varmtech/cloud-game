@@ -126,16 +126,18 @@ const socket = (() => {
     const saveGame = () => send({"id": "save", "data": ""});
     const loadGame = () => send({"id": "load", "data": ""});
     const updatePlayerIndex = (idx) => send({"id": "player_index", "data": idx.toString()});
-    const startGame = (gameName, isMobile, roomId, record, recordUser, playerIndex) => send({
-        "id": "start",
-        "data": JSON.stringify({
-            "game_name": gameName,
-            "record": record,
-            "record_user": recordUser,
-        }),
-        "room_id": roomId != null ? roomId : '',
-        "player_index": playerIndex
-    });
+    const startGame = (gameName, isMobile, roomId, record, recordUser, playerIndex) => {
+        send({
+            "id": "start",
+            "data": JSON.stringify({
+                "game_name": gameName,
+                "record": record,
+                "record_user": recordUser,
+            }),
+            "room_id": roomId != null ? roomId : '',
+            "player_index": playerIndex
+        })
+    };
     const quitGame = (roomId) => send({"id": "quit", "data": "", "room_id": roomId});
     const toggleMultitap = () => send({"id": "multitap", "data": ""});
     const toggleRecording = (active = false, userName = '') => send({

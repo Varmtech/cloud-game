@@ -52,7 +52,7 @@ import {settings} from "./settings/settings";
 import {opts} from "./settings/opts";
 import {stats} from "./stats/stats";
 import store from "../store";
-import {setLogAC} from "../store/games/actions";
+import {setGameShareLinkAC, setLogAC} from "../store/games/actions";
 
 (() => {
     console.log('controller')
@@ -114,6 +114,7 @@ import {setLogAC} from "../store/games/actions";
 
     const onGameRoomAvailable = () => {
         message.show('Now you can share you game!');
+        store.dispatch(setGameShareLinkAC(room.getLink()))
     };
 
     const onConnectionReady = () => {
@@ -196,8 +197,8 @@ import {setLogAC} from "../store/games/actions";
             room.getId(),
             recording.isActive(),
             recording.getUser(),
-            0);
-            // +playerIndex.value - 1);
+            // 0);
+            playerIndex ? +playerIndex.value - 1 : 0);
 
 
         // clear menu screen

@@ -264,7 +264,7 @@ const touch = (() => {
     buttons.forEach((btn) => {
         btn.addEventListener('mousedown', handleButtonDown);
         btn.addEventListener('touchstart', handleButtonDown, {passive: true});
-        // btn.addEventListener('touchend', handleButtonUp);
+        btn.addEventListener('touchend', handleButtonUp);
     });
 
     // touch/mouse events for dpad. mouseup events is binded to window.

@@ -93,6 +93,6 @@ export const gameList = (() => {
         pickGame: pickGame,
         show: show,
         set: setGames,
-        getCurrentGame: () => selectedGame.name
+        getCurrentGame: () => selectedGame ? selectedGame.name : store.getState().GameReducer.activeGame.name
     }
 })(document, event, log);

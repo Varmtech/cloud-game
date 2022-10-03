@@ -1,7 +1,9 @@
 import {
     GET_GAMES,
     SET_ACTIVE_GAME,
-    SET_GAME_IS_READY_TO_PLAY, SET_GAMES,
+    SET_GAME_IS_READY_TO_PLAY,
+    SET_GAME_SHARE_LINK,
+    SET_GAMES,
     SET_JOYSTICK_LOG,
     SET_LOG,
     SET_OS_LOG,
@@ -14,6 +16,7 @@ const initialState = {
     logs: [],
     joyLogs: [],
     osLogs: '',
+    gameShareLink: '',
     gameIsReadyToPlay: false,
     getGamesLoading: false
 };
@@ -29,6 +32,10 @@ export default (state = initialState, { type, payload }) => {
             newState.gameList = payload.gameList;
             newState.activeGame = payload.gameList[0];
             newState.getGamesLoading = false
+            return newState;
+        }
+        case SET_GAME_SHARE_LINK: {
+            newState.gameShareLink = payload.link;
             return newState;
         }
         case SET_ACTIVE_GAME: {

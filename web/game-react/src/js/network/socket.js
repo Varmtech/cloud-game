@@ -13,6 +13,7 @@ import {
     MEDIA_STREAM_SDP_AVAILABLE, PING_REQUEST,
     PING_RESPONSE, RECORDING_STATUS_CHANGED
 } from "../event/event";
+import store from "../../store";
 
 export const socket = (() => {
     // TODO: this ping is for maintain websocket state
@@ -138,17 +139,21 @@ export const socket = (() => {
     const saveGame = () => send({"id": "save", "data": ""});
     const loadGame = () => send({"id": "load", "data": ""});
     const updatePlayerIndex = (idx) => send({"id": "player_index", "data": idx.toString()});
-    const startGame = (gameName, isMobile, roomId, record, recordUser, playerIndex) => send({
-        "id": "start",
-        "data": JSON.stringify({
-            "game_name": gameName,
-            "record": record,
-            "record_user": recordUser,
-        }),
-        // "room_id": roomId != null ? roomId : '',
-        "room_id": '',
-        "player_index": playerIndex
-    });
+    const startGame = (gameName, isMobile, roomId, record, recordUser, playerIndex) => {
+        const { AuthReducer: { guestUserData, userData } } = store.getState();
+        send({
+            "id": "start",
+            "data": JSON.stringify({
+                "game_name": gameName,
+                "record": record,
+                "record_user": recordUser,
+            }),
+            "room_id": roomId != null ? roomId : '',
+            // "room_id": '',
+            "player_info": JSON.stringify(userData || guestUserData),
+            "player_index": playerIndex
+        });
+    }
     const quitGame = (roomId) => send({"id": "quit", "data": "", "room_id": roomId});
     const toggleMultitap = () => send({"id": "multitap", "data": ""});
     const toggleRecording = (active = false, userName = '') => send({

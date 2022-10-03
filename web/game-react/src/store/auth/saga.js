@@ -1,5 +1,5 @@
 import { call, takeLatest } from 'redux-saga/effects';
-import {AUTH_USER, authUserSuccessAC, SAVE_USER, saveUserAC} from "./actions";
+import {AUTH_USER, authUserFailedAC, authUserSuccessAC, SAVE_USER, saveUserAC} from "./actions";
 import { rootApi } from "../../api";
 import {auth, signInWithGoogle} from "../../service/firebase";
 import store from "../index";
@@ -18,7 +18,10 @@ function* authUser() {
       } else {
         // No user is signed in
         // Let's sign them in
-        signInWithGoogle()
+        const errorHandler = () => {
+          store.dispatch(authUserFailedAC())
+        }
+        signInWithGoogle(errorHandler)
             .then((result) => {
               if (result) {
                 const userData = {

@@ -1,22 +1,32 @@
-import React, {useState} from "react";
-import styled from 'styled-components'
-import {ReactComponent as NotificationIcon} from '../../../../img/icons/notification.svg';
-import {colors} from "../../../../Helpers/UI/constants";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import {Swiper, SwiperSlide} from 'swiper/react';
-import AvatarEx1 from '../../../../img/userAvatarEx.png';
-
+import styled from 'styled-components'
 import 'swiper/css';
 import "swiper/css/pagination";
+import {ReactComponent as NotificationIcon} from '../../../../img/icons/notification.svg';
+import {colors} from "../../../../Helpers/UI/constants";
+import AvatarEx1 from '../../../../img/userAvatarEx.png';
+
 import {ButtonWrapper, PageContainer, SectionHeader} from "../../../../Helpers/UI";
 import Header from "../../../header";
 import {ReactComponent as ArrowLeft} from "../../../../img/icons/chevron-left.svg";
 import CheckIcon from "../../../../img/icons/check.svg";
 import {CustomButton} from "../../../common/CustomButton";
 import {ReactComponent as PlayCircleIcon} from "../../../../img/icons/play.svg";
+import {PageWrapper} from "../../../common/PageWrapper";
+import {setActiveGameAC} from "../../../../store/games/actions";
+import {useDispatch, useSelector} from "react-redux";
+import {setGuestUserAC} from "../../../../store/auth/actions";
+import {guestUserDataSelector} from "../../../../store/auth/selectors";
 
 
-export default function ChooseAvatarAndNickname() {
+export default function ChooseAvatarAndNickname({inviteUrl}) {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const guestUserData = useSelector(guestUserDataSelector);
     const [activeBackgroundColor, setActiveBackgroundColor] = useState();
+    const [activeAvatarIcon, setActiveAvatarIcon] = useState(AvatarEx1);
     const [nickname, setNickname] = useState('');
 
     const backgroundColors = [
@@ -38,8 +48,32 @@ export default function ChooseAvatarAndNickname() {
         console.log(e.currentTarget)
     }
 
+    const handleSavePlayer = () => {
+        const userData = {
+            displayName: nickname,
+            avatarBackground: activeBackgroundColor,
+            avatarUrl: activeAvatarIcon
+        }
+        dispatch(setGuestUserAC(userData))
+    }
+
+    useEffect(() => {
+        if (inviteUrl) {
+            const activeGame = decodeURIComponent(inviteUrl).split('___')[1]
+            if(activeGame) {
+                dispatch(setActiveGameAC({name: activeGame}))
+            }
+        }
+    }, [])
+
+    useEffect(() => {
+        if (guestUserData) {
+            navigate(inviteUrl)
+        }
+    }, [guestUserData])
+
     return (
-        <AvatarPageContainer backgroundColor={colors.cream}>
+        <PageWrapper backgroundColor={colors.cream}>
             <Header leftIcon={<ArrowLeft/>} coloredLogo marginBottom='60px'/>
             <SectionHeader color={colors.blue} center>Choose avatar & nickname</SectionHeader>
             <SliderWrapper>
@@ -66,6 +100,7 @@ export default function ChooseAvatarAndNickname() {
             <BackgroundsWrapper>
                 {backgroundColors.map(color =>
                     <ColorItem color={color}
+                               key={color}
                                onClick={() => setActiveBackgroundColor(color)}
                                isActive={color === activeBackgroundColor}/>
                 )}
@@ -73,11 +108,10 @@ export default function ChooseAvatarAndNickname() {
 
             <NickNameInput placeholder='nickname' value={nickname} onChange={(e) => setNickname(e.currentTarget.value)}/>
 
-
             <ButtonWrapper>
-                <CustomButton fullWidth buttonText='I’m Ready' icon={<PlayCircleIcon/>} />
+                <CustomButton handleFunction={handleSavePlayer} disabled={!activeBackgroundColor || !nickname} fullWidth buttonText='I’m Ready' icon={<PlayCircleIcon/>} />
             </ButtonWrapper>
-        </AvatarPageContainer>
+        </PageWrapper>
     )
 }
 
@@ -88,6 +122,7 @@ const AvatarPageContainer = styled(PageContainer)`
 
 
 const SliderWrapper = styled.div`
+  max-width: 100vw;
   margin: 16px -16px 32px;
 `
 
