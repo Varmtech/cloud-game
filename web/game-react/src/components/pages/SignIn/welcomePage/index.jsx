@@ -23,7 +23,13 @@ export default function WelcomePage({inviteUrl}) {
     const [loading, setLoading] = useState(false);
     const [guestMode, setGuestMode] = useState(false);
     const elHeight = window.innerHeight
-    const usersWhitelist = ['scottygammon@gmail.com', 'armmkrtchyan07@gmail.com', 'voipam@gmail.com', 'dwaynelord@gmail.com']
+    const usersWhitelist = [
+        'scottygammon@gmail.com',
+        'armmkrtchyan07@gmail.com',
+        'voipam@gmail.com',
+        'dwaynelord@gmail.com',
+        'hello@1up.games',
+    ]
     const handleSingIn = () => {
         dispatch(authUserAC());
     }
