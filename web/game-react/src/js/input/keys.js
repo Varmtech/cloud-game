@@ -4,6 +4,7 @@ export const KEY = (() => {
         B: 'b',
         X: 'x',
         Y: 'y',
+        Z: 'z',
         L: 'l',
         R: 'r',
         START: 'start',

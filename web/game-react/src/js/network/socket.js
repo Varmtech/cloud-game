@@ -43,6 +43,7 @@ export const socket = (() => {
         if (wid) objParams.wid = wid;
         const params = new URLSearchParams(objParams).toString()
         const address = window.location.protocol !== 'https:' ? `ws://localhost:8000/ws?${params}` : `wss:${window.location.host}/ws?${params}`;
+        // const address = window.location.protocol !== 'https:' ? `ws://192.168.178.135:8000/ws?${params}` : `wss:${window.location.host}/ws?${params}`;
         console.info(`[ws] connecting to ${address}`);
         conn = new WebSocket(address);
 

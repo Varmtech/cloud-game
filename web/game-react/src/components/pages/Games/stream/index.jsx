@@ -86,6 +86,7 @@ export default function GameStream({userData, isGuest}) {
             { !gameIsReadyToPlay  && <Loading> <span/> </Loading>}
             <VideoWrapper id='stream_container'>
                 <StreamContainer>
+                    OS- {osLog} -
                      {logs.length ? <LogContainer>
                Keys press log
                {logs.map((log, index) => <div key={log.key+index}>{log.key}</div>)}

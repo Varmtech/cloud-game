@@ -39,6 +39,7 @@ function App() {
                 />
                 <Route exact path="inviteFriends"
                        element={
+                           // <InviteFriends/>
                            userData ?
                                <InviteFriends/> :
                                <Navigate to='/'/>
@@ -46,6 +47,7 @@ function App() {
                 />
                 <Route exact path="playGame"
                        element={
+                           // <GameStream userData={userData || guestUserData} isGuest={!!inviteUrl}/>
                            userData || guestUserData ?
                                <GameStream userData={userData || guestUserData} isGuest={!!inviteUrl}/> :
                                <Navigate to='/'/>
@@ -53,6 +55,7 @@ function App() {
                 />
                 <Route exact path="gameList"
                        element={
+                               // <GameList/>
                            userData ?
                                <GameList/> :
                                <Navigate to='/'/>
