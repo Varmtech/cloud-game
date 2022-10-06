@@ -80,7 +80,7 @@ export const joystick = (() => {
     function checkJoystickState() {
         let gamepad = navigator.getGamepads()[joystickIdx];
         if (gamepad) {
-            if (dpadMode) {
+            // if (dpadMode) {
                 // axis -> dpad
                 let corX = gamepad.axes[0]; // -1 -> 1, left -> right
                 let corY = gamepad.axes[1]; // -1 -> 1, up -> down
@@ -88,11 +88,11 @@ export const joystick = (() => {
                 checkJoystickAxisState(KEY.RIGHT, corX >= 0.5);
                 checkJoystickAxisState(KEY.UP, corY <= -0.5);
                 checkJoystickAxisState(KEY.DOWN, corY >= 0.5);
-            } else {
+            // } else {
                 gamepad.axes.forEach(function (value, index) {
                     checkJoystickAxis(index, value);
                 });
-            }
+            // }
 
             // normal button map
             Object.keys(joystickMap).forEach(function (btnIdx) {
