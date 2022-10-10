@@ -11,8 +11,17 @@ import (
 	"github.com/giongto35/cloud-game/v2/pkg/session"
 )
 
-func (bc *BrowserClient) handleHeartbeat() cws.PacketHandler {
-	return func(resp cws.WSPacket) cws.WSPacket { return resp }
+func (bc *BrowserClient) handleHeartbeat(o *Server) cws.PacketHandler {
+	return func(resp cws.WSPacket) cws.WSPacket {
+		resp.SessionID = bc.SessionID
+		wc, ok := o.workerClients[bc.WorkerID]
+		if !ok {
+			return cws.EmptyPacket
+		}
+		resp.ID = api.Players
+		heartbeat := wc.SyncSend(resp)
+		return heartbeat
+	}
 }
 
 func (bc *BrowserClient) handleInitWebrtc(o *Server) cws.PacketHandler {

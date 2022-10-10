@@ -3,6 +3,7 @@ package room
 import (
 	"bytes"
 	"encoding/gob"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -58,6 +59,25 @@ type Room struct {
 	rec *recorder.Recording
 
 	vPipe *encoder.VideoPipe
+
+	// Session ID Player map
+	Players map[string]*Player
+}
+
+type Player struct {
+	Index            int    `json:"index"`
+	DisplayName      string `json:"display_name"`
+	Email            string `json:"email"`
+	AvatarUrl        string `json:"avatar_url"`
+	AvatarBackground string `json:"avatar_background"`
+}
+
+func (p *Player) From(playerInfo string) error {
+	err := json.Unmarshal([]byte(playerInfo), p)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 const (
@@ -144,6 +164,8 @@ func NewRoom(roomID string, game games.GameMetadata, recUser string, rec bool, o
 		onlineStorage: onlineStorage,
 
 		Done: make(chan struct{}, 1),
+
+		Players: make(map[string]*Player),
 	}
 
 	// Check if room is on local storage, if not, pull from GCS to local storage
@@ -255,11 +277,21 @@ func isGameOnLocal(path string) bool {
 	return !errors.Is(err, os.ErrNotExist)
 }
 
-func (r *Room) AddConnectionToRoom(peerconnection *webrtc.WebRTC) {
+func (r *Room) AddConnectionToRoom(peerconnection *webrtc.WebRTC, sessionID string, player *Player) {
 	peerconnection.AttachRoomID(r.ID)
 	r.rtcSessions = append(r.rtcSessions, peerconnection)
 
+	r.Players[sessionID] = player
+
 	go r.startWebRTCSession(peerconnection)
+}
+
+func (r *Room) GetPlayers() []*Player {
+	var players []*Player
+	for _, player := range r.Players {
+		players = append(players, player)
+	}
+	return players
 }
 
 func (r *Room) UpdatePlayerIndex(peerconnection *webrtc.WebRTC, playerIndex int) {

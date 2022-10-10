@@ -19,7 +19,7 @@ func (s *Server) useragentRoutes(bc *BrowserClient) {
 	if bc == nil {
 		return
 	}
-	bc.Receive(api.Heartbeat, bc.handleHeartbeat())
+	bc.Receive(api.Heartbeat, bc.handleHeartbeat(s))
 	bc.Receive(api.InitWebrtc, bc.handleInitWebrtc(s))
 	bc.Receive(api.Answer, bc.handleAnswer(s))
 	bc.Receive(api.IceCandidate, bc.handleIceCandidate(s))

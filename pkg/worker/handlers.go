@@ -149,13 +149,14 @@ func (h *Handler) GetCoordinatorClient() *CoordinatorClient {
 }
 
 // detachPeerConn detaches a peerconnection from the current room.
-func (h *Handler) detachPeerConn(pc *webrtc.WebRTC) {
+func (h *Handler) detachPeerConn(pc *webrtc.WebRTC, sessionID string) {
 	log.Printf("[worker] closing peer connection")
 	gameRoom := h.getRoom(pc.RoomID)
 	if gameRoom == nil || gameRoom.IsEmpty() {
 		return
 	}
 	gameRoom.RemoveSession(pc)
+	delete(gameRoom.Players, sessionID)
 	if gameRoom.IsEmpty() {
 		log.Printf("[worker] closing an empty room")
 		gameRoom.Close()

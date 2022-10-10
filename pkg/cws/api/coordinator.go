@@ -8,6 +8,7 @@ const (
 	RegisterRoom = "register_room"
 	Heartbeat    = "heartbeat"
 	IceCandidate = "ice_candidate"
+	Players      = "players"
 
 	NoData = ""
 

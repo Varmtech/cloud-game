@@ -34,6 +34,9 @@ type (
 		RoomID      string `json:"room_id"`
 		PlayerIndex int    `json:"player_index"`
 
+		PlayerInfo string `json:"player_info"`
+		Players    string `json:"players"`
+
 		PacketID string `json:"packet_id"`
 		// Globally ID of a browser session
 		SessionID string `json:"session_id"`

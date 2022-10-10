@@ -1,6 +1,7 @@
 package worker
 
 import (
+	"encoding/json"
 	"log"
 	"strconv"
 
@@ -27,7 +28,7 @@ func (h *Handler) handleTerminateSession() cws.PacketHandler {
 		if session != nil {
 			session.Close()
 			delete(h.sessions, resp.SessionID)
-			h.detachPeerConn(session.peerconnection)
+			h.detachPeerConn(session.peerconnection, resp.SessionID)
 		} else {
 			log.Printf("Error: No session for ID: %s\n", resp.SessionID)
 		}
@@ -106,10 +107,28 @@ func (h *Handler) handleIceCandidate() cws.PacketHandler {
 	}
 }
 
+func (h *Handler) handlePlayers() cws.PacketHandler {
+	return func(resp cws.WSPacket) (req cws.WSPacket) {
+		session := h.getSession(resp.SessionID)
+		rm := h.getRoom(session.RoomID)
+		var jsonPlayers []byte
+		if rm != nil {
+			jsonPlayers, _ = json.Marshal(rm.GetPlayers())
+
+		}
+
+		return cws.WSPacket{
+			ID:      api.Heartbeat,
+			RoomID:  resp.RoomID,
+			Players: string(jsonPlayers),
+		}
+	}
+}
+
 func (h *Handler) handleGameStart() cws.PacketHandler {
 	return func(resp cws.WSPacket) (req cws.WSPacket) {
-		log.Println("Received a start request from coordinator")
 		session := h.getSession(resp.SessionID)
+		log.Println("Received a start request from coordinator, sessionId:", resp.SessionID)
 		if session == nil {
 			log.Printf("error: no session with id: %s", resp.SessionID)
 			return cws.EmptyPacket
@@ -129,10 +148,13 @@ func (h *Handler) handleGameStart() cws.PacketHandler {
 			log.Printf("RECORD OFF")
 		}
 
-		room := h.startGameHandler(game, rom.RecordUser, rom.Record, resp.RoomID, resp.PlayerIndex, session.peerconnection)
+		player := room.Player{}
+		player.From(resp.PlayerInfo)
+		room := h.startGameHandler(game, rom.RecordUser, rom.Record, resp.RoomID, resp.PlayerIndex, session.peerconnection, &player, resp.SessionID)
 		session.RoomID = room.ID
 		// TODO: can data race (and it does)
 		h.rooms[room.ID] = room
+
 		return cws.WSPacket{ID: api.GameStart, RoomID: room.ID}
 	}
 }
@@ -146,7 +168,7 @@ func (h *Handler) handleGameQuit() cws.PacketHandler {
 			room := h.getRoom(session.RoomID)
 			// Defensive coding, check if the peerconnection is in room
 			if room.IsPCInRoom(session.peerconnection) {
-				h.detachPeerConn(session.peerconnection)
+				h.detachPeerConn(session.peerconnection, resp.SessionID)
 			}
 		} else {
 			log.Printf("Error: No session for ID: %s\n", resp.SessionID)
@@ -277,7 +299,7 @@ func (h *Handler) handleGameRecording() cws.PacketHandler {
 }
 
 // startGameHandler starts a game if roomID is given, if not create new room
-func (h *Handler) startGameHandler(game games.GameMetadata, recUser string, rec bool, existedRoomID string, playerIndex int, peerconnection *webrtc.WebRTC) *room.Room {
+func (h *Handler) startGameHandler(game games.GameMetadata, recUser string, rec bool, existedRoomID string, playerIndex int, peerconnection *webrtc.WebRTC, player *room.Player, sessionID string) *room.Room {
 	log.Printf("Loading game: %v\n", game.Name)
 	// If we are connecting to coordinator, request corresponding serverID based on roomID
 	// TODO: check if existedRoomID is in the current server
@@ -301,8 +323,8 @@ func (h *Handler) startGameHandler(game games.GameMetadata, recUser string, rec 
 	// Attach peerconnection to room. If PC is already in room, don't detach
 	log.Println("Is PC in room", room.IsPCInRoom(peerconnection))
 	if !room.IsPCInRoom(peerconnection) {
-		h.detachPeerConn(peerconnection)
-		room.AddConnectionToRoom(peerconnection)
+		h.detachPeerConn(peerconnection, sessionID)
+		room.AddConnectionToRoom(peerconnection, sessionID, player)
 	}
 
 	// Register room to coordinator if we are connecting to coordinator

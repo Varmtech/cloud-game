@@ -12,6 +12,7 @@ func (h *Handler) routes() {
 	h.oClient.Receive(api.InitWebrtc, h.handleInitWebrtc())
 	h.oClient.Receive(api.Answer, h.handleAnswer())
 	h.oClient.Receive(api.IceCandidate, h.handleIceCandidate())
+	h.oClient.Receive(api.Players, h.handlePlayers())
 
 	h.oClient.Receive(api.GameStart, h.handleGameStart())
 	h.oClient.Receive(api.GameQuit, h.handleGameQuit())
