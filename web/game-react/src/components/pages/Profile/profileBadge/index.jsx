@@ -10,18 +10,18 @@ import {userDataSelector} from "../../../../store/auth/selectors";
 
 export default function ProfileBadge() {
     const userData = useSelector(userDataSelector);
-    const [trueAvatar, setTrueAvatar] = useState(userData && userData.avatarUrl);
+    const [trueAvatar, setTrueAvatar] = useState(userData && userData.avatar_url);
 
     return (
         <BadgeContainer>
             <UserAvatar
-                src={trueAvatar ? userData.avatarUrl : DefaultAvatar}
+                src={trueAvatar ? userData.avatar_url : DefaultAvatar}
                 onError={(e) => {
                     e.target.onerror = null; // prevents looping
                     setTrueAvatar(false);
                 }}
             />
-            <UserInfo>{userData ? userData.displayName : ''}</UserInfo>
+            <UserInfo>{userData ? userData.display_name : ''}</UserInfo>
             <NotificationIconWrapper>
                 <NotificationIcon />
             </NotificationIconWrapper>

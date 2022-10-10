@@ -7,6 +7,7 @@ import {
     SET_JOYSTICK_LOG,
     SET_LOG,
     SET_OS_LOG,
+    SET_PLAYERS_LIST,
 } from './actions';
 
 const initialState = {
@@ -18,7 +19,8 @@ const initialState = {
     osLogs: '',
     gameShareLink: '',
     gameIsReadyToPlay: false,
-    getGamesLoading: false
+    getGamesLoading: false,
+    playersList: []
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -36,6 +38,10 @@ export default (state = initialState, { type, payload }) => {
         }
         case SET_GAME_SHARE_LINK: {
             newState.gameShareLink = payload.link;
+            return newState;
+        }
+        case SET_PLAYERS_LIST: {
+            newState.playersList = payload.players;
             return newState;
         }
         case SET_ACTIVE_GAME: {

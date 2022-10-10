@@ -14,13 +14,13 @@ import avatarUrl3 from "../../../img/avatar-man2.png";
 import avatarUrl2 from "../../../img/avatar-m3.png";
 import avatarUrl4 from "../../../img/avatar-w.png";
 import avatarUrl5 from "../../../img/avatar-w2.png";
-import PlayerBadge from "../Games/playerBadge";
 import {CustomButton} from "../../common/CustomButton";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import Example from "./example";
 import GameList from "../Games";
 import {Link} from "react-router-dom";
+import PlayerAvatar from "../Games/playerAvatar";
 
 export default function AddPlayerToGame() {
     const [gamersList, setGamersList] = useState([])
@@ -56,12 +56,12 @@ export default function AddPlayerToGame() {
                     <LandscapeMode>
                         <PlayersSection>
                             <GamerItem>
-                                <PlayerBadge player={{avatar: gamersList[0] && gamersList[0].avatarUrl}} size={80}/>
+                                <PlayerAvatar player={{avatar: gamersList[0] && gamersList[0].avatarUrl}} size={80}/>
                                 <PlayerName>{gamersList[0] && gamersList[0].name === 'MyUser' ? 'You' : gamersList[0] && gamersList[0].name} ({gamersList[0] && gamersList[0].host ? 'Host' : ''})</PlayerName>
                             </GamerItem>
                             <PlayersSeparator />
                             <GamerItem>
-                                <PlayerBadge player={{avatar: gamersList[1] && gamersList[0].avatarUrl}} size={80}/>
+                                <PlayerAvatar player={{avatar: gamersList[1] && gamersList[0].avatarUrl}} size={80}/>
                                 <PlayerName>{gamersList[1] && gamersList[1].name}</PlayerName>
                             </GamerItem>
                         </PlayersSection>
@@ -70,12 +70,12 @@ export default function AddPlayerToGame() {
                         <PlayersSection leftSide={true}>
 
                             <GamerItem>
-                                <PlayerBadge player={{avatar: gamersList[2] && gamersList[2].avatarUrl}} size={80}/>
+                                <PlayerAvatar player={{avatar: gamersList[2] && gamersList[2].avatarUrl}} size={80}/>
                                 <PlayerName>{gamersList[2] && gamersList[2].name }</PlayerName>
                             </GamerItem>
                             <PlayersSeparator />
                             <GamerItem>
-                                <PlayerBadge player={{avatar: gamersList[3] && gamersList[3].avatarUrl}} size={80}/>
+                                <PlayerAvatar player={{avatar: gamersList[3] && gamersList[3].avatarUrl}} size={80}/>
                                 <PlayerName>{gamersList[3] && gamersList[3].name}</PlayerName>
                             </GamerItem>
                         </PlayersSection>

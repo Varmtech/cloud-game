@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import { useDrag } from 'react-dnd'
-import PlayerBadge from "../../Games/playerBadge";
+import PlayerAvatar from "../../Games/playerBadge";
 import styled from "styled-components";
 import {colors} from "../../../../Helpers/UI/constants";
 
@@ -26,13 +26,13 @@ const Box = memo(function Box({ spectator, isDropped, key, index }) {
                 <>
                     <Separator/>
                     <SpectatorItem ref={drag} style={{ opacity }} data-testid="box">
-                        <PlayerBadge player={{avatar: spectator.avatarUrl}} size={66}/>
+                        <PlayerAvatar player={{avatar: spectator.avatarUrl}} size={66}/>
                         <PlayerName>{spectator.name}</PlayerName>
                     </SpectatorItem>
                 </>
                 :
                 <SpectatorItem ref={drag} style={{ opacity }} data-testid="box">
-                    <PlayerBadge player={{avatar: spectator.avatarUrl}} size={66}/>
+                    <PlayerAvatar player={{avatar: spectator.avatarUrl}} size={66}/>
                     <PlayerName>{spectator.name}</PlayerName>
                 </SpectatorItem>}
         </>

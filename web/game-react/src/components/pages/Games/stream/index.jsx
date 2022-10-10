@@ -2,15 +2,10 @@ import React, {useEffect, useState} from "react";
 import styled from 'styled-components'
 import {useDispatch, useSelector} from "react-redux";
 import {
-    gameIsReadyToPlaySelector, gameShareLinkSelector,
+    gameIsReadyToPlaySelector, gameShareLinkSelector, playersListSelector,
 } from "../../../../store/games/selectors";
 import {colors} from "../../../../Helpers/UI/constants";
 import useScript from "../../../../hooks/useScript";
-import PlayerBadge from "../playerBadge";
-import avatarUrl1 from "../../../../img/avatar-man.png";
-import avatarUrl2 from "../../../../img/avatar-m3.png";
-import avatarUrl3 from "../../../../img/avatar-man2.png";
-import avatarUrl4 from "../../../../img/avatar-w.png";
 import {LoadingContainer} from "../../../../Helpers/UI";
 import {setGameIsReadyToPlayAC} from "../../../../store/games/actions";
 import {event, QUIT_GAME, KEY_RELEASED} from "../../../../js/event/event";
@@ -21,6 +16,7 @@ import {
     logsOsSelector,
     logsSelector
 } from "../../../../store/games/selectors";
+import PlayerAvatar from "../playerAvatar";
 
 
 export default function GameStream({userData, isGuest}) {
@@ -32,15 +28,16 @@ export default function GameStream({userData, isGuest}) {
     const osLog = useSelector(logsOsSelector);
     const gameIsReadyToPlay = useSelector(gameIsReadyToPlaySelector);
     const gameShareLink = useSelector(gameShareLinkSelector);
+    const playersList = useSelector(playersListSelector);
     const dispatch = useDispatch()
     const screen = window;
     const [isLandscapeMode, setIsLandscapeMode] = useState(screen.innerHeight < screen.innerWidth);
     const [shareMode, setShareMode] = useState(true);
-    const [gamersList, setGamersList] = useState([{id: 'gamer1', name: 'User 1', host: true, avatarUrl: avatarUrl1},
+/*    const [gamersList, setGamersList] = useState([{id: 'gamer1', name: 'User 1', host: true, avatarUrl: avatarUrl1},
         {id: 'gamer2', name: 'User2', host: false, avatarUrl: avatarUrl2},
         {id: 'gamer3', name: 'User3', host: false, avatarUrl: avatarUrl3},
         {id: 'gamer4', name: 'User4', host: false, avatarUrl: avatarUrl4},
-    ])
+    ])*/
 
     const [shareErrorMessage, setShareErrorMessage] = useState('')
     // const [shareLink, setShareLink] = useState("https://1up.games")
@@ -80,13 +77,11 @@ export default function GameStream({userData, isGuest}) {
             event.pub(QUIT_GAME);
         }
     }, [])
-
     return (
         <>
             { !gameIsReadyToPlay  && <Loading> <span/> </Loading>}
             <VideoWrapper id='stream_container'>
                 <StreamContainer>
-                    OS- {osLog} -
                      {logs.length ? <LogContainer>
                Keys press log
                {logs.map((log, index) => <div key={log.key+index}>{log.key}</div>)}
@@ -98,13 +93,25 @@ export default function GameStream({userData, isGuest}) {
            </LogJoyContainer> : ''}
                     <PlayersSection>
                         <GamerItem>
-                            <PlayerBadge player={{avatar: !isGuest ? userData && userData.avatarUrl : gamersList[1] && gamersList[1].avatarUrl}} size={80} />
-                            <PlayerName>{!isGuest ? 'You' : gamersList[0] && gamersList[0].name} (host)</PlayerName>
+                            {playersList[0] ? (
+                                <>
+                                    <PlayerAvatar player={playersList[0]} size={88} />
+                                    <PlayerName>{playersList[0].display_name}</PlayerName>
+                                </>
+                            ) : (
+                                <NoPlayer />
+                            )}
                         </GamerItem>
                         <PlayersSeparator/>
                         <GamerItem>
-                            <PlayerBadge player={{avatar: isGuest ? userData && userData.avatarUrl : gamersList[1] && gamersList[0].avatarUrl}} size={80}/>
-                            <PlayerName>{isGuest ? 'You' : gamersList[1] && gamersList[1].name}</PlayerName>
+                            {playersList[2] ? (
+                                <>
+                                    <PlayerAvatar player={playersList[2]} size={88} />
+                                    <PlayerName>{playersList[2].display_name}</PlayerName>
+                                </>
+                            ) : (
+                                <NoPlayer />
+                            )}
                         </GamerItem>
                     </PlayersSection>
                     {shareMode && (
@@ -117,13 +124,25 @@ export default function GameStream({userData, isGuest}) {
                     <GameVideo isLandscapeMode={isLandscapeMode} id="stream" className="game-screen" hidden muted playsInline preload="none" />
                     <PlayersSection leftSide={true}>
                         <GamerItem>
-                            <PlayerBadge player={{avatar: gamersList[2] && gamersList[2].avatarUrl}} size={80} />
-                            <PlayerName>{gamersList[2] && gamersList[2].name}</PlayerName>
+                            {playersList[1] ? (
+                                <>
+                                    <PlayerAvatar player={playersList[1]} size={88} />
+                                    <PlayerName>{playersList[1].display_name}</PlayerName>
+                                </>
+                            ) : (
+                                <NoPlayer />
+                            )}
                         </GamerItem>
                         <PlayersSeparator/>
                         <GamerItem>
-                            <PlayerBadge player={{avatar: gamersList[3] && gamersList[3].avatarUrl}} size={80}/>
-                            <PlayerName>{gamersList[3] && gamersList[3].name}</PlayerName>
+                            {playersList[3] ? (
+                                <>
+                                    <PlayerAvatar player={playersList[3]} size={88} />
+                                    <PlayerName>{playersList[3].display_name}</PlayerName>
+                                </>
+                            ) : (
+                                <NoPlayer />
+                            )}
                         </GamerItem>
                     </PlayersSection>
                 </StreamContainer>
@@ -187,6 +206,13 @@ export const StreamContainer = styled.div`
   width: 100%;
 `
 export const GamerItem = styled.div`
+`
+export const NoPlayer = styled.div`
+  width: 88px;
+  height: 88px;
+  background: #E6D8BF;
+  opacity: 0.3;
+  border-radius: 16px;
 `
 export const PlayerName = styled.h4`
   font-family: Roboto, sans-serif;

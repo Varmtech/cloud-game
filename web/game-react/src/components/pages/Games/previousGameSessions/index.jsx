@@ -9,7 +9,7 @@ import SushiCatImageSrc from "../../../../img/games/sushiCat.png";
 import ManAvatarSrc from "../../../../img/avatar-m3.png";
 import WomanAvatarSrc from "../../../../img/avatar-w.png";
 import Woman2AvatarSrc from "../../../../img/avatar-w2.png";
-import PlayerBadge from "../playerBadge";
+import PlayerAvatar from "../playerBadge";
 import {CustomButton} from "../../../common/CustomButton";
 import {ReactComponent as PlayCircleIcon} from "../../../../img/icons/play-circle.svg";
 
@@ -31,9 +31,9 @@ export default function PreviousGameSessions() {
                         <SessionDate>15 May 2022</SessionDate>
 
                         <SessionPlayers>
-                            <PlayerBadge player={{avatar: ManAvatarSrc}} size={32}/>
-                            <PlayerBadge player={{avatar: WomanAvatarSrc}} size={32}/>
-                            <PlayerBadge player={{avatar: Woman2AvatarSrc}} size={32}/>
+                            <PlayerAvatar player={{avatar: ManAvatarSrc}} size={32}/>
+                            <PlayerAvatar player={{avatar: WomanAvatarSrc}} size={32}/>
+                            <PlayerAvatar player={{avatar: Woman2AvatarSrc}} size={32}/>
                         </SessionPlayers>
                     </GameInfo>
                 </GameSessionItem>
@@ -46,9 +46,9 @@ export default function PreviousGameSessions() {
                         <SessionDate>14 May 2022</SessionDate>
 
                         <SessionPlayers>
-                            <PlayerBadge player={{avatar: ManAvatarSrc}} size={32}/>
-                            <PlayerBadge player={{avatar: WomanAvatarSrc}} size={32}/>
-                            <PlayerBadge player={{avatar: Woman2AvatarSrc}} size={32}/>
+                            <PlayerAvatar player={{avatar: ManAvatarSrc}} size={32}/>
+                            <PlayerAvatar player={{avatar: WomanAvatarSrc}} size={32}/>
+                            <PlayerAvatar player={{avatar: Woman2AvatarSrc}} size={32}/>
                         </SessionPlayers>
                     </GameInfo>
                 </GameSessionItem>
@@ -61,9 +61,9 @@ export default function PreviousGameSessions() {
                         <SessionDate>10 May 2022</SessionDate>
 
                         <SessionPlayers>
-                            <PlayerBadge player={{avatar: ManAvatarSrc}} size={32}/>
-                            <PlayerBadge player={{avatar: WomanAvatarSrc}} size={32}/>
-                            <PlayerBadge player={{avatar: Woman2AvatarSrc}} size={32}/>
+                            <PlayerAvatar player={{avatar: ManAvatarSrc}} size={32}/>
+                            <PlayerAvatar player={{avatar: WomanAvatarSrc}} size={32}/>
+                            <PlayerAvatar player={{avatar: Woman2AvatarSrc}} size={32}/>
                         </SessionPlayers>
                     </GameInfo>
                 </GameSessionItem>

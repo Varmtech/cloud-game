@@ -2,7 +2,7 @@ import { memo } from 'react'
 import { useDrop } from 'react-dnd'
 import styled from "styled-components";
 import {colors} from "../../../Helpers/UI/constants";
-import PlayerBadge from "../Games/playerBadge";
+import PlayerAvatar from "../Games/playerBadge";
 const style = {
     height: '12rem',
     width: '12rem',
@@ -46,7 +46,7 @@ export const Dustbin = memo(function Dustbin({ onDrop, player}) {
       <>
           {player.id ?
               <>
-                  <PlayerBadge player={{avatar: player.avatarUrl}} size={66}/>
+                  <PlayerAvatar player={{avatar: player.avatarUrl}} size={66}/>
                   <PlayerName>{player.name === 'MyUser' ? 'You' : player.name} ({player.host ? 'Host' : ''})</PlayerName>
               </> :
               <PlayerEmptyBadge ref={drop} style={{ backgroundColor }} data-testid="dustbin"/>

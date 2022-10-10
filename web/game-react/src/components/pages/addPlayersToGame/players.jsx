@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import update from 'immutability-helper'
 import {Dustbin} from "./dustbin";
 import Box from "./box";
-import PlayerBadge from "../Games/playerBadge";
+import PlayerAvatar from "../Games/playerBadge";
 import {colors} from "../../../Helpers/UI/constants";
 
 
@@ -79,7 +79,7 @@ export const Players = memo(function Players({gamersList, spectatorsList}) {
                     <GamerItem>
                         {gamer.id ?
                             <>
-                                <PlayerBadge player={{avatar: gamer.avatarUrl}} size={66}/>
+                                <PlayerAvatar player={{avatar: gamer.avatar_url}} size={66}/>
                                 <PlayerName>{gamer.name === 'MyUser' ? 'You' : gamer.name} ({gamer.host ? 'Host' : ''})</PlayerName>
                             </> :
                             <PlayerEmptyBadge/>
@@ -104,13 +104,13 @@ export const Players = memo(function Players({gamersList, spectatorsList}) {
                         <>
                             <Separator/>
                             <SpectatorItem>
-                                <PlayerBadge player={{avatar: spectator.avatarUrl}} size={66}/>
+                                <PlayerAvatar player={{avatar: spectator.avatarUrl}} size={66}/>
                                 <PlayerName>{spectator.name}</PlayerName>
                             </SpectatorItem>
                         </>
                         :
                         <SpectatorItem>
-                            <PlayerBadge player={{avatar: spectator.avatarUrl}} size={66}/>
+                            <PlayerAvatar player={{avatar: spectator.avatarUrl}} size={66}/>
                             <PlayerName>{spectator.name}</PlayerName>
                         </SpectatorItem>
                 )}*/}

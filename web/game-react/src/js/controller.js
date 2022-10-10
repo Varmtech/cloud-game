@@ -29,7 +29,9 @@ import {
     RECORDING_STATUS_CHANGED,
     RECORDING_TOGGLED,
     SETTINGS_CHANGED,
-    SETTINGS_CLOSED, STATS_TOGGLE
+    SETTINGS_CLOSED,
+    STATS_TOGGLE,
+    UPDATE_PLAYERS_LIST
 } from "./event/event";
 import {
     CONNECTION_CLOSED,
@@ -52,7 +54,7 @@ import {settings} from "./settings/settings";
 import {opts} from "./settings/opts";
 import {stats} from "./stats/stats";
 import store from "../store";
-import {setGameShareLinkAC, setLogAC} from "../store/games/actions";
+import {setGameShareLinkAC, setLogAC, setPlayersListAC} from "../store/games/actions";
 
 (() => {
     console.log('controller')
@@ -60,6 +62,7 @@ import {setGameShareLinkAC, setLogAC} from "../store/games/actions";
     let state;
     let lastState;
 
+    const playersList = {}
     // first user interaction
     let interacted = false;
 
@@ -289,6 +292,20 @@ import {setGameShareLinkAC, setLogAC} from "../store/games/actions";
         event.pub(DPAD_TOGGLE, {checked: toggle.checked});
     };
 
+    const handleUpdatePlayersList = (data) => {
+        let shouldUpdate = false;
+        data.players.map((player, index) => {
+            if (!playersList[index] || (player.email ? (playersList[index].email !== player.email) : playersList[index].display_name !== player.display_name)) {
+                playersList[index] = player;
+                shouldUpdate = true
+            }
+        })
+
+        if (shouldUpdate) {
+            store.dispatch(setPlayersListAC(data.players))
+        }
+    };
+
     const handleRecording = (data) => {
         const {recording, userName} = data;
         socket.toggleRecording(recording, userName);
@@ -471,6 +488,7 @@ import {setGameShareLinkAC, setLogAC} from "../store/games/actions";
     };
 
     // subscriptions
+    event.sub(UPDATE_PLAYERS_LIST, (data) => handleUpdatePlayersList(data));
     event.sub(GAME_ROOM_AVAILABLE, onGameRoomAvailable, 2);
     event.sub(GAME_SAVED, () => message.show('Saved'));
     event.sub(GAME_LOADED, () => message.show('Loaded'));

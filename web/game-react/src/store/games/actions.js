@@ -1,6 +1,7 @@
 export const GET_GAMES = 'GET_GAMES';
 export const SET_GAMES = 'SET_GAMES';
 export const SET_GAME_SHARE_LINK = 'SET_GAME_SHARE_LINK';
+export const SET_PLAYERS_LIST = 'SET_PLAYERS_LIST';
 export const SET_ACTIVE_GAME = 'SET_ACTIVE_GAME';
 export const SET_OS_LOG = 'SET_OS_LOG';
 export const SET_JOYSTICK_LOG = 'SET_JOYSTICK_LOG';
@@ -24,6 +25,14 @@ export function setGameShareLinkAC(link) {
     return {
         type: SET_GAME_SHARE_LINK,
         payload: { link }
+    };
+}
+
+
+export function setPlayersListAC(players) {
+    return {
+        type: SET_PLAYERS_LIST,
+        payload: { players }
     };
 }
 
