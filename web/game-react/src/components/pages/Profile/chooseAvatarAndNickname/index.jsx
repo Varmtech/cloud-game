@@ -4,11 +4,8 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import styled from 'styled-components'
 import 'swiper/css';
 import "swiper/css/pagination";
-import {ReactComponent as NotificationIcon} from '../../../../img/icons/notification.svg';
-import {colors} from "../../../../Helpers/UI/constants";
-import AvatarEx1 from '../../../../img/userAvatarEx.png';
-
 import {ButtonWrapper, PageContainer, SectionHeader} from "../../../../Helpers/UI";
+// import {ReactComponent as NotificationIcon} from '../../../../img/icons/notification.svg';
 import Header from "../../../header";
 import {ReactComponent as ArrowLeft} from "../../../../img/icons/chevron-left.svg";
 import CheckIcon from "../../../../img/icons/check.svg";
@@ -19,14 +16,53 @@ import {setActiveGameAC} from "../../../../store/games/actions";
 import {useDispatch, useSelector} from "react-redux";
 import {setGuestUserAC} from "../../../../store/auth/actions";
 import {guestUserDataSelector} from "../../../../store/auth/selectors";
+import {colors} from "../../../../Helpers/UI/constants";
+import Avatar0 from '../../../../img/avatars/FinalDelivery_male01.svg';
+import Avatar1 from '../../../../img/avatars/FinalDelivery_other01.svg';
+import Avatar2 from '../../../../img/avatars/FinalDelivery_male02.svg';
+import Avatar3 from '../../../../img/avatars/FinalDelivery_other02.svg';
+import Avatar4 from '../../../../img/avatars/FinalDelivery_male03.svg';
+import Avatar5 from '../../../../img/avatars/FinalDelivery_other03.svg';
+import Avatar6 from '../../../../img/avatars/FinalDelivery_male04.svg';
+import Avatar7 from '../../../../img/avatars/FinalDelivery_other04.svg';
+import Avatar8 from '../../../../img/avatars/FinalDelivery_male05.svg';
+import Avatar9 from '../../../../img/avatars/FinalDelivery_other05.svg';
+import Avatar10 from '../../../../img/avatars/FinalDelivery_male06.svg';
+import Avatar11 from '../../../../img/avatars/FinalDelivery_female06.svg';
+import Avatar12 from '../../../../img/avatars/FinalDelivery_other06.svg';
+import Avatar13 from '../../../../img/avatars/FinalDelivery_male07.svg';
+import Avatar14 from '../../../../img/avatars/FinalDelivery_female07.svg';
+import Avatar15 from '../../../../img/avatars/FinalDelivery_other07.svg';
+import Avatar16 from '../../../../img/avatars/FinalDelivery_male08.svg';
 
+
+
+const avatarsMap = [
+    Avatar0,
+    Avatar1,
+    Avatar2,
+    Avatar3,
+    Avatar4,
+    Avatar5,
+    Avatar6,
+    Avatar7,
+    Avatar8,
+    Avatar9,
+    Avatar10,
+    Avatar11,
+    Avatar12,
+    Avatar13,
+    Avatar14,
+    Avatar15,
+    Avatar16
+]
 
 export default function ChooseAvatarAndNickname({inviteUrl}) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const guestUserData = useSelector(guestUserDataSelector);
     const [activeBackgroundColor, setActiveBackgroundColor] = useState();
-    const [activeAvatarIcon, setActiveAvatarIcon] = useState(AvatarEx1);
+    const [activeAvatarIcon, setActiveAvatarIcon] = useState(avatarsMap[0]);
     const [nickname, setNickname] = useState('');
 
     const backgroundColors = [
@@ -84,14 +120,16 @@ export default function ChooseAvatarAndNickname({inviteUrl}) {
                     grabCursor={true}
 
                     className="avatar_slider"
-                    onSlideChange={() => console.log('slide change')}
-                    onSwiper={(swiper) => console.log(swiper)}
+                    onSlideChange={(item) => setActiveAvatarIcon(avatarsMap[item.activeIndex])}
+                    onSwiper={(swiper) => console.log('on swiper ... ')}
                 >
-                    <SwiperSlide><SliderImage src={AvatarEx1} alt=""/></SwiperSlide>
-                    <SwiperSlide><SliderImage src={AvatarEx1} alt=""/></SwiperSlide>
-                    <SwiperSlide><SliderImage src={AvatarEx1} alt=""/> </SwiperSlide>
-                    <SwiperSlide><SliderImage src={AvatarEx1} alt=""/></SwiperSlide>
-                    <SwiperSlide><SliderImage src={AvatarEx1} alt=""/></SwiperSlide>
+                    {avatarsMap.map(avatar => (
+                        <SwiperSlide key={avatar}>
+                            <AvatarBadge backgrond={activeBackgroundColor}>
+                                <SliderImage src={avatar} alt=""/>
+                            </AvatarBadge>
+                        </SwiperSlide>
+                    ))}
                 </Swiper>
             </SliderWrapper>
 
@@ -138,6 +176,13 @@ const BackgroundsWrapper = styled.div`
   @media (max-width: 350px) {
     width: 252px;
   }
+`
+
+export const AvatarBadge = styled.div`
+  background-color: ${props => props.backgrond};
+  border-radius: 48px;
+  height: 100%;
+  width: 100%;
 `
 
 const ColorItem = styled.div`

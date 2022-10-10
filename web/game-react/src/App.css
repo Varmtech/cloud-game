@@ -37,7 +37,7 @@
   display: flex;
   justify-content: center;
 }
-.avatar_slider.swiper-backface-hidden .swiper-slide {
+.avatar_slider .swiper-slide {
   transform: translateZ(0) scale(0.85) translateY(3px);
   opacity: 0.5;
   transition: all 0.2s;
