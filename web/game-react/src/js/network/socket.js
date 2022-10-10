@@ -81,6 +81,9 @@ export const socket = (() => {
                     event.pub(MEDIA_STREAM_CANDIDATE_ADD, {candidate: data.data});
                     break;
                 case 'heartbeat':
+                    if(data.players) {
+                        console.log('PING_RESPONSE received ,,, ', JSON.parse(data.players))
+                    }
                     event.pub(PING_RESPONSE);
                     break;
                 case 'start':
@@ -142,6 +145,21 @@ export const socket = (() => {
     const updatePlayerIndex = (idx) => send({"id": "player_index", "data": idx.toString()});
     const startGame = (gameName, isMobile, roomId, record, recordUser, playerIndex) => {
         const { AuthReducer: { guestUserData, userData } } = store.getState();
+        let playerInfo;
+        if (userData) {
+            playerInfo = {
+                display_name: userData.displayName,
+                email: userData.email,
+                avatar_url: userData.avatarUrl,
+            }
+        } else if (guestUserData) {
+            playerInfo = {
+                display_name: guestUserData.displayName,
+                avatar_background: guestUserData.avatarBackground,
+                avatar_url: guestUserData.avatarUrl
+            }
+        }
+        console.log('playerInfo for start game -- ', playerInfo)
         send({
             "id": "start",
             "data": JSON.stringify({
@@ -151,7 +169,7 @@ export const socket = (() => {
             }),
             "room_id": roomId != null ? roomId : '',
             // "room_id": '',
-            "player_info": JSON.stringify(userData || guestUserData),
+            "player_info": JSON.stringify(playerInfo),
             "player_index": playerIndex
         });
     }
