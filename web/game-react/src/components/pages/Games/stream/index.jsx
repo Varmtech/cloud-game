@@ -77,6 +77,7 @@ export default function GameStream({userData, isGuest}) {
             event.pub(QUIT_GAME);
         }
     }, [])
+
     return (
         <>
             { !gameIsReadyToPlay  && <Loading> <span/> </Loading>}
