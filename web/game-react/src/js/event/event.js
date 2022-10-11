@@ -57,6 +57,7 @@ export const event = (() => {
 export const LATENCY_CHECK_REQUESTED = 'latencyCheckRequested';
 export const PING_REQUEST = 'pingRequest';
 export const PING_RESPONSE = 'pingResponse';
+export const UPDATE_PLAYERS_LIST = 'updatePlayerList';
 
 export const GET_SERVER_LIST = 'getServerList';
 

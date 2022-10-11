@@ -6,3 +6,4 @@ export const gameIsReadyToPlaySelector = (store) => store.GameReducer.gameIsRead
 export const gameListSelector = (store) => store.GameReducer.gameList;
 export const gameLoadingSelector = (store) => store.GameReducer.getGamesLoading;
 export const gameShareLinkSelector = (store) => store.GameReducer.gameShareLink;
+export const playersListSelector = (store) => store.GameReducer.playersList;

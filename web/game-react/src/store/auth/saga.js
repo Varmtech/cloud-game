@@ -9,9 +9,9 @@ function* authUser() {
     auth.onAuthStateChanged(function (user) {
       if (user) {
         const userData = {
-          displayName: user.displayName,
+          display_name: user.displayName,
           email: user.email,
-          avatarUrl: user.photoURL,
+          avatar_url: user.photoURL,
         }
         localStorage.setItem('user', JSON.stringify(userData))
         store.dispatch(authUserSuccessAC(userData))
@@ -27,11 +27,11 @@ function* authUser() {
                 const userData = {
                   display_name: result.user.displayName,
                   email: result.user.email,
-                  profile_url: result.user.photoURL,
+                  avatar_url: result.user.photoURL,
                 }
                 localStorage.setItem('user', JSON.stringify(userData))
                 store.dispatch(saveUserAC(userData))
-                store.dispatch(authUserSuccessAC({displayName: userData.display_name, email: userData.email, avatarUrl: userData.profile_url}))
+                store.dispatch(authUserSuccessAC({userData}))
               }
             }).catch((error) => {
             console.log('error .. ', error)

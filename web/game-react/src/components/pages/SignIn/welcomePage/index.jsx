@@ -28,7 +28,9 @@ export default function WelcomePage({inviteUrl}) {
         'armmkrtchyan07@gmail.com',
         'voipam@gmail.com',
         'dwaynelord@gmail.com',
+        'dwayne.lord@gmail.com',
         'hello@1up.games',
+        'default@mail.com',
     ]
     const handleSingIn = () => {
         dispatch(authUserAC());
@@ -46,7 +48,11 @@ export default function WelcomePage({inviteUrl}) {
                             dispatch(setActiveGameAC({name: activeGame}))
                         }
                     } else {
-                        navigate("/createGameSession");
+                        // if(userData.email === 'default@mail.com') {
+                        //     navigate("/gameList");
+                        // } else {
+                            navigate("/createGameSession");
+                        // }
                     }
                 } else {
                     setGuestMode(true)
@@ -59,6 +65,17 @@ export default function WelcomePage({inviteUrl}) {
         if (userAuthFailed && inviteUrl) {
             navigate("/settings/chooseAvatarAndNickname");
         }
+
+        /* if (userAuthFailed && !inviteUrl) {
+            const userData = {
+                display_name: 'Default User',
+                email: 'default@mail.com',
+                avatar_url: '',
+
+            }
+            // dispatch(saveUserAC(userData))
+            dispatch(authUserSuccessAC({...userData}))
+        } */
     }, [userAuthFailed])
 
     useEffect(() => {

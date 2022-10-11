@@ -57,28 +57,28 @@ const avatarsMap = [
     Avatar16
 ]
 
+const backgroundColors = [
+    '#013094',
+    '#D62500',
+    '#FC8831',
+    '#FDAC00',
+    '#FFFFFF',
+    '#E5D8BF',
+    '#1689B4',
+    '#0C7955',
+    '#C4DAC6',
+    '#E1716C',
+    '#B37B5E',
+    '#9F93E9',
+];
+
 export default function ChooseAvatarAndNickname({inviteUrl}) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const guestUserData = useSelector(guestUserDataSelector);
-    const [activeBackgroundColor, setActiveBackgroundColor] = useState();
+    const [activeBackgroundColor, setActiveBackgroundColor] = useState(backgroundColors[4]);
     const [activeAvatarIcon, setActiveAvatarIcon] = useState(avatarsMap[0]);
     const [nickname, setNickname] = useState('');
-
-    const backgroundColors = [
-        '#013094',
-        '#D62500',
-        '#FC8831',
-        '#FDAC00',
-        '#FFFFFF',
-        '#E5D8BF',
-        '#1689B4',
-        '#0C7955',
-        '#C4DAC6',
-        '#E1716C',
-        '#B37B5E',
-        '#9F93E9',
-    ];
 
     const handleChangeInput = (e) => {
         console.log(e.currentTarget)
@@ -86,9 +86,9 @@ export default function ChooseAvatarAndNickname({inviteUrl}) {
 
     const handleSavePlayer = () => {
         const userData = {
-            displayName: nickname,
-            avatarBackground: activeBackgroundColor,
-            avatarUrl: activeAvatarIcon
+            display_name: nickname,
+            avatar_background: activeBackgroundColor,
+            avatar_url: activeAvatarIcon
         }
         dispatch(setGuestUserAC(userData))
     }

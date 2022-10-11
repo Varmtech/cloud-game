@@ -15,7 +15,7 @@ import {ArrowWrapper, SectionHeader} from "../../../../Helpers/UI";
 import {colors} from "../../../../Helpers/UI/constants";
 import {CustomButton} from "../../../common/CustomButton";
 import {AttachGameBoard, AttachGameContainer, PlusGameIcon} from "../createGameSession";
-import PlayerBadge from "../playerBadge";
+import PlayerAvatar from "../playerBadge";
 
 
 export default function Lobby() {
@@ -33,9 +33,9 @@ export default function Lobby() {
                             <img src={MarioImageSrc} alt=""/>
                         </GameImageWrapper>
                         <PlayersCont>
-                            <PlayerBadge player={{avatar: Player1Srs}} size={22} smSize={16}/>
-                            <PlayerBadge player={{avatar: Player2Srs}} size={22} smSize={16}/>
-                            <PlayerBadge player={{avatar: Player3Srs}} size={22} smSize={16}/>
+                            <PlayerAvatar player={{avatar: Player1Srs}} size={22} smSize={16}/>
+                            <PlayerAvatar player={{avatar: Player2Srs}} size={22} smSize={16}/>
+                            <PlayerAvatar player={{avatar: Player3Srs}} size={22} smSize={16}/>
                         </PlayersCont>
                     </GameSessionItem>
                     <GameSessionItem>
@@ -43,9 +43,9 @@ export default function Lobby() {
                             <img src={SushiCatImageSrc} alt=""/>
                         </GameImageWrapper>
                         <PlayersCont>
-                            <PlayerBadge player={{avatar: Player1Srs}} size={22} smSize={16}/>
-                            <PlayerBadge player={{avatar: Player2Srs}} size={22} smSize={16}/>
-                            <PlayerBadge player={{avatar: Player3Srs}} size={22} smSize={16}/>
+                            <PlayerAvatar player={{avatar: Player1Srs}} size={22} smSize={16}/>
+                            <PlayerAvatar player={{avatar: Player2Srs}} size={22} smSize={16}/>
+                            <PlayerAvatar player={{avatar: Player3Srs}} size={22} smSize={16}/>
                         </PlayersCont>
                     </GameSessionItem>
                     <GameSessionItem>
@@ -53,9 +53,9 @@ export default function Lobby() {
                             <img src={MarioImageSrc} alt=""/>
                         </GameImageWrapper>
                         <PlayersCont>
-                            <PlayerBadge player={{avatar: Player1Srs}} size={22} smSize={16}/>
-                            <PlayerBadge player={{avatar: Player2Srs}} size={22} smSize={16}/>
-                            <PlayerBadge player={{avatar: Player3Srs}} size={22} smSize={16}/>
+                            <PlayerAvatar player={{avatar: Player1Srs}} size={22} smSize={16}/>
+                            <PlayerAvatar player={{avatar: Player2Srs}} size={22} smSize={16}/>
+                            <PlayerAvatar player={{avatar: Player3Srs}} size={22} smSize={16}/>
                         </PlayersCont>
                     </GameSessionItem>
                     <GameSessionItem>
@@ -63,9 +63,9 @@ export default function Lobby() {
                             <img src={SushiCatImageSrc} alt=""/>
                         </GameImageWrapper>
                         <PlayersCont>
-                            <PlayerBadge player={{avatar: Player1Srs}} size={22} smSize={16}/>
-                            <PlayerBadge player={{avatar: Player2Srs}} size={22} smSize={16}/>
-                            <PlayerBadge player={{avatar: Player3Srs}} size={22} smSize={16}/>
+                            <PlayerAvatar player={{avatar: Player1Srs}} size={22} smSize={16}/>
+                            <PlayerAvatar player={{avatar: Player2Srs}} size={22} smSize={16}/>
+                            <PlayerAvatar player={{avatar: Player3Srs}} size={22} smSize={16}/>
                         </PlayersCont>
                     </GameSessionItem>
                     <GameSessionItem>
@@ -73,9 +73,9 @@ export default function Lobby() {
                             <img src={SushiCatImageSrc} alt=""/>
                         </GameImageWrapper>
                         <PlayersCont>
-                            <PlayerBadge player={{avatar: Player1Srs}} size={22} smSize={16}/>
-                            <PlayerBadge player={{avatar: Player2Srs}} size={22} smSize={16}/>
-                            <PlayerBadge player={{avatar: Player3Srs}} size={22} smSize={16}/>
+                            <PlayerAvatar player={{avatar: Player1Srs}} size={22} smSize={16}/>
+                            <PlayerAvatar player={{avatar: Player2Srs}} size={22} smSize={16}/>
+                            <PlayerAvatar player={{avatar: Player3Srs}} size={22} smSize={16}/>
                         </PlayersCont>
                     </GameSessionItem>
                 </GameSessionsCont>

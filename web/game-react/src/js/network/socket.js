@@ -11,7 +11,8 @@ import {
     MEDIA_STREAM_CANDIDATE_ADD,
     MEDIA_STREAM_INITIALIZED,
     MEDIA_STREAM_SDP_AVAILABLE, PING_REQUEST,
-    PING_RESPONSE, RECORDING_STATUS_CHANGED
+    PING_RESPONSE, RECORDING_STATUS_CHANGED,
+    UPDATE_PLAYERS_LIST
 } from "../event/event";
 import store from "../../store";
 
@@ -82,7 +83,7 @@ export const socket = (() => {
                     break;
                 case 'heartbeat':
                     if(data.players) {
-                        console.log('PING_RESPONSE received ,,, ', JSON.parse(data.players))
+                        event.pub(UPDATE_PLAYERS_LIST, {players: JSON.parse(data.players)});
                     }
                     event.pub(PING_RESPONSE);
                     break;
@@ -145,21 +146,7 @@ export const socket = (() => {
     const updatePlayerIndex = (idx) => send({"id": "player_index", "data": idx.toString()});
     const startGame = (gameName, isMobile, roomId, record, recordUser, playerIndex) => {
         const { AuthReducer: { guestUserData, userData } } = store.getState();
-        let playerInfo;
-        if (userData) {
-            playerInfo = {
-                display_name: userData.displayName,
-                email: userData.email,
-                avatar_url: userData.avatarUrl,
-            }
-        } else if (guestUserData) {
-            playerInfo = {
-                display_name: guestUserData.displayName,
-                avatar_background: guestUserData.avatarBackground,
-                avatar_url: guestUserData.avatarUrl
-            }
-        }
-        console.log('playerInfo for start game -- ', playerInfo)
+
         send({
             "id": "start",
             "data": JSON.stringify({
@@ -169,8 +156,8 @@ export const socket = (() => {
             }),
             "room_id": roomId != null ? roomId : '',
             // "room_id": '',
-            "player_info": JSON.stringify(playerInfo),
-            "player_index": playerIndex
+            "player_info": JSON.stringify(userData || guestUserData),
+            "player_index": guestUserData ? 1 : playerIndex
         });
     }
     const quitGame = (roomId) => send({"id": "quit", "data": "", "room_id": roomId});

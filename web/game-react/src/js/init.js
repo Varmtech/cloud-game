@@ -6,6 +6,9 @@ import {socket} from "./network/socket";
 import {keyboard} from "./input/keyboard";
 import {opts} from "./settings/opts";
 import {joystick} from "./input/joystick";
+import {event, KEY_RELEASED} from "./event/event";
+// import store from "../store";
+// import {setLogAC} from "../store/games/actions";
 
 settings.init();
 
@@ -24,7 +27,15 @@ settings.init();
 })();
 
 keyboard.init();
-joystick.init();
+
+const handleKeyRelease = (data) => {
+    if (data.state === 'play') {
+        console.log('should init joystick... ')
+        joystick.init();
+    }
+}
+
+event.sub(KEY_RELEASED, handleKeyRelease);
 stream.init();
 
 const [roomId, zone] = room.loadMaybe();

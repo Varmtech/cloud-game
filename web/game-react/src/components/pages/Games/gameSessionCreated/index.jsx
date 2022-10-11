@@ -8,7 +8,7 @@ import GameImageSrc from "../../../../img/games/mario.png";
 import AvatarUrl from "../../../../img/avatar-man2.png";
 import {ArrowWrapper, ButtonWrapper, SectionHeader} from "../../../../Helpers/UI";
 import {colors} from "../../../../Helpers/UI/constants";
-import PlayerBadge from "../playerBadge";
+import PlayerAvatar from "../playerAvatar";
 import {PageWrapper} from "../../../common/PageWrapper";
 import {useSelector} from "react-redux";
 import {GameContinueButton} from "../index";
@@ -38,10 +38,10 @@ export default function GameSessionCreated() {
                 <GameName>Super Mario</GameName>
                 <PlayersCount>4 players</PlayersCount>
                 <PlayersWrapper>
-                    <PlayerBadge player={{avatar: AvatarUrl}} size={60}/>
-                    <PlayerBadge player={{}} size={60}/>
-                    <PlayerBadge player={{}} size={60}/>
-                    <PlayerBadge player={{}} size={60}/>
+                    <PlayerAvatar player={{avatar: AvatarUrl}} size={60}/>
+                    <PlayerAvatar player={{}} size={60}/>
+                    <PlayerAvatar player={{}} size={60}/>
+                    <PlayerAvatar player={{}} size={60}/>
                     <PlayersJoinNotification>Waiting for players to join</PlayersJoinNotification>
                 </PlayersWrapper>
                 <ButtonWrapper>

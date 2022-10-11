@@ -29,7 +29,9 @@ import {
     RECORDING_STATUS_CHANGED,
     RECORDING_TOGGLED,
     SETTINGS_CHANGED,
-    SETTINGS_CLOSED, STATS_TOGGLE
+    SETTINGS_CLOSED,
+    STATS_TOGGLE,
+    UPDATE_PLAYERS_LIST
 } from "./event/event";
 import {
     CONNECTION_CLOSED,
@@ -52,7 +54,7 @@ import {settings} from "./settings/settings";
 import {opts} from "./settings/opts";
 import {stats} from "./stats/stats";
 import store from "../store";
-import {setGameShareLinkAC, setLogAC} from "../store/games/actions";
+import {setGameShareLinkAC, setLogAC, setPlayersListAC} from "../store/games/actions";
 
 (() => {
     console.log('controller')
@@ -60,6 +62,9 @@ import {setGameShareLinkAC, setLogAC} from "../store/games/actions";
     let state;
     let lastState;
 
+    let joysickState = false
+
+    const playersList = {}
     // first user interaction
     let interacted = false;
 
@@ -215,20 +220,23 @@ import {setGameShareLinkAC, setLogAC} from "../store/games/actions";
 
     // pre-state key press handler
     const onKeyPress = (data) => {
-        store.dispatch(setLogAC(data))
-        const button = keyButtons[data.key];
+        // store.dispatch(setLogAC(data))
+        // const button = keyButtons[data.key];
 
-        if (_dpadArrowKeys.includes(data.key)) {
+        // if (_dpadArrowKeys.includes(data.key)) {
             // button.classList.add('dpad-pressed');
-        } else {
-            if (button) button.classList.add('pressed');
-        }
+        // } else {
+            // if (button) button.classList.add('pressed');
+        // }
 
-        if (state !== app.state.settings) {
-            if (KEY.HELP === data.key) helpScreen.show(true, event);
-        }
+        // if (state !== app.state.settings) {
+        //     if (KEY.HELP === data.key) helpScreen.show(true, event);
+        // }
 
-        state.keyPress(data.key);
+        if (joysickState) {
+            // store.dispatch(setLogAC({key: 'handle key pressed'}))
+            state.keyPress(data.key);
+        }
     };
 
     // pre-state key press handler
@@ -238,17 +246,17 @@ import {setGameShareLinkAC, setLogAC} from "../store/games/actions";
 
     // pre-state key release handler
     const onKeyRelease = data => {
-        const button = keyButtons[data.key];
+        // const button = keyButtons[data.key];
 
-        if (_dpadArrowKeys.includes(data.key)) {
+       /* if (_dpadArrowKeys.includes(data.key)) {
             // button.classList.remove('dpad-pressed');
         } else {
             if (button) button.classList.remove('pressed');
         }
-
-        if (state !== app.state.settings) {
+*/
+        /*if (state !== app.state.settings) {
             if (KEY.HELP === data.key) helpScreen.show(false, event);
-        }
+        }*/
 
         // maybe move it somewhere
         if (!interacted) {
@@ -258,9 +266,15 @@ import {setGameShareLinkAC, setLogAC} from "../store/games/actions";
         }
 
         // change app state if settings
-        if (KEY.SETTINGS === data.key) setState(app.state.settings);
-
-        state.keyRelease(data.key);
+        // if (KEY.SETTINGS === data.key) setState(app.state.settings);
+        // if(data.key !== KEY.JOIN) {
+        if (data.state === 'play') {
+            joysickState = true;
+        }
+        if (joysickState || data.key === KEY.JOIN) {
+            state.keyRelease(data.key);
+        }
+        // }
     };
 
     const updatePlayerIndex = idx => {
@@ -287,6 +301,20 @@ import {setGameShareLinkAC, setLogAC} from "../store/games/actions";
         let toggle = document.getElementById('dpad-toggle');
         toggle.checked = !toggle.checked;
         event.pub(DPAD_TOGGLE, {checked: toggle.checked});
+    };
+
+    const handleUpdatePlayersList = (data) => {
+        let shouldUpdate = false;
+        data.players.map((player, index) => {
+            if (!playersList[index] || (player.email ? (playersList[index].email !== player.email) : playersList[index].display_name !== player.display_name)) {
+                playersList[index] = player;
+                shouldUpdate = true
+            }
+        })
+
+        if (shouldUpdate) {
+            store.dispatch(setPlayersListAC(data.players))
+        }
     };
 
     const handleRecording = (data) => {
@@ -471,6 +499,7 @@ import {setGameShareLinkAC, setLogAC} from "../store/games/actions";
     };
 
     // subscriptions
+    event.sub(UPDATE_PLAYERS_LIST, (data) => handleUpdatePlayersList(data));
     event.sub(GAME_ROOM_AVAILABLE, onGameRoomAvailable, 2);
     event.sub(GAME_SAVED, () => message.show('Saved'));
     event.sub(GAME_LOADED, () => message.show('Loaded'));
