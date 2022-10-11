@@ -99,7 +99,7 @@ export const stream = (() => {
         }, false);
         screen.addEventListener('canplay', () => {
             screen.poster = '';
-            console.log('set game is ready to play ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, ')
+            console.log('set game is ready to play ,,,,,,,,,,,,,,,,,,,')
             store.dispatch(setGameIsReadyToPlayAC(true))
             useCustomScreen(options.mirrorMode === 'mirror');
         }, false);

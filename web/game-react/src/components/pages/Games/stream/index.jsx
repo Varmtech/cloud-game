@@ -11,21 +11,21 @@ import {setGameIsReadyToPlayAC} from "../../../../store/games/actions";
 import {event, QUIT_GAME, KEY_RELEASED} from "../../../../js/event/event";
 import {KEY} from "../../../../js/input/keys";
 import {CustomButton} from "../../../common/CustomButton";
-import {
-    logsJoySelector,
-    logsOsSelector,
-    logsSelector
-} from "../../../../store/games/selectors";
+// import {
+//     logsJoySelector,
+//     logsOsSelector,
+//     logsSelector
+// } from "../../../../store/games/selectors";
 import PlayerAvatar from "../playerAvatar";
 
 
-export default function GameStream({userData, isGuest}) {
+export default function GameStream() {
     useScript('controller.js');
     useScript('init.js');
 
-    const joyLogs = useSelector(logsJoySelector);
-    const logs = useSelector(logsSelector);
-    const osLog = useSelector(logsOsSelector);
+    // const joyLogs = useSelector(logsJoySelector);
+    // const logs = useSelector(logsSelector);
+    // const osLog = useSelector(logsOsSelector);
     const gameIsReadyToPlay = useSelector(gameIsReadyToPlaySelector);
     const gameShareLink = useSelector(gameShareLinkSelector);
     const playersList = useSelector(playersListSelector);
@@ -33,11 +33,6 @@ export default function GameStream({userData, isGuest}) {
     const screen = window;
     const [isLandscapeMode, setIsLandscapeMode] = useState(screen.innerHeight < screen.innerWidth);
     const [shareMode, setShareMode] = useState(true);
-/*    const [gamersList, setGamersList] = useState([{id: 'gamer1', name: 'User 1', host: true, avatarUrl: avatarUrl1},
-        {id: 'gamer2', name: 'User2', host: false, avatarUrl: avatarUrl2},
-        {id: 'gamer3', name: 'User3', host: false, avatarUrl: avatarUrl3},
-        {id: 'gamer4', name: 'User4', host: false, avatarUrl: avatarUrl4},
-    ])*/
 
     const [shareErrorMessage, setShareErrorMessage] = useState('')
     // const [shareLink, setShareLink] = useState("https://1up.games")
@@ -69,6 +64,11 @@ export default function GameStream({userData, isGuest}) {
         event.pub(KEY_RELEASED, { key: KEY.JOIN });
     };
 
+    const handlePlayGame = () => {
+        event.pub(KEY_RELEASED, { key: KEY.JOIN, state: 'play' });
+        setShareMode(false)
+    };
+
     useEffect(() => {
         window.addEventListener("resize", handleDetectScreen);
         return () => {
@@ -83,15 +83,15 @@ export default function GameStream({userData, isGuest}) {
             { !gameIsReadyToPlay  && <Loading> <span/> </Loading>}
             <VideoWrapper id='stream_container'>
                 <StreamContainer>
-                     {logs.length ? <LogContainer>
-               Keys press log
-               {logs.map((log, index) => <div key={log.key+index}>{log.key}</div>)}
-           </LogContainer>: ''}
-           {joyLogs.length ?  <LogJoyContainer>
-               OS- {osLog} -
-               Joystick logs
-               {joyLogs.map((log, index) => <div key={log.key+index}>{log}</div>)}
-           </LogJoyContainer> : ''}
+                    {/* {logs.length ? <LogContainer>
+                        Keys press log
+                        {logs.map((log, index) => <div key={log.key + index}>{log.key}</div>)}
+                    </LogContainer> : ''}
+                    {joyLogs.length ? <LogJoyContainer>
+                        OS- {osLog} -
+                        Joystick logs
+                        {joyLogs.map((log, index) => <div key={log + index}>{log}</div>)}
+                    </LogJoyContainer> : ''} */}
                     <PlayersSection>
                         <GamerItem>
                             {playersList[0] ? (
@@ -118,7 +118,7 @@ export default function GameStream({userData, isGuest}) {
                     {shareMode && (
                         <ShareContainer>
                             <CustomButton buttonText='Invite friends' handleFunction={handleInviteFriend} transparent/>
-                            <CustomButton buttonText='Play' handleFunction={() => setShareMode(false)}/>
+                            <CustomButton buttonText='Play' handleFunction={handlePlayGame}/>
                             <ErrorMessage>{shareErrorMessage}</ErrorMessage>
                         </ShareContainer>)
                     }

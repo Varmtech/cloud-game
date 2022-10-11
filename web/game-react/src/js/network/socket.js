@@ -157,7 +157,7 @@ export const socket = (() => {
             "room_id": roomId != null ? roomId : '',
             // "room_id": '',
             "player_info": JSON.stringify(userData || guestUserData),
-            "player_index": playerIndex
+            "player_index": guestUserData ? 1 : playerIndex
         });
     }
     const quitGame = (roomId) => send({"id": "quit", "data": "", "room_id": roomId});

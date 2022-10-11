@@ -62,6 +62,8 @@ import {setGameShareLinkAC, setLogAC, setPlayersListAC} from "../store/games/act
     let state;
     let lastState;
 
+    let joysickState = false
+
     const playersList = {}
     // first user interaction
     let interacted = false;
@@ -218,20 +220,23 @@ import {setGameShareLinkAC, setLogAC, setPlayersListAC} from "../store/games/act
 
     // pre-state key press handler
     const onKeyPress = (data) => {
-        store.dispatch(setLogAC(data))
-        const button = keyButtons[data.key];
+        // store.dispatch(setLogAC(data))
+        // const button = keyButtons[data.key];
 
-        if (_dpadArrowKeys.includes(data.key)) {
+        // if (_dpadArrowKeys.includes(data.key)) {
             // button.classList.add('dpad-pressed');
-        } else {
-            if (button) button.classList.add('pressed');
-        }
+        // } else {
+            // if (button) button.classList.add('pressed');
+        // }
 
-        if (state !== app.state.settings) {
-            if (KEY.HELP === data.key) helpScreen.show(true, event);
-        }
+        // if (state !== app.state.settings) {
+        //     if (KEY.HELP === data.key) helpScreen.show(true, event);
+        // }
 
-        state.keyPress(data.key);
+        if (joysickState) {
+            // store.dispatch(setLogAC({key: 'handle key pressed'}))
+            state.keyPress(data.key);
+        }
     };
 
     // pre-state key press handler
@@ -241,17 +246,17 @@ import {setGameShareLinkAC, setLogAC, setPlayersListAC} from "../store/games/act
 
     // pre-state key release handler
     const onKeyRelease = data => {
-        const button = keyButtons[data.key];
+        // const button = keyButtons[data.key];
 
-        if (_dpadArrowKeys.includes(data.key)) {
+       /* if (_dpadArrowKeys.includes(data.key)) {
             // button.classList.remove('dpad-pressed');
         } else {
             if (button) button.classList.remove('pressed');
         }
-
-        if (state !== app.state.settings) {
+*/
+        /*if (state !== app.state.settings) {
             if (KEY.HELP === data.key) helpScreen.show(false, event);
-        }
+        }*/
 
         // maybe move it somewhere
         if (!interacted) {
@@ -261,9 +266,15 @@ import {setGameShareLinkAC, setLogAC, setPlayersListAC} from "../store/games/act
         }
 
         // change app state if settings
-        if (KEY.SETTINGS === data.key) setState(app.state.settings);
-
-        state.keyRelease(data.key);
+        // if (KEY.SETTINGS === data.key) setState(app.state.settings);
+        // if(data.key !== KEY.JOIN) {
+        if (data.state === 'play') {
+            joysickState = true;
+        }
+        if (joysickState || data.key === KEY.JOIN) {
+            state.keyRelease(data.key);
+        }
+        // }
     };
 
     const updatePlayerIndex = idx => {
