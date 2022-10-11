@@ -281,16 +281,32 @@ func (r *Room) AddConnectionToRoom(peerconnection *webrtc.WebRTC, sessionID stri
 	peerconnection.AttachRoomID(r.ID)
 	r.rtcSessions = append(r.rtcSessions, peerconnection)
 
-	r.Players[sessionID] = player
-	index := 0
+	maxPlayers := 4
+	playersLen := len(r.Players)
+	if playersLen < maxPlayers {
+		index := 0
 
-	if len(r.Players) > 1 {
-		index = 1
+		if playersLen > 0 {
+			seats := make([]int, maxPlayers)
+			for _, p := range r.Players {
+				seats[p.Index] = p.Index
+			}
+
+			for i := 0; i < len(seats); i++ {
+				if i != seats[i] {
+					index = i
+					break
+				}
+
+			}
+		}
+
+		player.Index = index
+
+		r.Players[sessionID] = player
+
+		r.UpdatePlayerIndex(peerconnection, player.Index)
 	}
-
-	player.Index = index
-
-	r.UpdatePlayerIndex(peerconnection, index)
 
 	go r.startWebRTCSession(peerconnection)
 }
