@@ -309,7 +309,7 @@ func (h *Handler) startGameHandler(game games.GameMetadata, recUser string, rec 
 		log.Println("Got Room from local ", room, " ID: ", existedRoomID)
 		// Create new room and update player index
 		room = h.createNewRoom(game, recUser, rec, existedRoomID)
-		room.UpdatePlayerIndex(peerconnection, playerIndex)
+		//room.UpdatePlayerIndex(peerconnection, playerIndex)
 
 		// Wait for done signal from room
 		go func() {
