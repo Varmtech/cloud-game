@@ -64,7 +64,7 @@ import {setGameShareLinkAC, setLogAC, setPlayersListAC} from "../store/games/act
 
     let joysickState = false
 
-    const playersList = {}
+    let playersList = []
     // first user interaction
     let interacted = false;
 
@@ -305,6 +305,9 @@ import {setGameShareLinkAC, setLogAC, setPlayersListAC} from "../store/games/act
 
     const handleUpdatePlayersList = (data) => {
         let shouldUpdate = false;
+        if (playersList.length > data.players.length) {
+            playersList = []
+        }
         data.players.map(player => {
             if (!playersList[player.index] || (player.email ? (playersList[player.index].email !== player.email) : playersList[player.index].display_name !== player.display_name)) {
                 playersList[player.index] = player;
@@ -312,7 +315,7 @@ import {setGameShareLinkAC, setLogAC, setPlayersListAC} from "../store/games/act
             }
         })
         if (shouldUpdate) {
-            store.dispatch(setPlayersListAC(playersList))
+            store.dispatch(setPlayersListAC([...playersList]))
         }
     };
 

@@ -17,6 +17,7 @@ import {CustomButton} from "../../../common/CustomButton";
 //     logsSelector
 // } from "../../../../store/games/selectors";
 import PlayerAvatar from "../playerAvatar";
+import {isEquals} from "immutability-helper";
 
 
 export default function GameStream() {
@@ -28,7 +29,7 @@ export default function GameStream() {
     // const osLog = useSelector(logsOsSelector);
     const gameIsReadyToPlay = useSelector(gameIsReadyToPlaySelector);
     const gameShareLink = useSelector(gameShareLinkSelector);
-    const playersList = useSelector(playersListSelector);
+    const playersList = useSelector(playersListSelector, isEquals);
     const dispatch = useDispatch()
     const screen = window;
     const [isLandscapeMode, setIsLandscapeMode] = useState(screen.innerHeight < screen.innerWidth);
