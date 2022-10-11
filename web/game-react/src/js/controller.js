@@ -305,15 +305,14 @@ import {setGameShareLinkAC, setLogAC, setPlayersListAC} from "../store/games/act
 
     const handleUpdatePlayersList = (data) => {
         let shouldUpdate = false;
-        data.players.map((player, index) => {
-            if (!playersList[index] || (player.email ? (playersList[index].email !== player.email) : playersList[index].display_name !== player.display_name)) {
-                playersList[index] = player;
+        data.players.map(player => {
+            if (!playersList[player.index] || (player.email ? (playersList[player.index].email !== player.email) : playersList[player.index].display_name !== player.display_name)) {
+                playersList[player.index] = player;
                 shouldUpdate = true
             }
         })
-
         if (shouldUpdate) {
-            store.dispatch(setPlayersListAC(data.players))
+            store.dispatch(setPlayersListAC(playersList))
         }
     };
 
@@ -439,7 +438,7 @@ import {setGameShareLinkAC, setLogAC, setPlayersListAC} from "../store/games/act
                     switch (key) {
                         case KEY.JOIN: // or SHARE
                             // save when click share
-                            saveGame();
+                            // saveGame();
                             room.copyToClipboard();
                             message.show('Shared link copied to the clipboard!');
                             break;

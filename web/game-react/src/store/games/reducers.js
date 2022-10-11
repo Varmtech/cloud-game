@@ -41,7 +41,7 @@ export default (state = initialState, { type, payload }) => {
             return newState;
         }
         case SET_PLAYERS_LIST: {
-            newState.playersList = payload.players;
+            newState.playersList = Object.values(payload.players);
             return newState;
         }
         case SET_ACTIVE_GAME: {
