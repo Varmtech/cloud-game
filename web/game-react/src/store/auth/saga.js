@@ -31,7 +31,7 @@ function* authUser() {
                 }
                 localStorage.setItem('user', JSON.stringify(userData))
                 store.dispatch(saveUserAC(userData))
-                store.dispatch(authUserSuccessAC({userData}))
+                store.dispatch(authUserSuccessAC(userData))
               }
             }).catch((error) => {
             console.log('error .. ', error)

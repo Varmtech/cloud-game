@@ -2,7 +2,10 @@ import React, {useEffect, useState} from "react";
 import styled from 'styled-components'
 import {useDispatch, useSelector} from "react-redux";
 import {
-    gameIsReadyToPlaySelector, gameShareLinkSelector, playersListSelector,
+    activeGameSelector,
+    gameIsReadyToPlaySelector,
+    gameShareLinkSelector,
+    playersListSelector,
 } from "../../../../store/games/selectors";
 import {colors} from "../../../../Helpers/UI/constants";
 import useScript from "../../../../hooks/useScript";
@@ -19,8 +22,7 @@ import {CustomButton} from "../../../common/CustomButton";
 import PlayerAvatar from "../playerAvatar";
 import {isEquals} from "immutability-helper";
 
-
-export default function GameStream() {
+export default function GameStream({userData}) {
     useScript('controller.js');
     useScript('init.js');
 
@@ -29,6 +31,7 @@ export default function GameStream() {
     // const osLog = useSelector(logsOsSelector);
     const gameIsReadyToPlay = useSelector(gameIsReadyToPlaySelector);
     const gameShareLink = useSelector(gameShareLinkSelector);
+    const selectedGame = useSelector(activeGameSelector);
     const playersList = useSelector(playersListSelector, isEquals);
     const dispatch = useDispatch()
     const screen = window;
@@ -39,7 +42,7 @@ export default function GameStream() {
     // const [shareLink, setShareLink] = useState("https://1up.games")
     const handleInviteFriend = () => {
         if(navigator.share) {
-            navigator.share({ title: "Example Page", url: gameShareLink })
+            navigator.share({ text: `${userData.display_name } has invited you to play ${selectedGame.name}`, url: gameShareLink })
                 .then(() => {
                     console.log(' .. shared successfully .. ', )
                 })

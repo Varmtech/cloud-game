@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import { getAuth, signOut } from "firebase/auth";
 import styled from 'styled-components'
 import LogoImage from '../../../../img/logo.png';
 import {CustomButton} from "../../../common/CustomButton";
 import {ReactComponent as GoogleIcon} from '../../../../img/icons/google.svg';
 import {colors} from "../../../../Helpers/UI/constants";
 import {PageWrapper} from "../../../common/PageWrapper";
-import {authUserAC} from "../../../../store/auth/actions";
+import {authUserAC, authUserSuccessAC} from "../../../../store/auth/actions";
 import { useNavigate } from "react-router-dom";
 import useDidUpdate from "../../../../hooks/useDidUpdate";
 import {LoadingContainer} from "../../../../Helpers/UI";
@@ -55,6 +56,14 @@ export default function WelcomePage({inviteUrl}) {
                         // }
                     }
                 } else {
+                    const auth = getAuth();
+                    signOut(auth).then(() => {
+                        // Sign-out successful.
+                        console.log('user is sign outed.... ')
+                    }).catch((error) => {
+                        console.log('sign out error .. ')
+                        // An error happened.
+                    });
                     setGuestMode(true)
                 }
             }, 500)
@@ -90,7 +99,7 @@ export default function WelcomePage({inviteUrl}) {
                 <Logo src={LogoImage}/>
                 <WelcomeText>Welcome</WelcomeText>
                 <SignInText>{guestMode
-                    ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam arcu aliquet amet.'
+                    ? 'Your email is not recognized, please wait until you are invited to a game by a friend.'
                     : 'Please sign in to continue'}
                 </SignInText>
             </PageContainer>
