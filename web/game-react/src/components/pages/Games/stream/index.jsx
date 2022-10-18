@@ -42,7 +42,7 @@ export default function GameStream({userData}) {
     // const [shareLink, setShareLink] = useState("https://1up.games")
     const handleInviteFriend = () => {
         if(navigator.share) {
-            navigator.share({ text: `${userData.display_name } has invited you to play ${selectedGame.name}`, url: gameShareLink })
+            navigator.share({ text: `${userData.display_name } has invited you to play ${selectedGame.name}.`, url: gameShareLink })
                 .then(() => {
                     console.log(' .. shared successfully .. ', )
                 })

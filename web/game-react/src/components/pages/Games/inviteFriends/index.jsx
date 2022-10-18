@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import styled from 'styled-components'
 import Header from "../../../header";
-import {ReactComponent as SettingsIcon} from "../../../../img/icons/settings.svg";
 import {ReactComponent as BackIcon} from "../../../../img/icons/arrow-left.svg";
 import {ReactComponent as PlayIcon} from "../../../../img/icons/play.svg";
 import {ArrowWrapper, ButtonWrapper, SectionHeader} from "../../../../Helpers/UI";
@@ -9,7 +8,7 @@ import {colors} from "../../../../Helpers/UI/constants";
 import {CustomButton} from "../../../common/CustomButton";
 import {PageWrapper} from "../../../common/PageWrapper";
 import {useSelector} from "react-redux";
-import {activeGameSelector, gameListSelector} from "../../../../store/games/selectors";
+import {activeGameSelector} from "../../../../store/games/selectors";
 import {useNavigate} from "react-router-dom";
 
 export default function InviteFriends() {
@@ -25,8 +24,7 @@ export default function InviteFriends() {
 
     return (
         <PageWrapper>
-            <Header leftIcon={<ArrowWrapper onClick={() => navigate(-1)}><BackIcon/></ArrowWrapper>}
-                   rightIcon={<ArrowWrapper><SettingsIcon/></ArrowWrapper>}/>
+            <Header leftIcon={<ArrowWrapper onClick={() => navigate(-1)}><BackIcon/></ArrowWrapper>} />
             <GameSessionContainer>
                 <SectionHeader>Game session created</SectionHeader>
                 <AttachedGameCont>

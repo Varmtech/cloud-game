@@ -1,8 +1,8 @@
-import React from "react";
+import React from "react"
+import { getAuth, signOut } from "firebase/auth";
 import styled from 'styled-components'
 import Header from "../../../header";
-import {ReactComponent as SettingsIcon} from "../../../../img/icons/settings.svg";
-import {ReactComponent as BackIcon} from "../../../../img/icons/arrow-left.svg";
+import {ReactComponent as SignOutIcon} from "../../../../img/icons/log-out-red.svg";
 import {ReactComponent as AttachGameIcon} from "../../../../img/icons/attachGame.svg";
 import {ReactComponent as AttachIcon} from "../../../../img/icons/folder-plus.svg";
 import {ReactComponent as PlusIcon} from "../../../../img/icons/plus.svg";
@@ -11,13 +11,28 @@ import {ArrowWrapper, SectionHeader} from "../../../../Helpers/UI";
 import {colors} from "../../../../Helpers/UI/constants";
 import {CustomButton} from "../../../common/CustomButton";
 import {PageWrapper} from "../../../common/PageWrapper";
+import {useNavigate} from "react-router-dom";
+import store from "../../../../store";
+import {authUserSuccessAC} from "../../../../store/auth/actions";
 
 export default function CreateGameSession() {
+    const navigate = useNavigate();
+
+    const handleSignOut = () => {
+        const auth = getAuth();
+        signOut(auth).then(() => {
+            // Sign-out successful.
+            store.dispatch(authUserSuccessAC(null))
+            navigate('/')
+        }).catch((error) => {
+            // An error happened.
+            console.log('sign out error .. ', error)
+        });
+    }
 
     return (
         <PageWrapper>
-            <Header leftIcon={<ArrowWrapper><BackIcon/></ArrowWrapper>}
-                   rightIcon={<ArrowWrapper><SettingsIcon/></ArrowWrapper>}/>
+            <Header rightIcon={<ArrowWrapper onClick={handleSignOut}><SignOutIcon/></ArrowWrapper>}/>
             <ProfileBadge/>
             <SectionHeader>Create game session</SectionHeader>
             <AttachGameContainer>

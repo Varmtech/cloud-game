@@ -22,9 +22,9 @@ export default function ProfileBadge() {
                 }}
             />
             <UserInfo>{userData ? userData.display_name : ''}</UserInfo>
-            <NotificationIconWrapper>
+            {/* <NotificationIconWrapper>
                 <NotificationIcon />
-            </NotificationIconWrapper>
+            </NotificationIconWrapper> */}
         </BadgeContainer>
     )
 }
