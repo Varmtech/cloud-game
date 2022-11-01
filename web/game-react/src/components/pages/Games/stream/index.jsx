@@ -11,9 +11,11 @@ import {colors} from "../../../../Helpers/UI/constants";
 import useScript from "../../../../hooks/useScript";
 import {LoadingContainer} from "../../../../Helpers/UI";
 import {setGameIsReadyToPlayAC} from "../../../../store/games/actions";
-import {event, QUIT_GAME, KEY_RELEASED} from "../../../../js/event/event";
+import {event, QUIT_GAME, KEY_RELEASED, PLAY_GAME, KEY_PRESSED} from "../../../../js/event/event";
 import {KEY} from "../../../../js/input/keys";
 import {CustomButton} from "../../../common/CustomButton";
+import {ReactComponent as PauseIcon} from "../../../../img/icons/pause.svg"
+
 // import {
 //     logsJoySelector,
 //     logsOsSelector,
@@ -21,6 +23,7 @@ import {CustomButton} from "../../../common/CustomButton";
 // } from "../../../../store/games/selectors";
 import PlayerAvatar from "../playerAvatar";
 import {isEquals} from "immutability-helper";
+import PauseGame from "../PauseGame";
 
 export default function GameStream({userData}) {
     useScript('controller.js');
@@ -37,6 +40,7 @@ export default function GameStream({userData}) {
     const screen = window;
     const [isLandscapeMode, setIsLandscapeMode] = useState(screen.innerHeight < screen.innerWidth);
     const [shareMode, setShareMode] = useState(true);
+    const [gameIsPaused, setGameIsPaused] = useState(false);
 
     const [shareErrorMessage, setShareErrorMessage] = useState('')
     // const [shareLink, setShareLink] = useState("https://1up.games")
@@ -73,6 +77,15 @@ export default function GameStream({userData}) {
         setShareMode(false)
     };
 
+    const handlePauseGame = (mouseDown) => {
+        if(mouseDown) {
+            event.pub(KEY_PRESSED, { key: KEY.START });
+        } else {
+            setGameIsPaused(true)
+            event.pub(KEY_RELEASED, { key: KEY.START });
+        }
+    };
+
     useEffect(() => {
         window.addEventListener("resize", handleDetectScreen);
         return () => {
@@ -86,7 +99,13 @@ export default function GameStream({userData}) {
         <>
             { !gameIsReadyToPlay  && <Loading> <span/> </Loading>}
             <VideoWrapper id='stream_container'>
+                {gameIsPaused && <PauseGame onResumeGame={() => setGameIsPaused(false)}/>}
                 <StreamContainer>
+                    {!gameIsPaused && (
+                        <PauseButton onMouseDown={() => handlePauseGame(true)} onMouseUp={() => handlePauseGame(false)}>
+                            <PauseIcon/>
+                        </PauseButton>
+                    )}
                     {/* {logs.length ? <LogContainer>
                         Keys press log
                         {logs.map((log, index) => <div key={log.key + index}>{log.key}</div>)}
@@ -209,6 +228,16 @@ export const StreamContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
+`
+export const PauseButton = styled.div`
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  cursor: pointer;
+  background-color: #212121;
+  border-radius: 50%;
+  line-height: 3px;
+  z-index: 25;
 `
 export const GamerItem = styled.div`
 `
