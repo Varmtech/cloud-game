@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import styled from 'styled-components'
 import {useDispatch, useSelector} from "react-redux";
+import VideoClient from 'video-client'
 import {
     activeGameSelector,
     gameIsReadyToPlaySelector,
@@ -42,6 +43,15 @@ export default function GameStream({userData}) {
     const [shareMode, setShareMode] = useState(true);
     const [gameIsPaused, setGameIsPaused] = useState(false);
 
+    const [audioTrack, setAudioTrack] = useState(false);
+    const [videoTrack, setVideoTrack] = useState(false);
+
+    const signalingHost = "https://1up.games"
+
+    const videoClient = new VideoClient(signalingHost)
+    const { MediaCapture } = videoClient
+
+    const { getMediaStream, getScreenMedia } = MediaCapture
     const [shareErrorMessage, setShareErrorMessage] = useState('')
     // const [shareLink, setShareLink] = useState("https://1up.games")
     const handleInviteFriend = () => {
@@ -87,6 +97,17 @@ export default function GameStream({userData}) {
     };
 
     useEffect(() => {
+        getMediaStream({
+            audio: true,
+            video: true,
+        }).then(stream => {
+            console.log('stream', stream)
+            setAudioTrack(stream.getAudioTracks()[0])
+            setVideoTrack(stream.getVideoTracks()[0])
+        }).catch(error => {
+            console.log('error', error)
+        })
+
         window.addEventListener("resize", handleDetectScreen);
         return () => {
             window.removeEventListener("resize", null)
@@ -94,7 +115,14 @@ export default function GameStream({userData}) {
             event.pub(QUIT_GAME);
         }
     }, [])
+    useEffect(() => {
+        if (gameIsReadyToPlay && audioTrack && videoTrack) {
+            const roomId = gameShareLink.split('id=')[1].split('___')[0];
+            const videoRoom = videoClient.join('', userData.id, userData.display_name, roomId, {audioTrack, videoTrack}, true)
+            console.log('videoRoom: ', videoRoom)
+        }
 
+    }, [gameIsReadyToPlay, audioTrack, videoTrack])
     return (
         <>
             { !gameIsReadyToPlay  && <Loading> <span/> </Loading>}

@@ -9,6 +9,7 @@ function* authUser() {
     auth.onAuthStateChanged(function (user) {
       if (user) {
         const userData = {
+          id: user.uid,
           display_name: user.displayName,
           email: user.email,
           avatar_url: user.photoURL,
@@ -25,6 +26,7 @@ function* authUser() {
             .then((result) => {
               if (result) {
                 const userData = {
+                  id: result.user.uid,
                   display_name: result.user.displayName,
                   email: result.user.email,
                   avatar_url: result.user.photoURL,

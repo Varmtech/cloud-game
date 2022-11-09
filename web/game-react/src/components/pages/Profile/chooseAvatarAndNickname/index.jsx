@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Swiper, SwiperSlide} from 'swiper/react';
+import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components'
 import 'swiper/css';
 import "swiper/css/pagination";
@@ -86,6 +87,7 @@ export default function ChooseAvatarAndNickname({inviteUrl}) {
 
     const handleSavePlayer = () => {
         const userData = {
+            id: uuidv4(),
             display_name: nickname,
             avatar_background: activeBackgroundColor,
             avatar_url: activeAvatarIcon
