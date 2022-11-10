@@ -45,6 +45,7 @@ export default function GameStream({userData}) {
 
     const [audioTrack, setAudioTrack] = useState(false);
     const [videoTrack, setVideoTrack] = useState(false);
+    const [streams, setStreams] = useState([]);
 
     const signalingHost = "https://1up.games"
 
@@ -52,11 +53,8 @@ export default function GameStream({userData}) {
 
     const handleParticipantJoined = (participant) => {
         participant.on('stream', (stream) => {
-            console.log('participant on stream', stream)
-            const audio2 = document.getElementById('audio2')
-            if (audio2.srcObject !== stream) {
-                audio2.srcObject = stream;
-                console.log('Received remote stream');
+            if (!streams.includes(stream)) {
+                setStreams([...streams, stream])
             }
         })
 
@@ -118,7 +116,11 @@ export default function GameStream({userData}) {
             event.pub(KEY_RELEASED, { key: KEY.START });
         }
     };
-
+    const setSrcObject = (ref, stream) => {
+        if(ref) {
+            ref.srcObject = stream;
+        }
+    }
     useEffect(() => {
         getMediaStream({
             audio: true,
@@ -161,14 +163,9 @@ export default function GameStream({userData}) {
             <VideoWrapper id='stream_container'>
 
                 <AudioPlayers id="audio">
-                    <div>
-                        <div className="label">Local audio:</div>
-                        <audio id="audio1" autoPlay controls muted></audio>
-                    </div>
-                    <div>
-                        <div className="label">Remote audio:</div>
-                        <audio id="audio2" autoPlay controls></audio>
-                    </div>
+                    {streams.map((stream) => {
+                        return <audio ref={ref => setSrcObject(ref, stream)} key={stream} autoPlay />
+                    })}
                 </AudioPlayers>
                 {gameIsPaused && <PauseGame onResumeGame={() => setGameIsPaused(false)}/>}
                 <StreamContainer>
