@@ -52,6 +52,8 @@ export default function GameStream({userData}) {
     const videoClient = new VideoClient(signalingHost)
 
     const handleParticipantJoined = (participant) => {
+        const gameVideo = document.getElementById('stream');
+        gameVideo.volume = 0.2
         participant.on('stream', (stream) => {
             if (!streams.includes(stream)) {
                 setStreams([...streams, stream])
