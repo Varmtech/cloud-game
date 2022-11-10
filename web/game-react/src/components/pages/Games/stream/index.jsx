@@ -46,13 +46,13 @@ export default function GameStream({userData}) {
     const [audioTrack, setAudioTrack] = useState(false);
     const [videoTrack, setVideoTrack] = useState(false);
     const [streams, setStreams] = useState([]);
+    const gameVideo = document.getElementById('stream');
 
     const signalingHost = "https://1up.games"
 
     const videoClient = new VideoClient(signalingHost)
 
     const handleParticipantJoined = (participant) => {
-        const gameVideo = document.getElementById('stream');
         gameVideo.volume = 0.2
         participant.on('stream', (stream) => {
             if (!streams.includes(stream)) {
@@ -108,6 +108,10 @@ export default function GameStream({userData}) {
     const handlePlayGame = () => {
         event.pub(KEY_RELEASED, { key: KEY.JOIN, state: 'play' });
         setShareMode(false)
+
+        if(gameVideo && streams.length) {
+            gameVideo.volume = 0.2
+        }
     };
 
     const handlePauseGame = (mouseDown) => {
@@ -158,6 +162,9 @@ export default function GameStream({userData}) {
             })()
         }
 
+        if(gameVideo && streams.length) {
+            gameVideo.volume = 0.2
+        }
     }, [gameIsReadyToPlay, audioTrack])
     return (
         <>
