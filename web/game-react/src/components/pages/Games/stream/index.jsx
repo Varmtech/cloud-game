@@ -49,6 +49,29 @@ export default function GameStream({userData}) {
     const signalingHost = "https://1up.games"
 
     const videoClient = new VideoClient(signalingHost)
+
+    const handleParticipantJoined = (participant) => {
+        participant.on('stream', (stream) => {
+            console.log('participant on stream', stream)
+            const audio2 = document.getElementById('audio2')
+            if (audio2.srcObject !== stream) {
+                audio2.srcObject = stream;
+                console.log('Received remote stream');
+            }
+        })
+
+
+       /* participant.connectToUser().then((stream) => {
+            console.log('participant connected, stream: ', stream)
+            const audio2 = document.getElementById('audio2')
+            if (audio2.srcObject !== stream) {
+                audio2.srcObject = stream;
+                console.log('Received remote stream');
+            }
+        }) .catch((err) => {
+            console.log('participant connectToUser error: ', err)
+        })*/
+    }
     const { MediaCapture } = videoClient
 
     const { getMediaStream, getScreenMedia } = MediaCapture
@@ -99,13 +122,13 @@ export default function GameStream({userData}) {
     useEffect(() => {
         getMediaStream({
             audio: true,
-            video: true,
+            // video: true
         }).then(stream => {
             console.log('stream', stream)
             setAudioTrack(stream.getAudioTracks()[0])
-            setVideoTrack(stream.getVideoTracks()[0])
+            // setVideoTrack(stream.getVideoTracks()[0])
         }).catch(error => {
-            console.log('error', error)
+            console.log('error on getMediaStream', error)
         })
 
         window.addEventListener("resize", handleDetectScreen);
@@ -116,17 +139,37 @@ export default function GameStream({userData}) {
         }
     }, [])
     useEffect(() => {
-        if (gameIsReadyToPlay && audioTrack && videoTrack) {
-            const roomId = gameShareLink.split('id=')[1].split('___')[0];
-            const videoRoom = videoClient.join('', userData.id, userData.display_name, roomId, {audioTrack, videoTrack}, true)
-            console.log('videoRoom: ', videoRoom)
+        if (gameIsReadyToPlay && audioTrack) {
+            (async () => {
+                const roomId = gameShareLink.split('id=')[1].split('___')[0];
+                const videoRoom = await videoClient.join('', userData.id, userData.display_name, roomId, {audioTrack}, true)
+                const participants = videoRoom.getParticipants()
+                if (participants && participants.length) {
+                    participants.forEach(participant => {
+                        handleParticipantJoined(participant)
+                    })
+                }
+                videoRoom.on('participantJoined', handleParticipantJoined)
+
+            })()
         }
 
-    }, [gameIsReadyToPlay, audioTrack, videoTrack])
+    }, [gameIsReadyToPlay, audioTrack])
     return (
         <>
             { !gameIsReadyToPlay  && <Loading> <span/> </Loading>}
             <VideoWrapper id='stream_container'>
+
+                <AudioPlayers id="audio">
+                    <div>
+                        <div className="label">Local audio:</div>
+                        <audio id="audio1" autoPlay controls muted></audio>
+                    </div>
+                    <div>
+                        <div className="label">Remote audio:</div>
+                        <audio id="audio2" autoPlay controls></audio>
+                    </div>
+                </AudioPlayers>
                 {gameIsPaused && <PauseGame onResumeGame={() => setGameIsPaused(false)}/>}
                 <StreamContainer>
                     {!gameIsPaused && (
@@ -220,6 +263,9 @@ export const ShareContainer = styled.div`
     width: 130px;
     height: 48px;
   }
+`
+export const AudioPlayers = styled.div`
+  display: none;
 `
 export const VideoWrapper = styled.div`
   display: none;

@@ -27,6 +27,7 @@ export default function WelcomePage({inviteUrl}) {
     const usersWhitelist = [
         'scottygammon@gmail.com',
         'armmkrtchyan07@gmail.com',
+        'armen@sceyt.com',
         'voipam@gmail.com',
         'dwaynelord@gmail.com',
         'dwayne.lord@gmail.com',
