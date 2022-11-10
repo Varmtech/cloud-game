@@ -33,6 +33,7 @@ export default function GameStream({userData}) {
     // const joyLogs = useSelector(logsJoySelector);
     // const logs = useSelector(logsSelector);
     // const osLog = useSelector(logsOsSelector);
+    const videoElement = React.createRef();
     const gameIsReadyToPlay = useSelector(gameIsReadyToPlaySelector);
     const gameShareLink = useSelector(gameShareLinkSelector);
     const selectedGame = useSelector(activeGameSelector);
@@ -46,14 +47,15 @@ export default function GameStream({userData}) {
     const [audioTrack, setAudioTrack] = useState(false);
     const [videoTrack, setVideoTrack] = useState(false);
     const [streams, setStreams] = useState([]);
-    const gameVideo = document.getElementById('stream');
 
     const signalingHost = "https://1up.games"
 
     const videoClient = new VideoClient(signalingHost)
 
     const handleParticipantJoined = (participant) => {
-        gameVideo.volume = 0.2
+        if(videoElement.current) {
+            videoElement.current.volume = 0.1
+        }
         participant.on('stream', (stream) => {
             if (!streams.includes(stream)) {
                 setStreams([...streams, stream])
@@ -109,8 +111,8 @@ export default function GameStream({userData}) {
         event.pub(KEY_RELEASED, { key: KEY.JOIN, state: 'play' });
         setShareMode(false)
 
-        if(gameVideo && streams.length) {
-            gameVideo.volume = 0.2
+        if(videoElement.current && streams.length) {
+            videoElement.current.volume = 0.1
         }
     };
 
@@ -120,6 +122,9 @@ export default function GameStream({userData}) {
         } else {
             setGameIsPaused(true)
             event.pub(KEY_RELEASED, { key: KEY.START });
+        }
+        if(videoElement.current && streams.length) {
+            videoElement.current.volume = 0.1
         }
     };
     const setSrcObject = (ref, stream) => {
@@ -147,6 +152,13 @@ export default function GameStream({userData}) {
         }
     }, [])
     useEffect(() => {
+        if (streams.length > 0) {
+            if(videoElement.current ) {
+                videoElement.current.volume = 0.1
+            }
+        }
+    }, [streams.length])
+    useEffect(() => {
         if (gameIsReadyToPlay && audioTrack) {
             (async () => {
                 const roomId = gameShareLink.split('id=')[1].split('___')[0];
@@ -162,8 +174,9 @@ export default function GameStream({userData}) {
             })()
         }
 
-        if(gameVideo && streams.length) {
-            gameVideo.volume = 0.2
+
+        if(videoElement.current && streams.length) {
+            videoElement.current.volume = 0.1
         }
     }, [gameIsReadyToPlay, audioTrack])
     return (
@@ -222,7 +235,7 @@ export default function GameStream({userData}) {
                             <ErrorMessage>{shareErrorMessage}</ErrorMessage>
                         </ShareContainer>)
                     }
-                    <GameVideo isLandscapeMode={isLandscapeMode} id="stream" className="game-screen" hidden muted playsInline preload="none" />
+                    <GameVideo ref={videoElement} isLandscapeMode={isLandscapeMode} id="stream" className="game-screen" hidden muted playsInline preload="none" />
                     <PlayersSection leftSide={true}>
                         <GamerItem>
                             {playersList[1] ? (
