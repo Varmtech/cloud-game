@@ -7,7 +7,7 @@ import {CustomButton} from "../../../common/CustomButton";
 import {ReactComponent as GoogleIcon} from '../../../../img/icons/google.svg';
 import {colors} from "../../../../Helpers/UI/constants";
 import {PageWrapper} from "../../../common/PageWrapper";
-import {authUserAC, authUserSuccessAC} from "../../../../store/auth/actions";
+import {authUserAC} from "../../../../store/auth/actions";
 import { useNavigate } from "react-router-dom";
 import useDidUpdate from "../../../../hooks/useDidUpdate";
 import {LoadingContainer} from "../../../../Helpers/UI";
@@ -33,6 +33,14 @@ export default function WelcomePage({inviteUrl}) {
         'dwayne.lord@gmail.com',
         'hello@1up.games',
         'default@mail.com',
+        'dorvago@gmail.com',
+        'ricardo.esanto93@gmail.com',
+        'c.g.charles1001@gmail.com',
+        'Shabanaz.nunhuck@gmail.com',
+        'mr.marco.lobo@gmail.com',
+        'aasf.pombeiro@gmail.com',
+        'jaredjames.nelson@gmail.com',
+        'karunavannan@gmail.com'
     ]
     const handleSingIn = () => {
         dispatch(authUserAC());
@@ -62,7 +70,7 @@ export default function WelcomePage({inviteUrl}) {
                         // Sign-out successful.
                         console.log('user is sign outed.... ')
                     }).catch((error) => {
-                        console.log('sign out error .. ')
+                        console.log('sign out error .. ', error)
                         // An error happened.
                     });
                     setGuestMode(true)
