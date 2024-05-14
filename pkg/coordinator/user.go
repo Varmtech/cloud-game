@@ -68,6 +68,12 @@ func (u *User) HandleRequests(info HasServerInfo, launcher games.Launcher, conf 
 				return api.ErrMalformed
 			}
 			u.HandleStartGame(*rq, launcher, conf)
+		case api.Heartbeat:
+			rq := api.Unwrap[api.GetPlayerListRequest[com.Uid]](payload)
+			if rq == nil {
+				return api.ErrMalformed
+			}
+			u.HandleGetPlayerList(*rq)
 		case api.QuitGame:
 			rq := api.Unwrap[api.GameQuitRequest[com.Uid]](payload)
 			if rq == nil {

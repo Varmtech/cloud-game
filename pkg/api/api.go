@@ -85,6 +85,8 @@ const (
 	IceCandidate        = WebrtcIce
 	TerminateSession PT = 204
 	AppVideoChange   PT = 150
+	Players          PT = 151
+	Heartbeat        PT = 152
 )
 
 func (p PT) String() string {
@@ -125,6 +127,10 @@ func (p PT) String() string {
 		return "TerminateSession"
 	case AppVideoChange:
 		return "AppVideoChange"
+	case Players:
+		return "Players"
+	case Heartbeat:
+		return "Heartbeat"
 	default:
 		return "Unknown"
 	}

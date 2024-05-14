@@ -89,6 +89,12 @@ func (c *coordinator) HandleRequests(w *Worker) chan struct{} {
 				return api.ErrMalformed
 			}
 			c.HandleWebrtcIceCandidate(*dat, w)
+		case api.Players:
+			if dat := api.Unwrap[api.GetPlayerListRequest[com.Uid]](x.Payload); dat == nil {
+				err, out = api.ErrMalformed, api.EmptyPacket
+			} else {
+				out = c.HandlePlayers(*dat, w)
+			}
 		case api.StartGame:
 			if dat := api.Unwrap[api.StartGameRequest[com.Uid]](x.Payload); dat == nil {
 				err, out = api.ErrMalformed, api.EmptyPacket

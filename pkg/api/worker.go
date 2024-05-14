@@ -64,4 +64,11 @@ type (
 		S int     `json:"s"`
 		A float32 `json:"a"`
 	}
+
+	GetPlayerListRequest[T Id] struct {
+		StatefulRoom[T]
+	}
+	GetPlayerListResponse struct {
+		Players string `json:"players"`
+	}
 )

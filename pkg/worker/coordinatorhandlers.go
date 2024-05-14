@@ -183,6 +183,23 @@ func (c *coordinator) HandleGameStart(rq api.StartGameRequest[com.Uid], w *Worke
 	return api.Out{Payload: response}
 }
 
+func (c *coordinator) HandlePlayers(rq api.GetPlayerListRequest[com.Uid], w *Worker) api.Out {
+	r := w.router.FindRoom(rq.Rid)
+	if r == nil {
+		return api.ErrPacket
+	}
+	var jsonPlayers []byte
+	jsonPlayers, _ = json.Marshal(w.router.Users())
+
+	resp := api.GetPlayerListResponse{
+		Players: string(jsonPlayers),
+	}
+
+	return api.Out{
+		Payload: resp,
+	}
+}
+
 // HandleTerminateSession handles cases when a user has been disconnected from the websocket of coordinator.
 func (c *coordinator) HandleTerminateSession(rq api.TerminateSessionRequest[com.Uid], w *Worker) {
 	if user := w.router.FindUser(rq.Id); user != nil {

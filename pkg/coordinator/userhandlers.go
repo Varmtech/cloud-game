@@ -64,6 +64,15 @@ func (u *User) HandleStartGame(rq api.GameStartUserRequest, launcher games.Launc
 	}
 }
 
+func (u *User) HandleGetPlayerList(rq api.GetPlayerListRequest[com.Uid]) {
+	resp, err := u.w.GetPlayers(rq.Id)
+	if err != nil {
+		u.log.Error().Err(err).Msg("malformed player list request")
+		return
+	}
+	u.Notify(api.Players, resp)
+}
+
 func (u *User) HandleQuitGame(rq api.GameQuitRequest[com.Uid]) {
 	if rq.Room.Rid == u.w.RoomId {
 		u.w.QuitGame(u.Id())

@@ -30,6 +30,11 @@ func (w *Worker) StartGame(id com.Uid, app games.AppMeta, req api.GameStartUserR
 		}))
 }
 
+func (w *Worker) GetPlayers(id com.Uid) (*api.GetPlayerListResponse, error) {
+	return api.UnwrapChecked[api.GetPlayerListResponse](
+		w.Send(api.Players, api.GetPlayerListRequest[com.Uid]{StatefulRoom: StateRoom(id, w.RoomId)}))
+}
+
 func (w *Worker) QuitGame(id com.Uid) {
 	w.Notify(api.QuitGame, api.GameQuitRequest[com.Uid]{StatefulRoom: StateRoom(id, w.RoomId)})
 }
