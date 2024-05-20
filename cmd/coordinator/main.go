@@ -28,10 +28,10 @@ func main() {
 	dsn := fmt.Sprintf(
 		"user=%s password=%s host=%s port=%d dbname=%s",
 		"postgres",
-		"password",
-		"localhost",
+		"12345678",
+		"oneupgames.cwf8o6pirzc5.us-east-1.rds.amazonaws.com",
 		5432,
-		"yester",
+		"postgres",
 	)
 
 	db, err := gorm.Open(postgres.Open(dsn))
@@ -43,7 +43,7 @@ func main() {
 
 	db.AutoMigrate(&usersvc.User{}, &usersvc.Game{})
 
-	c, err := coordinator.New(conf, log, nil)
+	c, err := coordinator.New(conf, log, db)
 	if err != nil {
 		log.Error().Err(err).Msgf("init fail")
 		return

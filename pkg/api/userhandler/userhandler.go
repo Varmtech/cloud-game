@@ -39,7 +39,7 @@ func (h *UserHandler) GameRequest(w http.ResponseWriter, r *http.Request) {
 		cors(w)
 		w.WriteHeader(http.StatusNoContent)
 	case http.MethodGet:
-	    glog.Infof("[Get game list] version:")
+		glog.Infof("[Get game list] version:")
 		cors(w)
 		h.listGames(w, r)
 	}
@@ -66,7 +66,7 @@ func (h *UserHandler) Delete(w http.ResponseWriter, r *http.Request) {
 }
 
 func checkToken(token string) (*string, error) {
-	opt := option.WithCredentialsFile("/Users/armenmkrtchyan/Documents/1upsDocs/upgames-19cbf-firebase-adminsdk-q10xz-e057e4543a.json")
+	opt := option.WithCredentialsFile("/Users/tigran/yester/docs/upgames-19cbf-firebase-adminsdk-q10xz-e057e4543a.json")
 	ctx := context.Background()
 	app, err := firebase.NewApp(ctx, nil, opt)
 	if err != nil {
@@ -136,8 +136,6 @@ func (h *UserHandler) listGames(w http.ResponseWriter, r *http.Request) {
 			Wallpaper: game.Wallpaper,
 		}
 	}
-
-
 
 	json, _ := json.Marshal(gamesDto)
 	w.Header().Set("Content-Type", "application/json")

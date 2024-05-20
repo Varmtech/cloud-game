@@ -8,7 +8,7 @@ let conn;
 
 const buildUrl = (params = {}) => {
     const url = new URL(window.location);
-    url.protocol = location.protocol !== 'https:' ? 'ws' : 'wss';
+    url.protocol = window.location.protocol !== 'https:' ? 'ws' : 'wss';
     url.pathname = "/ws";
     Object.keys(params).forEach(k => {
         if (!!params[k]) url.searchParams.set(k, params[k])
